@@ -1,2 +1,2 @@
 # oxShibboleth
-Shibboleth V3 midifications.
+Shibboleth V3 modifications.
