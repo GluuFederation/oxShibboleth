@@ -114,7 +114,7 @@
                         <phase>process-sources</phase>
                         <configuration>
                             <target>
-                                <property name="shib.basedir" value="${project.build.directory}/shibboleth-identityprovider-${shibboleth.version}"/>
+                                <property name="shib.basedir" value="${project.build.directory}/shibboleth-identity-provider-${shibboleth.version}"/>
 
                                 <property name="webapp.dir" value="${shib.basedir}/src/main/webapp"/>
                                 <property name="idp.home.path" value="file:/opt/shibboleth-idp"/>
