@@ -48,9 +48,9 @@
     </repositories>
 
     <scm>
-        <url>https://github.com/GluuFederation/oxIdp</url>
-        <connection>scm:git:git://github.com/GluuFederation/oxIdp.git</connection>
-        <developerConnection>scm:git:git@github.com:GluuFederation/oxIdp.git</developerConnection>
+        <url>https://github.com/GluuFederation/oxShibboleth</url>
+        <connection>scm:git:git://github.com/GluuFederation/oxShibboleth.git</connection>
+        <developerConnection>scm:git:git@github.com:GluuFederation/oxShibboleth.git</developerConnection>
     </scm>
 
     <build>
