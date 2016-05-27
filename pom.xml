@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.xdi</groupId>
     <artifactId>oxshibbolethidp</artifactId>
-    <name>OX IDP</name>
+    <name>OX Shibboleth IDP</name>
     <url>http://ox.gluu.org</url>
     <packaging>war</packaging>
     <version>2.4.3-SNAPSHOT</version>
@@ -147,7 +147,7 @@
                 </executions>
             </plugin>
 
-            <!--<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-patch-plugin</artifactId>
                 <version>1.1.1</version>
@@ -168,7 +168,7 @@
                         </goals>
                     </execution>
                 </executions>
-	    </plugin>-->
+	    </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
