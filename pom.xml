@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.xdi</groupId>
-    <artifactId>oxshibbolethidp</artifactId>
+    <artifactId>oxshibbolethIdp</artifactId>
     <name>OX Shibboleth IDP</name>
     <url>http://ox.gluu.org</url>
     <packaging>war</packaging>
@@ -116,11 +116,10 @@
                             <target>
                                 <property name="shib.basedir" value="${project.build.directory}/shibboleth-identity-provider-${shibboleth.version}"/>
 
-                                <property name="webapp.dir" value="${shib.basedir}/src/main/webapp"/>
+                                <property name="webapp.dir" value="${shib.basedir}/webapp"/>
                                 <property name="idp.home.path" value="file:/opt/shibboleth-idp"/>
 
                                 <delete dir="${shib.basedir}/target" />
-                                <delete dir="${shib.basedir}/dist" />
 
                                 <mkdir dir="${shib.basedir}/target" />
 
@@ -132,12 +131,12 @@
                                 </copy>
 
                                 <!-- build the war file -->
-                                <war warfile="${shib.basedir}/dist/idp.war" webxml="${shib.basedir}/target/web.xml">
-                                    <lib dir="${shib.basedir}/lib" excludes="servlet-api*.jar,jsp-api*.jar"/>
+                                <war warfile="${shib.basedir}/target/${project.build.finalName}.war" webxml="${shib.basedir}/target/web.xml">
+                                    <!--<lib dir="${shib.basedir}/lib" excludes="servlet-api*.jar,jsp-api*.jar"/>-->
                                     <webinf dir="${webapp.dir}/WEB-INF" excludes="web.xml"/>
                                     <fileset dir="${webapp.dir}" excludes="WEB-INF/**"/>
                                 </war>
-                                <unwar dest="${project.build.directory}/${project.build.finalName}" src="${shib.basedir}/dist/idp.war" />
+                                <unwar dest="${project.build.directory}/${project.build.finalName}" src="${shib.basedir}/target/${project.build.finalName}.war" />
                             </target>
                         </configuration>
                         <goals>
@@ -147,7 +146,7 @@
                 </executions>
             </plugin>
 
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-patch-plugin</artifactId>
                 <version>1.1.1</version>
@@ -168,7 +167,7 @@
                         </goals>
                     </execution>
                 </executions>
-	    </plugin>
+	    </plugin>-->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
