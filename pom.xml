@@ -11,6 +11,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
 		<maven.min-version>3.0.3</maven.min-version>
 	</properties>
 
@@ -56,6 +58,7 @@
 	<modules>
 		<module>static</module>
 		<module>oxShibbolethWebapp</module>
+        <module>keygenerator</module>
 	</modules>
 
 	<dependencyManagement>

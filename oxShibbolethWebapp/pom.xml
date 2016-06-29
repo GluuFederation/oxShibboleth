@@ -13,6 +13,9 @@
     </prerequisites>
 
     <properties>
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
+        
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <shibboleth.version>3.2.1</shibboleth.version>
