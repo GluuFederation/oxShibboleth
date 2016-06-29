@@ -18,9 +18,9 @@
         <shibboleth.version>3.2.1</shibboleth.version>
         <shibboleth.dist.md5>fc5e166659752e6a1e2e86c30df404fc</shibboleth.dist.md5>
 
-        <oxcore.version>2.4.3-SNAPSHOT</oxcore.version>
-        <oxauth.version>2.4.3-SNAPSHOT</oxauth.version>
-        <oxtrust.version>2.4.3-SNAPSHOT</oxtrust.version>
+        <oxcore.version>2.4.4-SNAPSHOT</oxcore.version>
+        <oxauth.version>2.4.4-SNAPSHOT</oxauth.version>
+        <oxtrust.version>2.4.4-SNAPSHOT</oxtrust.version>
 
         <jackson.version>1.9.9</jackson.version>
         <resteasy.version>2.3.7.Final</resteasy.version>
