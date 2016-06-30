@@ -6,7 +6,7 @@
 package org.xdi.oxshibboleth.keygenerator;
 
 import java.io.File;
-import java.security.Security;
+//import java.security.Security;
 //import org.bouncycastle.jcajce.provider.config.ConfigurableProvider;
 //import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
@@ -18,6 +18,11 @@ public class KeyGenerator {
     public static void main(String args[]) {
         String path = ".";
         String masterPassword = "test";
+        
+        if (args.length >= 2) {
+            path = args[0];
+            masterPassword = args[1];
+        }
         
         // init provider
         //Security.addProvider(new BouncyCastleProvider());
