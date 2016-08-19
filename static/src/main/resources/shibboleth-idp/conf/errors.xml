@@ -33,31 +33,6 @@
     </util:map>
     
     <!-- Mappings of error events during requests to SAML status codes and SOAP fault codes. -->
-
-    <util:map id="shibboleth.SAML1StatusMappings">
-        <entry key="InvalidMessageVersion" value-ref="shibboleth.SAML1Status.VersionMismatch" />
-        
-        <entry key="UnableToDecode" value-ref="shibboleth.SAML1Status.Requester" />
-        
-        <entry key="UnableToEncode" value-ref="shibboleth.SAML1Status.Requester" />
-
-        <entry key="MessageReplay" value-ref="shibboleth.SAML1Status.Requester" />
-        <entry key="MessageExpired" value-ref="shibboleth.SAML1Status.Requester" />
-        <entry key="MessageAuthenticationError" value-ref="shibboleth.SAML1Status.Requester" />
-
-        <entry key="RequestUnsupported" value-ref="shibboleth.SAML1Status.Requester" />
-        
-        <entry key="NoPassive" value-ref="shibboleth.SAML1Status.Requester" />
-        <entry key="NoPotentialFlow" value-ref="shibboleth.SAML1Status.Requester" />
-        <entry key="NoCredentials" value-ref="shibboleth.SAML1Status.Requester" />
-        <entry key="InvalidCredentials" value-ref="shibboleth.SAML1Status.Requester" />
-        <entry key="AccountError" value-ref="shibboleth.SAML1Status.Requester" />
-        <entry key="IdentitySwitch" value-ref="shibboleth.SAML1Status.Requester" />
-        <entry key="AuthenticationException" value-ref="shibboleth.SAML1Status.Requester" />
-        
-        <entry key="InvalidSubject" value-ref="shibboleth.SAML1Status.Requester" />
-        <entry key="SubjectCanonicalizationError" value-ref="shibboleth.SAML1Status.Requester" />
-    </util:map>
     
     <util:map id="shibboleth.SAML2StatusMappings">
         <entry key="InvalidMessageVersion" value-ref="shibboleth.SAML2Status.VersionMismatch" />
