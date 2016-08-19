@@ -12,7 +12,7 @@ idp.terms-of-use.required   = Please check this box if you want to proceed.
 # Triples consisting of a TOU key, and a title and text for each set of terms.
 # The default implementation uses the SP name as the key, but this can be overriden.
 
-https\://sp.example.org = example-tou-1
+https\://sp.gluu.info = example-tou-1
 example-tou-1.title = Example Terms of Use
 example-tou-1.text	= <em>*** This is an example ToU - tailor due to your needs ***</em> \
                         <p>Example organization AAI services: Terms of Use (ToU)</p> \

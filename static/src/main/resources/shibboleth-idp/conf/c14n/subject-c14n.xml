@@ -88,7 +88,7 @@
     <bean id="shibboleth.NameTransformPredicate" parent="shibboleth.Conditions.RelyingPartyId">
         <constructor-arg>
             <list>
-                <!-- <value>https://sp.example.org</value> -->
+                <!-- <value>https://sp.gluu.info</value> -->
             </list>
         </constructor-arg>
     </bean>

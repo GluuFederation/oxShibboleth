@@ -15,7 +15,7 @@
 
     <!-- Release some attributes to an SP. -->
     <AttributeFilterPolicy id="example1">
-        <PolicyRequirementRule xsi:type="Requester" value="https://sp.example.org" />
+        <PolicyRequirementRule xsi:type="Requester" value="https://sp.gluu.info" />
 
         <AttributeRule attributeID="eduPersonPrincipalName">
             <PermitValueRule xsi:type="ANY" />
@@ -33,7 +33,7 @@
     <!-- Release eduPersonAffiliation to two specific SPs. -->
     <AttributeFilterPolicy id="example2">
         <PolicyRequirementRule xsi:type="OR">
-            <Rule xsi:type="Requester" value="https://sp.example.org" />
+            <Rule xsi:type="Requester" value="https://sp.gluu.info" />
             <Rule xsi:type="Requester" value="https://another.example.org/shibboleth" />
         </PolicyRequirementRule>
 
