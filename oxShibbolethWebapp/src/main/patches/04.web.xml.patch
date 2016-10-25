@@ -1,10 +1,10 @@
---- /opt/gluu-server-2.4.3/opt/shibboleth-idp/webapp/WEB-INF/web.xml	2016-05-25 12:03:46.420484007 -0300
-+++ web.xml	2016-05-26 00:10:19.577744496 -0300
+--- WEB-INF/web.xml	2013-04-17 11:47:26.000000000 +0000
++++ WEB-INF/web.xml	2013-04-23 17:00:04.000000000 +0000
 @@ -80,6 +80,44 @@
          <filter-name>SL4JMDCServletFilter</filter-name>
          <url-pattern>/*</url-pattern>
      </filter-mapping>
-+    
++
 +    <!-- OAuth client filters -->
 +    <filter>
 +        <filter-name>OAuth Authentication Filter</filter-name>
@@ -33,15 +33,16 @@
 +        <url-pattern>/Authn/RemoteUser</url-pattern>
 +    </filter-mapping>
 +    <!-- Store the modified session object in the memcached storage service -->
-+    <filter>
++    <!-- <filter>
 +       <filter-name>UniMrMemcachedServletFilter</filter-name>
 +       <filter-class>unimr.shib2.UniMrMemcachedServletFilter</filter-class>
 +    </filter>
 +    <filter-mapping>
 +       <filter-name>UniMrMemcachedServletFilter</filter-name>
 +       <url-pattern>/*</url-pattern>
-+    </filter-mapping>
++    </filter-mapping> -->
 +
  
      <!-- HTTP headers to every response in order to prevent response caching -->
      <!-- <filter> <filter-name>IdPNoCacheFilter</filter-name> <filter-class>edu.internet2.middleware.shibboleth.idp.util.NoCacheFilter</filter-class> 
+

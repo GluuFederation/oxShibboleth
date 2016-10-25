@@ -1,0 +1,51 @@
+--- auth-code.jsp	1970-01-01 00:00:00.000000000 +0000
++++ auth-code.jsp	2013-04-23 17:00:04.000000000 +0000
+@@ -0,0 +1,48 @@
++<html>
++<head>
++    <script type="text/javascript" language="javascript">
++        //<![CDATA[
++        function generateQueryString()
++        {
++            var href = window.location.href;
++            var queryString = "";
++
++            var currentQueryString = "";
++            var hashQueryString = "";
++            if(href.indexOf('?') != -1){
++                if(href.indexOf('#') != -1){
++                    currentQueryString = href.slice(href.indexOf('?') + 1, href.indexOf('#'));
++                } else {
++                    currentQueryString = href.slice(href.indexOf('?') + 1);
++                }
++                alert("currentQueryString = " + currentQueryString);
++            }
++
++            if(href.indexOf('#') != -1){
++                hashQueryString = href.slice(href.indexOf('#') + 1);
++            }
++
++            if(currentQueryString != "" || hashQueryString != ""){
++                if(currentQueryString != ""){
++                    queryString = "?" + currentQueryString;
++                    if(hashQueryString != ""){
++                        queryString += "&" + hashQueryString;
++                    }
++                } else {
++                    queryString = "?" + hashQueryString;
++                }
++            }
++
++            return queryString;
++        }
++
++        function redirect(){
++            var loc = "<%=request.getContextPath() + "/Authn/RemoteUser"%>" + generateQueryString();
++            window.location = loc;
++        }
++
++        // ]]>
++    </script>
++</head>
++<body onLoad="redirect()"></body>
++</html>

@@ -103,8 +103,8 @@
 
                                 <!-- create web.xml -->
                                 <copy file="${webapp.dir}/WEB-INF/web.xml" todir="${shib.basedir}/target" preservelastmodified="true" overwrite="true">
-                                    <filterset begintoken="$" endtoken="$">
-                                        <filter token="IDP_HOME" value="${idp.home.path}"/>
+                                    <filterset begintoken="${" endtoken="}">
+                                        <filter token="idp.home" value="${idp.home.path}"/>
                                     </filterset>
                                 </copy>
 
@@ -124,7 +124,7 @@
                 </executions>
             </plugin>
 
-            <!--<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-patch-plugin</artifactId>
                 <version>1.1.1</version>
@@ -145,7 +145,7 @@
                         </goals>
                     </execution>
                 </executions>
-	    </plugin>-->
+	        </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -251,6 +251,12 @@
             <groupId>unimr.shib2</groupId>
             <artifactId>unimr-memcached</artifactId>
             <version>idp2.4-rev218</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+            <version>1.7.7</version>
         </dependency>
         
         <!--START: OX OpenId Authentication -->
