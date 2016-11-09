@@ -67,7 +67,5 @@
     <!--
     <MetadataProvider id="LocalMetadata"  xsi:type="FilesystemMetadataProvider" metadataFile="PATH_TO_YOUR_METADATA"/>
     -->
-	<MetadataProvider id="ce.gluu.info.shibboleth"  xsi:type="FilesystemMetadataProvider" metadataFile="/opt/shibboleth-idp/metadata/sp_shib_ce.gluu.info_metadata.xml"/>
-          
-    
+
 </MetadataProvider>

@@ -50,7 +50,8 @@
         Override example that identifies a single RP by name and configures it
         for SAML 2 SSO without encryption. This is a common "vendor" scenario.
         -->
-        
+
+        <!--
         <bean parent="RelyingPartyByName" c:relyingPartyIds="https://ce.gluu.info/shibboleth">
             <property name="profileConfigurations">
                 <list>
@@ -58,7 +59,7 @@
                 </list>
             </property>
         </bean>
-        
+        -->
         
     </util:list>
 
