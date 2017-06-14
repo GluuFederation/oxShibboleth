@@ -286,7 +286,7 @@
 
         <dependency>
             <groupId>org.xdi</groupId>
-            <artifactId>oxUtil</artifactId>
+            <artifactId>oxcore-util</artifactId>
             <version>${oxcore.version}</version>
             <exclusions>
                 <exclusion>
@@ -298,7 +298,7 @@
 
         <dependency>
             <groupId>org.xdi</groupId>
-            <artifactId>oxLdap-annotations</artifactId>
+            <artifactId>oxcore-ldap-annotations</artifactId>
             <version>${oxcore.version}</version>
             <exclusions>
                 <exclusion>
@@ -310,7 +310,7 @@
 
         <dependency>
             <groupId>org.xdi</groupId>
-            <artifactId>oxLdap</artifactId>
+            <artifactId>oxcore-ldap</artifactId>
             <version>${oxcore.version}</version>
             <exclusions>
                 <exclusion>
