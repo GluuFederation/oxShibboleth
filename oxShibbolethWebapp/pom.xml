@@ -18,8 +18,8 @@
         
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <shibboleth.version>3.2.1</shibboleth.version>
-        <shibboleth.dist.md5>fc5e166659752e6a1e2e86c30df404fc</shibboleth.dist.md5>
+        <shibboleth.version>3.3.1</shibboleth.version>
+        <shibboleth.dist.md5>80ddc32401fe3b5b9e0e04ae2f11dd73</shibboleth.dist.md5>
 
         <oxcore.version>3.1.0-SNAPSHOT</oxcore.version>
         <oxauth.version>3.1.0-SNAPSHOT</oxauth.version>
