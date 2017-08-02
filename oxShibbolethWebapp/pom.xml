@@ -25,10 +25,11 @@
         <oxauth.version>3.1.0-SNAPSHOT</oxauth.version>
         <oxtrust.version>3.1.0-SNAPSHOT</oxtrust.version>
 
-        <jackson.version>1.9.9</jackson.version>
-        <resteasy.version>2.3.7.Final</resteasy.version>
-        <httpcore.version>4.3.3</httpcore.version>
-        <httpclient.version>4.3.6</httpclient.version>
+        <jackson.version>1.9.11</jackson.version>
+        <jaxrs.version>3.0.12.Final</jaxrs.version>
+        <resteasy.version>3.0.12.Final</resteasy.version>
+        <httpcore.version>4.4.6</httpcore.version>
+        <httpclient.version>4.5.3</httpclient.version>
     </properties>
 
     <repositories>
@@ -347,7 +348,7 @@
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>jaxrs-api</artifactId>
-            <version>${resteasy.version}</version>
+            <version>${jaxrs.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>*</artifactId>
