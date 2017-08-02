@@ -28,8 +28,8 @@
         <jackson.version>1.9.11</jackson.version>
         <jaxrs.version>3.0.12.Final</jaxrs.version>
         <resteasy.version>3.0.12.Final</resteasy.version>
-        <httpcore.version>4.4.6</httpcore.version>
-        <httpclient.version>4.5.3</httpclient.version>
+        <httpcore.version>4.3.3</httpcore.version>
+        <httpclient.version>4.3.6</httpclient.version>
     </properties>
 
     <repositories>
@@ -408,7 +408,7 @@
         <dependency>
             <groupId>com.unboundid</groupId>
             <artifactId>unboundid-ldapsdk</artifactId>
-            <version>3.1.1</version>
+            <version>3.2.0</version>
             <exclusions>
                 <exclusion>
                     <artifactId>*</artifactId>
