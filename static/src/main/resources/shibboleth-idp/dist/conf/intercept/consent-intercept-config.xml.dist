@@ -30,7 +30,7 @@
             <bean class="com.google.common.base.Functions" factory-method="forMap" c:defaultValue="terms-of-use">
                 <constructor-arg name="map">
                     <map>
-                        <entry key="https://sp.gluu.info/shibboleth" value="example-terms" />
+                        <entry key="https://sp.example.org/shibboleth" value="example-terms" />
                     </map>
                 </constructor-arg>
             </bean>
@@ -93,7 +93,7 @@
 
     <!--
     For attribute-release consent, the default entry is :
-     'YYYYMMDDTHHMMSSZ|https://sp.gluu.info|AttributeReleaseConsent|jdoe|email,eduPersonAffiliation|rHo...rrw=,rHo...rrw=|false,false'
+     'YYYYMMDDTHHMMSSZ|https://sp.example.org|AttributeReleaseConsent|jdoe|email,eduPersonAffiliation|rHo...rrw=,rHo...rrw=|false,false'
     -->
     <util:map id="shibboleth.consent.attribute-release.AuditFormattingMap">
         <entry key="Shibboleth-Consent-Audit" value="%T|%SP|%e|%u|%CCI|%CCV|%CCA" />

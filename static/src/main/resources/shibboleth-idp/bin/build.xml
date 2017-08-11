@@ -116,7 +116,7 @@
     <target name="getsource" unless="idp.src.dir">
         <TGT>getsource</TGT>
         <fail if="idp.noprompt">Input needed, silence demanded</fail>
-        <input message="Source (Distribution) Directory:" addproperty="idp.src.dir" defaultvalue="${basedir}" />
+        <input message="Source (Distribution) Directory (press &lt;enter&gt; to accept default):" addproperty="idp.src.dir" defaultvalue="${basedir}" />
     </target>
 
     <target name="gettarget" depends="target-properties, setmerge, setservicemerge, target-src-default, target-nosrc-default, prompttarget, settarget, setfilemode" />

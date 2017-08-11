@@ -11,8 +11,8 @@
         <evaluate expression="PopulateConsentContext" />
         <evaluate expression="PopulatePreConsentAuditContext" />
         <evaluate expression="ReadConsentFromStorage" />
-        <evaluate expression="SetRPUIInformation" />
         <evaluate expression="'proceed'" />
+        
         <transition on="proceed" to="IsConsentRequired" />
     </action-state>
     
@@ -26,7 +26,7 @@
             <evaluate expression="flowRequestContext.getExternalContext().getNativeRequest()" result="viewScope.request" />
             <evaluate expression="flowRequestContext.getExternalContext().getNativeResponse()" result="viewScope.response" />
             <evaluate expression="T(net.shibboleth.utilities.java.support.codec.HTMLEncoder)" result="viewScope.encoder" />
-            <evaluate expression="SetRPUIInformation.getRPUIContextCreateStrategy().apply(opensamlProfileRequestContext)" result="viewScope.rpUIContext" />
+            <evaluate expression="opensamlProfileRequestContext.getSubcontext(T(net.shibboleth.idp.authn.context.AuthenticationContext), true).getSubcontext(T(net.shibboleth.idp.ui.context.RelyingPartyUIContext))" result="viewScope.rpUIContext" />
             <evaluate expression="opensamlProfileRequestContext.getSubcontext(T(net.shibboleth.idp.consent.context.impl.ConsentContext)).getCurrentConsents().keySet().iterator().next()" result="viewScope.termsOfUseId" />
             <evaluate expression="flowRequestContext.getActiveFlow().getApplicationContext().containsBean('shibboleth.CustomViewContext') ? flowRequestContext.getActiveFlow().getApplicationContext().getBean('shibboleth.CustomViewContext') : null" result="viewScope.custom" />
         </on-render>
@@ -48,12 +48,15 @@
         <evaluate expression="CreateResult" />
         <!-- Set the event ID to 'TermsAccepted' for auditing. -->
         <evaluate expression="'TermsAccepted'" />
+        
+        <transition on="TermsAccepted" to="TermsAccepted" />
     </action-state>
 
     <action-state id="TermsAccepted">
         <evaluate expression="PopulateConsentAuditContext" />
         <evaluate expression="WriteConsentAuditLog" />
         <evaluate expression="'proceed'" />
+        
         <transition on="proceed" to="proceed" />
     </action-state>
 

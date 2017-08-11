@@ -1,5 +1,8 @@
  Current Development Team
 
+   Marvin Addison
+   Virginia Tech
+
    Scott Cantor
    The Ohio State University
 
@@ -86,6 +89,9 @@ Additional thanks to:
 
     Derek Morr, from Penn State University, for his initial work on the 2.0 IdP
    	  authentication engine
+   	  
+   	Christopher Bongaarts and the University of Minnesota for donating an
+   	  account lockout plugin.
         
     Kaspar Brand for assisting in the development of CRL-related functionality
 

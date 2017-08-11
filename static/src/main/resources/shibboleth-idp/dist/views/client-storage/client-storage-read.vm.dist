@@ -12,28 +12,18 @@
 ## response - HttpServletResponse
 ## environment - Spring Environment object for property resolution
 #set ($title = $springMacroRequestContext.getMessage("idp.title", "Web Login Service"))
-#set ($titleSuffix = $springMacroRequestContext.getMessage("idp.client-storage-read.suffix", "Loading Session State..."))
+#set ($titleSuffix = $springMacroRequestContext.getMessage("idp.client-storage-read.suffix", "Loading Session Information"))
 ##
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <title>$title - $titleSuffix</title>
         <link rel="stylesheet" type="text/css" href="$request.getContextPath()/css/main.css">
         <script>
         <!--
         #include( "client-storage/local-storage-read.js" )
-
-        function doLoad() {
-            var localStorageSupported = isLocalStorageSupported();
-            document.form1["shib_idp_ls_supported"].value = localStorageSupported;
-            if (localStorageSupported) {
-            #foreach ($key in $loadContext.getStorageKeys())
-                readLocalStorage("$key");
-            #end
-            }
-            document.form1.submit();
-        }
         // -->
         </script>
     </head>
@@ -43,23 +33,15 @@
                 <header>
                     <h3>$title - $titleSuffix</h3>
                 </header>
+                <div class="content">
+                $springMacroRequestContext.getMessage("idp.client-storage-read.text", "Loading login session information from the browser...")
+                </div>
                 <noscript>
                     <div class="content">
                     $springMacroRequestContext.getMessage("idp.client-storage.no-js", "Since your browser does not support JavaScript, you must press the Continue button once to proceed.")
                     </div>
                 </noscript>
-                <form name="form1" action="${flowExecutionUrl}" method="post">
-                    #foreach ($key in $loadContext.getStorageKeys())
-                        <input name="shib_idp_ls_exception.$key" type="hidden" />
-                        <input name="shib_idp_ls_success.$key" type="hidden" value="false" />
-                        <input name="shib_idp_ls_value.$key" type="hidden" />
-                    #end
-                    <input name="shib_idp_ls_supported" type="hidden" />
-                    <input name="_eventId_proceed" type="hidden" />
-                    <noscript>
-                        <input type="submit" value="Continue" />
-                    </noscript>
-                </form>
+                #parse( "client-storage/read.vm" )
             </div>
             <footer>
                 <div class="container container-footer">
