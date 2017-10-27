@@ -1,20 +1,61 @@
---- WEB-INF/web.xml	2013-04-17 11:47:26.000000000 +0000
-+++ WEB-INF/web.xml	2013-04-23 17:00:04.000000000 +0000
-@@ -80,6 +80,44 @@
-         <filter-name>SL4JMDCServletFilter</filter-name>
+--- web.xml.orig	2017-03-13 23:30:56.000000000 -0300
++++ web.xml	2017-10-27 10:54:03.058888999 -0300
+@@ -45,16 +45,6 @@
+         <filter-name>CookieBufferingFilter</filter-name>
+         <filter-class>net.shibboleth.utilities.java.support.net.CookieBufferingFilter</filter-class>
+     </filter>
+-    <!-- Automates TLS-based propagation of HttpServletRequest/Response into beans. -->
+-    <filter>
+-        <filter-name>RequestResponseContextFilter</filter-name>
+-        <filter-class>net.shibboleth.utilities.java.support.net.RequestResponseContextFilter</filter-class>
+-    </filter>
+-    <!-- Manages logging MDC. -->
+-    <filter>
+-        <filter-name>SLF4JMDCServletFilter</filter-name>
+-        <filter-class>net.shibboleth.idp.log.SLF4JMDCServletFilter</filter-class>
+-    </filter>
+     <filter-mapping>
+         <filter-name>CookieBufferingFilter</filter-name>
+         <url-pattern>/profile/Logout</url-pattern>
+@@ -68,6 +58,21 @@
+         <url-pattern>/profile/SAML2/POST-SimpleSign/SLO</url-pattern>
+         <url-pattern>/profile/cas/login</url-pattern>
+     </filter-mapping>
++    
++    <!-- Automates TLS-based propagation of HttpServletRequest/Response into beans. -->
++    <filter>
++        <filter-name>RequestResponseContextFilter</filter-name>
++        <filter-class>net.shibboleth.utilities.java.support.net.RequestResponseContextFilter</filter-class>
++    </filter>
++    <!-- Manages logging MDC. -->
++    <filter>
++        <filter-name>SLF4JMDCServletFilter</filter-name>
++        <filter-class>net.shibboleth.idp.log.SLF4JMDCServletFilter</filter-class>
++    </filter>
++    <filter-mapping>
++        <filter-name>SLF4JMDCServletFilter</filter-name>
++        <url-pattern>/*</url-pattern>
++    </filter-mapping>
+     <filter-mapping>
+         <filter-name>CharacterEncodingFilter</filter-name>
+         <url-pattern>/*</url-pattern>
+@@ -76,10 +81,55 @@
+         <filter-name>RequestResponseContextFilter</filter-name>
          <url-pattern>/*</url-pattern>
      </filter-mapping>
++    
 +
 +    <!-- OAuth client filters -->
 +    <filter>
 +        <filter-name>OAuth Authentication Filter</filter-name>
 +        <filter-class>org.gluu.oxauth.client.authentication.AuthenticationFilter</filter-class>
 +    </filter>
-+    <filter-mapping>
+     <filter-mapping>
+-        <filter-name>SLF4JMDCServletFilter</filter-name>
+-        <url-pattern>/*</url-pattern>
 +        <filter-name>OAuth Authentication Filter</filter-name>
 +        <url-pattern>/Authn/RemoteUser</url-pattern>
 +    </filter-mapping>
-+
 +    <filter>
 +        <filter-name>OAuth Validation Filter</filter-name>
 +        <filter-class>org.gluu.oxauth.client.validation.OAuthValidationFilter</filter-class>
@@ -22,6 +63,17 @@
 +    <filter-mapping>
 +        <filter-name>OAuth Validation Filter</filter-name>
 +        <url-pattern>/Authn/RemoteUser</url-pattern>
++    </filter-mapping>
++    
++    <filter>
++        <filter-name>OAuth Logout Filter</filter-name>
++        <filter-class>org.gluu.oxauth.client.logout.LogoutFilter</filter-class>
++    </filter>
++    <filter-mapping>
++        <filter-name>OAuth Logout Filter</filter-name>
++        <url-pattern>/profile/SAML2/Redirect/SLO</url-pattern>
++        <url-pattern>/profile/SAML2/POST/SLO</url-pattern>
++        <url-pattern>/profile/SAML2/POST-SimpleSign/SLO</url-pattern>
 +    </filter-mapping>
 +
 +    <filter>
@@ -31,7 +83,7 @@
 +    <filter-mapping>
 +        <filter-name>OAuth Principal Provider Filter</filter-name>
 +        <url-pattern>/Authn/RemoteUser</url-pattern>
-+    </filter-mapping>
+     </filter-mapping>
 +    <!-- Store the modified session object in the memcached storage service -->
 +    <!-- <filter>
 +       <filter-name>UniMrMemcachedServletFilter</filter-name>
@@ -43,6 +95,5 @@
 +    </filter-mapping> -->
 +
  
-     <!-- HTTP headers to every response in order to prevent response caching -->
-     <!-- <filter> <filter-name>IdPNoCacheFilter</filter-name> <filter-class>edu.internet2.middleware.shibboleth.idp.util.NoCacheFilter</filter-class> 
-
+     <!-- Servlets and servlet mappings -->    
+     <servlet>
