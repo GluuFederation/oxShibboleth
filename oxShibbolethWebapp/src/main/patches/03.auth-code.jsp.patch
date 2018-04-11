@@ -18,7 +18,7 @@
 +                } else {
 +                    currentQueryString = href.slice(href.indexOf('?') + 1);
 +                }
-+                alert("currentQueryString = " + currentQueryString);
++                // alert("currentQueryString = " + currentQueryString);
 +            }
 +
 +            if(href.indexOf('#') != -1){
