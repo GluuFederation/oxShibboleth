@@ -14,7 +14,7 @@
 
     <!-- Servlet context-relative path to wherever your implementation lives. -->
     <bean id="shibboleth.authn.oxAuth.externalAuthnPath" class="java.lang.String"
-          c:_0="contextRelative:Authn/ExtOxAuth" />
+          c:_0="contextRelative:Authn/oxAuth" />
 
     <!--
     Default is to always use the path in the bean above. If you want to determine it
