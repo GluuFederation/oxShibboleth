@@ -123,6 +123,7 @@
         </bean>
 
         <bean id="authn/oxAuth" parent="shibboleth.AuthenticationFlow"
+                p:forcedAuthenticationSupported="true"
                 p:nonBrowserSupported="false" />
 
     </util:list>

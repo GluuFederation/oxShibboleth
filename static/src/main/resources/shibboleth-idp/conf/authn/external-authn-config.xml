@@ -13,7 +13,7 @@
        default-destroy-method="destroy">
 
     <!-- Servlet context-relative path to wherever your implementation lives. -->
-    <bean id="shibboleth.authn.External.externalAuthnPath" class="java.lang.String"
+    <bean id="shibboleth.authn.oxAuth.externalAuthnPath" class="java.lang.String"
         c:_0="contextRelative:Authn/External" />
 
     <!--

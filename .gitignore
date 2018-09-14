@@ -1,1 +1,20 @@
-/target/
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+.DS_Store
+*.iws
+.gradle/
+.sonar-ide.properties
+build/
+/bin
+.classpath
+.project
+.idea
+*.iml
+*.ipr
+
+target/
+.settings
