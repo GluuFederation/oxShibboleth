@@ -23,7 +23,7 @@
           class="com.google.common.base.Functions" factory-method="constant"
           c:_0-ref="shibboleth.authn.oxAuth.externalAuthnPath" />
 
-    <import resource="../../../conf/authn/shib-oxauth-authn-config.xml" />
+    <import resource="../../../conf/authn/oxauth-authn-config.xml" />
 
     <bean id="ValidateExternalAuthentication"
           class="net.shibboleth.idp.authn.impl.ValidateExternalAuthentication" scope="prototype"
