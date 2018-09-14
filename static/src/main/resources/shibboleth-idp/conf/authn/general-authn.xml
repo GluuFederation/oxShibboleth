@@ -122,6 +122,9 @@
             </property>
         </bean>
 
+        <bean id="authn/oxAuth" parent="shibboleth.AuthenticationFlow"
+                p:nonBrowserSupported="false" />
+
     </util:list>
 
     <!--
