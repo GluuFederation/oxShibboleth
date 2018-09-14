@@ -8,6 +8,7 @@ idp.entityID = https://idp.example.org
 idp.scope = example.org
 
 # General cookie properties (maxAge only applies to persistent cookies)
+# Note the default for idp.cookie.secure, you will usually want it set.
 #idp.cookie.secure = false
 #idp.cookie.httpOnly = true
 #idp.cookie.domain =

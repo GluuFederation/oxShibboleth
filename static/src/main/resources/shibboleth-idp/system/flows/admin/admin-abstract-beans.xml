@@ -106,6 +106,8 @@
     <bean id="WriteAuditLog" class="net.shibboleth.idp.profile.audit.impl.WriteAuditLog" scope="prototype"
         p:activationCondition-ref="shibboleth.ProfileAuditingCondition"
         p:formattingMap-ref="shibboleth.AuditFormattingMap"
+        p:dateTimeFormat="#{getObject('shibboleth.AuditDateTimeFormat')}"
+        p:useDefaultTimeZone="#{getObject('shibboleth.AuditDefaultTimeZone') ?: false}"
         p:httpServletRequest-ref="shibboleth.HttpServletRequest" />
     
     <bean id="MapEventToView"

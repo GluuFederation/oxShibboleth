@@ -99,6 +99,8 @@
     <bean id="WriteConsentAuditLog" class="net.shibboleth.idp.profile.audit.impl.WriteAuditLog" scope="prototype"
         p:auditContextLookupStrategy-ref="shibboleth.consent.ChildLookup.ConsentAuditContext"
         p:formattingMap-ref="shibboleth.consent.terms-of-use.AuditFormattingMap"
+        p:dateTimeFormat="#{getObject('shibboleth.AuditDateTimeFormat')}"
+        p:useDefaultTimeZone="#{getObject('shibboleth.AuditDefaultTimeZone') ?: false}"
         p:httpServletRequest-ref="shibboleth.HttpServletRequest" />
 
 </beans>

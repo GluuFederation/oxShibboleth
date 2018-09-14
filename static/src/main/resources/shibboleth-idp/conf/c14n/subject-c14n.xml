@@ -86,7 +86,7 @@
     Any condition can be used here; the example is suitable for enumerating a number of SPs to allow.
     -->
     <bean id="shibboleth.NameTransformPredicate" parent="shibboleth.Conditions.RelyingPartyId">
-        <constructor-arg>
+        <constructor-arg name="candidates">
             <list>
                 <!-- <value>https://sp.gluu.info</value> -->
             </list>

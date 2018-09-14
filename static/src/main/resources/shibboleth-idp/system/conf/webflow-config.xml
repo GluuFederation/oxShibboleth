@@ -183,7 +183,8 @@
 
     <webflow:flow-builder-services id="flowBuilderServices" view-factory-creator="mvcViewFactoryCreator" />
 
-    <bean id="mvcViewFactoryCreator" class="org.springframework.webflow.mvc.builder.MvcViewFactoryCreator">
+    <bean id="mvcViewFactoryCreator" class="org.springframework.webflow.mvc.builder.MvcViewFactoryCreator"
+            p:useSpringBeanBinding="true">
         <property name="viewResolvers">
             <list>
                 <ref bean="shibboleth.VelocityViewResolver" />
