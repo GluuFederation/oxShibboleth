@@ -66,10 +66,14 @@
                 <input class="form-element form-field" id="password" name="j_password" type="password" value="">
               </div>
 
+              ## You may need to modify this to taste, such as changing the flow name its checking for to authn/MFA.
+              #if (!$authenticationContext.getActiveResults().containsKey('authn/Password'))
               <div class="form-element-wrapper">
                 <input type="checkbox" name="donotcache" value="1" id="donotcache">
                 <label for="donotcache">#springMessageText("idp.login.donotcache", "Don't Remember Login")</label>
                </div>
+              #end
+              
             #end
 
               <div class="form-element-wrapper">

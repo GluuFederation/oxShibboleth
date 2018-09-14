@@ -103,6 +103,8 @@
           class="net.shibboleth.idp.profile.audit.impl.WriteAuditLog"
           scope="prototype"
           p:formattingMap-ref="shibboleth.AuditFormattingMap"
+          p:dateTimeFormat="#{getObject('shibboleth.AuditDateTimeFormat')}"
+          p:useDefaultTimeZone="#{getObject('shibboleth.AuditDefaultTimeZone') ?: false}"
           p:httpServletRequest-ref="shibboleth.HttpServletRequest" />
 
     <bean id="ErrorViewPopulateAuditContext" parent="shibboleth.AbstractPopulateAuditContext"

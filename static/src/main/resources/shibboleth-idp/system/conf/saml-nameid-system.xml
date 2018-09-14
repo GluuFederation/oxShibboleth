@@ -61,7 +61,8 @@
         class="net.shibboleth.idp.saml.nameid.impl.ComputedPersistentIdGenerationStrategy"
         p:salt="%{idp.persistentId.salt:}"
         p:encodedSalt="%{idp.persistentId.encodedSalt:}"
-        p:algorithm="%{idp.persistentId.algorithm:SHA}" />
+        p:algorithm="%{idp.persistentId.algorithm:SHA}"
+        p:encoding="#{ T(net.shibboleth.idp.saml.nameid.impl.ComputedPersistentIdGenerationStrategy.Encoding).%{idp.persistentId.encoding:BASE64} }" />
 
     <bean id="shibboleth.StoredPersistentIdGenerator" lazy-init="true"
         class="net.shibboleth.idp.saml.nameid.impl.StoredPersistentIdGenerationStrategy"

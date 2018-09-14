@@ -110,6 +110,8 @@
     </bean>
     
     <bean id="WriteAuditLog" class="net.shibboleth.idp.profile.audit.impl.WriteAuditLog" scope="prototype"
+        p:dateTimeFormat="#{getObject('shibboleth.AuditDateTimeFormat')}"
+        p:useDefaultTimeZone="#{getObject('shibboleth.AuditDefaultTimeZone') ?: false}"
         p:httpServletRequest-ref="shibboleth.HttpServletRequest"
         p:formattingMap-ref="shibboleth.AuditFormattingMap" />
 
