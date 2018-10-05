@@ -16,8 +16,6 @@
 
     <bean id="shibboleth.SAML2AttributeSourcedGenerator" abstract="true"
         class="net.shibboleth.idp.saml.nameid.impl.AttributeSourcedSAML2NameIDGenerator" />
-    <bean id="shibboleth.SAML1AttributeSourcedGenerator" abstract="true"
-        class="net.shibboleth.idp.saml.nameid.impl.AttributeSourcedSAML1NameIdentifierGenerator" />
 
     <!-- The actual plugins for generating transient and persistent identifiers. -->
 
@@ -33,10 +31,6 @@
             <bean parent="shibboleth.CommaDelimStringArray" c:_0="#{'%{idp.persistentId.sourceAttribute:}'.trim()}" />
         </property>
     </bean>
-
-    <bean id="shibboleth.SAML1TransientGenerator"
-        class="net.shibboleth.idp.saml.nameid.impl.TransientSAML1NameIdentifierGenerator"
-        p:transientIdGenerator-ref="#{'%{idp.transientId.generator:shibboleth.CryptoTransientIdGenerator}'.trim()}" />
 
     <!--
     These are strategy implementations for generating transient and persistent identifiers.
@@ -75,8 +69,6 @@
         class="net.shibboleth.idp.saml.nameid.impl.JDBCPersistentIdStoreEx" />
     
     <!-- These two beans handle legacy support for NameID generation in the Attribute Resolver. -->
-    <bean id="shibboleth.LegacySAML1NameIdentifierGenerator"
-        class="net.shibboleth.idp.saml.nameid.impl.LegacySAML1NameIdentifierGenerator" />
     <bean id="shibboleth.LegacySAML2NameIDGenerator"
         class="net.shibboleth.idp.saml.nameid.impl.LegacySAML2NameIDGenerator" />
     
@@ -86,11 +78,6 @@
     -->
     
     <bean class="net.shibboleth.idp.saml.nameid.impl.NameIdentifierGenerationServiceImpl">
-        <property name="SAML1NameIdentifierGenerator">
-            <bean class="org.opensaml.saml.saml1.profile.impl.ChainingSAML1NameIdentifierGenerator"
-                p:generators-ref="shibboleth.SAML1NameIdentifierGenerators"
-                p:defaultGenerator="#{getObject('%{idp.nameid.saml1.legacyGenerator:}'.trim())}" />    
-        </property>
         <property name="SAML2NameIDGenerator">
             <bean class="org.opensaml.saml.saml2.profile.impl.ChainingSAML2NameIDGenerator"
                 p:generators-ref="shibboleth.SAML2NameIDGenerators"
