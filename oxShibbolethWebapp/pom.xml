@@ -6,7 +6,7 @@
     <name>OX Shibboleth IDP</name>
     <url>http://ox.gluu.org</url>
     <packaging>war</packaging>
-    <version>3.1.5-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
 
     <prerequisites>
         <maven>2.3</maven>
@@ -21,9 +21,9 @@
         <shibboleth.version>3.3.3</shibboleth.version>
         <shibboleth.dist.md5>318ffa6b3992a17a0528a07a21c19865</shibboleth.dist.md5>
 
-        <oxcore.version>3.1.5-SNAPSHOT</oxcore.version>
-        <oxauth.version>3.1.5-SNAPSHOT</oxauth.version>
-        <oxtrust.version>3.1.5-SNAPSHOT</oxtrust.version>
+        <oxcore.version>4.0.0-SNAPSHOT</oxcore.version>
+        <oxauth.version>4.0.0-SNAPSHOT</oxauth.version>
+        <oxtrust.version>4.0.0-SNAPSHOT</oxtrust.version>
 
         <jackson.version>1.9.11</jackson.version>
         <jaxrs.version>3.0.12.Final</jaxrs.version>
