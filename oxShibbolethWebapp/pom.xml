@@ -280,7 +280,7 @@
 
         <dependency>
             <groupId>org.xdi</groupId>
-            <artifactId>saml-openid-auth-client</artifactId>
+            <artifactId>oxtrust-saml-openid-auth-client</artifactId>
             <version>${oxtrust.version}</version>
             <exclusions>
                 <exclusion>
