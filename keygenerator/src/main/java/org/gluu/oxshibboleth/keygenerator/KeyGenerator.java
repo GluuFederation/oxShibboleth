@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2016, Gluu
  */
-package org.xdi.oxshibboleth.keygenerator;
+package org.gluu.oxshibboleth.keygenerator;
 
 import java.io.File;
 //import java.security.Security;
