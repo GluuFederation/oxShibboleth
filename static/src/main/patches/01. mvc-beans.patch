@@ -1,0 +1,11 @@
+--- shibboleth-idp\system\conf\mvc-beans.xml.orig	2019-02-22 10:08:15.544167900 +0300
++++ shibboleth-idp\system\conf\mvc-beans.xml	2019-05-09 19:23:59.797135000 +0300
+@@ -100,7 +100,7 @@
+     </bean>
+ 
+     <bean class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+-        <property name="resourceLoaderPath" value="#{'%{idp.views:%{idp.home}/views}'.trim()},%{idp.home}/system/views" />
++        <property name="resourceLoaderPath" value="/opt/gluu/jetty/idp/custom/pages,#{'%{idp.views:%{idp.home}/views}'.trim()},%{idp.home}/system/views" />
+         <property name="velocityProperties">
+             <props>
+                 <prop key="runtime.log.logsystem.class">net.shibboleth.utilities.java.support.velocity.SLF4JLogChute</prop>

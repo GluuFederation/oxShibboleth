@@ -18,4 +18,31 @@
 		<maven>${maven.min-version}</maven>
 	</prerequisites>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-patch-plugin</artifactId>
+                <version>1.1.1</version>
+                <configuration>
+                    <targetDirectory>${project.build.directory}/classes</targetDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>gluu-patch</id>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <patchDirectory>src/main/patches</patchDirectory>
+                            <naturalOrderProcessing>true</naturalOrderProcessing>
+                            <optimizations>false</optimizations>
+                        </configuration>
+                        <goals>
+                            <goal>apply</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
