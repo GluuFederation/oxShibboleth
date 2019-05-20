@@ -258,17 +258,29 @@
             <version>1.7.7</version>
         </dependency>
 	-->
-	
+
+        <!--START: Couchbase JDBC section -->
 		<dependency>
-			<groupId>com.couchbase.jdbc</groupId>
+			<groupId>org.gluu.jdbc</groupId>
 			<artifactId>jdbc-n1ql</artifactId>
-			<version>1.0-BETA</version>
+			<version>1.0.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
 		</dependency>
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>io.fastjson</groupId>
+			<artifactId>boon</artifactId>
+			<version>0.34</version>
+		</dependency>
+        <!--END: Couchbase JDBC section -->
 
 
         <!--START: OX OpenId Authentication -->
