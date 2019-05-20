@@ -25,7 +25,7 @@
         <oxauth.version>4.0.0-SNAPSHOT</oxauth.version>
         <oxtrust.version>4.0.0-SNAPSHOT</oxtrust.version>
 
-        <jackson.version>1.9.11</jackson.version>
+        <jackson.version>1.9.1f1</jackson.version>
         <jaxrs.version>3.0.12.Final</jaxrs.version>
         <resteasy.version>3.0.12.Final</resteasy.version>
         <httpcore.version>4.3.3</httpcore.version>
@@ -363,18 +363,6 @@
             <groupId>org.gluu</groupId>
             <artifactId>oxauth-client</artifactId>
             <version>${oxauth.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>*</artifactId>
-                    <groupId>*</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>jaxrs-api</artifactId>
-            <version>${jaxrs.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>*</artifactId>
