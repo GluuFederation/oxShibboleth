@@ -124,8 +124,18 @@
 
         <bean id="authn/oxAuth" parent="shibboleth.AuthenticationFlow"
                 p:forcedAuthenticationSupported="true"
-                p:nonBrowserSupported="false" />
-
+                p:nonBrowserSupported="false" >
+            <property name="supportedPrincipals">
+                <list>
+                    <bean parent="shibboleth.SAML2AuthnContextClassRef"
+                        c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:InternetProtocol" />
+                    <bean parent="shibboleth.SAML2AuthnContextClassRef"
+                        c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport" />
+                    <bean parent="shibboleth.SAML2AuthnContextClassRef"
+                        c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:Password" />
+                </list>
+            </property>
+        </bean>
     </util:list>
 
     <!--
