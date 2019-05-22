@@ -302,8 +302,40 @@
             		<groupId>commons-codec</groupId>
             		<artifactId>commons-codec</artifactId>
             	</exclusion>
+            	<exclusion>
+            		<groupId>org.bouncycastle</groupId>
+            		<artifactId>bcpkix-jdk15on</artifactId>
+            	</exclusion>
+            	<exclusion>
+            		<groupId>org.cryptacular</groupId>
+            		<artifactId>cryptacular</artifactId>
+            	</exclusion>
+            	<exclusion>
+            		<groupId>com.fasterxml.jackson.core</groupId>
+            		<artifactId>jackson-core</artifactId>
+            	</exclusion>
+            	<exclusion>
+            		<groupId>com.fasterxml.jackson.core</groupId>
+            		<artifactId>jackson-databind</artifactId>
+            	</exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.gluu</groupId>
+            <artifactId>oxcore-persistence-ldap</artifactId>
+            <version>${oxcore.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.gluu</groupId>
+            <artifactId>oxcore-persistence-couchbase</artifactId>
+            <version>${oxcore.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.gluu</groupId>
+            <artifactId>oxcore-persistence-hybrid</artifactId>
+            <version>${oxcore.version}</version>
+        </dependency>
+
 		<!-- Google -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
