@@ -1,0 +1,448 @@
+diff -rupN shibboleth-idp/doc/BC-LICENSE.txt shibboleth-idp/doc/BC-LICENSE.txt
+--- shibboleth-idp/doc/BC-LICENSE.txt	2018-05-14 23:49:56.000000000 -0400
++++ shibboleth-idp/doc/BC-LICENSE.txt	2019-07-01 13:03:37.429961900 -0400
+@@ -1,17 +1,17 @@
+-Copyright (c) 2000 - 2013 The Legion of the Bouncy Castle Inc. (http://www.bouncycastle.org)
+-
+-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+-documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+-rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+-permit persons to whom the Software is furnished to do so, subject to the following conditions:
+-
+-The above copyright notice and this permission notice shall be included in all copies or substantial portions of
+-the Software.
+-
+-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+-INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+-PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+-CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+-OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++Copyright (c) 2000 - 2013 The Legion of the Bouncy Castle Inc. (http://www.bouncycastle.org)
++
++Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
++documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
++rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
++permit persons to whom the Software is furnished to do so, subject to the following conditions:
++
++The above copyright notice and this permission notice shall be included in all copies or substantial portions of
++the Software.
++
++THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
++INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
++PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
++HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
++CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
++OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  
+\ No newline at end of file
+diff -rupN shibboleth-idp/doc/CREDITS.txt shibboleth-idp/doc/CREDITS.txt
+--- shibboleth-idp/doc/CREDITS.txt	2018-05-14 23:49:56.000000000 -0400
++++ shibboleth-idp/doc/CREDITS.txt	2019-07-01 13:03:37.429961900 -0400
+@@ -1,100 +1,100 @@
+- Current Development Team
+-
+-   Marvin Addison
+-   Virginia Tech
+-
+-   Scott Cantor
+-   The Ohio State University
+-
+-   Daniel Fisher
+-   Virginia Tech
+-   
+-   Brent Putman
+-   Georgetown University
+-   
+-   Rod Widdowson
+-   Steading System Software LLP
+-
+-   Ian Young
+-   Independent
+-
+-   Tom Zeller
+-   Dragonacea, LLC
+-      
+-  
+- Emeritus Developers
+-
+-   Derek Atkins
+-
+-   Jim Fox
+-
+-   Walter Hoehn
+-
+-   Chad LaJoie
+-
+-   Derek Morr
+-
+-   Will Norris
+-  
+- Emeritus Contributors
+-
+-   Steven Carmody
+-   Brown University
+-
+-   Marlena Erdos
+-
+-   Ken Klingenstein
+-   Internet2
+-
+-   Nate Klingenstein
+-   Internet2
+-
+-   Nicole Harris
+-   TERENA
+-
+-   RL "Bob" Morgan
+-   University of Washington
+-   http://shibboleth.net/community/news/20120717.html
+-
+-   Many others!
+-   
+-Additional thanks to:
+-
+-    Internet2
+-
+-    The National Science Foundation
+-    
+-    National Research Council of Canada
+-
+-    Barbara Jenson (CMU), Parviz Dousti (CMU), Tom Dopirak (CMU), 
+-      and Sridhar Muppidi (IBM/Tivoli); for helping to develop 
+-      the initial Shibboleth prototype
+-
+-    Brian Pittman (WebAssign), Mark Earnest (PSU), James Shvarts (Columbia), 
+-      Ryan Muldoon (Wisconsin), John Hopkins (PSU), Noah Levitt (Columbia), 
+-      and David Walker (UCOP); for much help with testing
+-      
+-    Dave Dearman (NRCC), for contributing a SQL Data Connector for the AA 
+-      resolver back in the 1.x release
+-
+-    Noah Levitt (Columbia), for simplifying the  logging configuration.
+-
+-    Joel Murphy (Buffalo), for much help with load testing and generally
+-      pushing the software to its limits.
+-
+-    Vishal Goenka (SunGard SCT) for contributing some useful resolver plugins
+-
+-    Ian Young for donating XSLT scripts for converting metadata across
+-      Shibboleth versions
+-
+-    Derek Morr, from Penn State University, for his initial work on the 2.0 IdP
+-   	  authentication engine
+-   	  
+-   	Christopher Bongaarts and the University of Minnesota for donating an
+-   	  account lockout plugin.
+-        
+-    Kaspar Brand for assisting in the development of CRL-related functionality
+-
+-    The community at large for helping with end user support, particularly
+-      Peter Schober, Paul Hethmon, Kevin Foote, Russell Beall, and Christopher
+-      Bongaarts
++ Current Development Team
++
++   Marvin Addison
++   Virginia Tech
++
++   Scott Cantor
++   The Ohio State University
++
++   Daniel Fisher
++   Virginia Tech
++   
++   Brent Putman
++   Georgetown University
++   
++   Rod Widdowson
++   Steading System Software LLP
++
++   Ian Young
++   Independent
++
++   Tom Zeller
++   Dragonacea, LLC
++      
++  
++ Emeritus Developers
++
++   Derek Atkins
++
++   Jim Fox
++
++   Walter Hoehn
++
++   Chad LaJoie
++
++   Derek Morr
++
++   Will Norris
++  
++ Emeritus Contributors
++
++   Steven Carmody
++   Brown University
++
++   Marlena Erdos
++
++   Ken Klingenstein
++   Internet2
++
++   Nate Klingenstein
++   Internet2
++
++   Nicole Harris
++   TERENA
++
++   RL "Bob" Morgan
++   University of Washington
++   http://shibboleth.net/community/news/20120717.html
++
++   Many others!
++   
++Additional thanks to:
++
++    Internet2
++
++    The National Science Foundation
++    
++    National Research Council of Canada
++
++    Barbara Jenson (CMU), Parviz Dousti (CMU), Tom Dopirak (CMU), 
++      and Sridhar Muppidi (IBM/Tivoli); for helping to develop 
++      the initial Shibboleth prototype
++
++    Brian Pittman (WebAssign), Mark Earnest (PSU), James Shvarts (Columbia), 
++      Ryan Muldoon (Wisconsin), John Hopkins (PSU), Noah Levitt (Columbia), 
++      and David Walker (UCOP); for much help with testing
++      
++    Dave Dearman (NRCC), for contributing a SQL Data Connector for the AA 
++      resolver back in the 1.x release
++
++    Noah Levitt (Columbia), for simplifying the  logging configuration.
++
++    Joel Murphy (Buffalo), for much help with load testing and generally
++      pushing the software to its limits.
++
++    Vishal Goenka (SunGard SCT) for contributing some useful resolver plugins
++
++    Ian Young for donating XSLT scripts for converting metadata across
++      Shibboleth versions
++
++    Derek Morr, from Penn State University, for his initial work on the 2.0 IdP
++   	  authentication engine
++   	  
++   	Christopher Bongaarts and the University of Minnesota for donating an
++   	  account lockout plugin.
++        
++    Kaspar Brand for assisting in the development of CRL-related functionality
++
++    The community at large for helping with end user support, particularly
++      Peter Schober, Paul Hethmon, Kevin Foote, Russell Beall, and Christopher
++      Bongaarts
+diff -rupN shibboleth-idp/doc/DUO-LICENSE.txt shibboleth-idp/doc/DUO-LICENSE.txt
+--- shibboleth-idp/doc/DUO-LICENSE.txt	2018-05-14 23:49:56.000000000 -0400
++++ shibboleth-idp/doc/DUO-LICENSE.txt	2019-07-01 13:03:37.429961900 -0400
+@@ -1,25 +1,25 @@
+-Copyright (c) 2011, Duo Security, Inc.
+-All rights reserved.
+-
+-Redistribution and use in source and binary forms, with or without
+-modification, are permitted provided that the following conditions
+-are met:
+-
+-1. Redistributions of source code must retain the above copyright
+-   notice, this list of conditions and the following disclaimer.
+-2. Redistributions in binary form must reproduce the above copyright
+-   notice, this list of conditions and the following disclaimer in the
+-   documentation and/or other materials provided with the distribution.
+-3. The name of the author may not be used to endorse or promote products
+-   derived from this software without specific prior written permission.
+-
+-THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+-IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+-OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+-IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+-INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+-NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+-THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++Copyright (c) 2011, Duo Security, Inc.
++All rights reserved.
++
++Redistribution and use in source and binary forms, with or without
++modification, are permitted provided that the following conditions
++are met:
++
++1. Redistributions of source code must retain the above copyright
++   notice, this list of conditions and the following disclaimer.
++2. Redistributions in binary form must reproduce the above copyright
++   notice, this list of conditions and the following disclaimer in the
++   documentation and/or other materials provided with the distribution.
++3. The name of the author may not be used to endorse or promote products
++   derived from this software without specific prior written permission.
++
++THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
++IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
++IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
++INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
++THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+diff -rupN shibboleth-idp/doc/JQUERY-LICENSE.txt shibboleth-idp/doc/JQUERY-LICENSE.txt
+--- shibboleth-idp/doc/JQUERY-LICENSE.txt	2018-05-14 23:49:56.000000000 -0400
++++ shibboleth-idp/doc/JQUERY-LICENSE.txt	2019-07-01 13:03:37.429961900 -0400
+@@ -1,20 +1,20 @@
+-The MIT License (MIT)
+-
+-Copyright (c) 2015 jQuery Foundation
+-
+-Permission is hereby granted, free of charge, to any person obtaining a copy
+-of this software and associated documentation files (the "Software"), to deal
+-in the Software without restriction, including without limitation the rights
+-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+-copies of the Software, and to permit persons to whom the Software is furnished
+-to do so, subject to the following conditions:
+-
+-The above copyright notice and this permission notice shall be included in all
+-copies or substantial portions of the Software.
+-
+-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++The MIT License (MIT)
++
++Copyright (c) 2015 jQuery Foundation
++
++Permission is hereby granted, free of charge, to any person obtaining a copy
++of this software and associated documentation files (the "Software"), to deal
++in the Software without restriction, including without limitation the rights
++to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++copies of the Software, and to permit persons to whom the Software is furnished
++to do so, subject to the following conditions:
++
++The above copyright notice and this permission notice shall be included in all
++copies or substantial portions of the Software.
++
++THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
++WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
++CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+diff -rupN shibboleth-idp/doc/README.txt shibboleth-idp/doc/README.txt
+--- shibboleth-idp/doc/README.txt	2018-05-14 23:49:56.000000000 -0400
++++ shibboleth-idp/doc/README.txt	2019-07-01 13:03:37.429961900 -0400
+@@ -1,22 +1,22 @@
+-Shibboleth is a federated web authentication and attribute exchange system
+-based on SAML, originally developed by Internet2 and now a product of the
+-Shibboleth Consortium.
+-
+-Please review the terms described in the LICENSE.txt file before using this
+-code. It is the standard Apache 2.0 license.
+-
+-A wealth of information about Shibboleth can be found at
+-http://shibboleth.net/
+-
+-Shibboleth is divided into identity and service provider components, with the
+-IdP (this software) in Java and the SP in C++.
+-
+-Source and binary distributions are available from
+-http://shibboleth.net/downloads/
+-
+-The source is available in Subversion, as described in the Shibboleth
+-site. Mailing lists and a bug database (https://issues.shibboleth.net/) are
+-also available.
+-
+-For basic information on building from source, using binaries, and deploying
+-Shibboleth, refer to the web site and Wiki for the latest documentation.
++Shibboleth is a federated web authentication and attribute exchange system
++based on SAML, originally developed by Internet2 and now a product of the
++Shibboleth Consortium.
++
++Please review the terms described in the LICENSE.txt file before using this
++code. It is the standard Apache 2.0 license.
++
++A wealth of information about Shibboleth can be found at
++http://shibboleth.net/
++
++Shibboleth is divided into identity and service provider components, with the
++IdP (this software) in Java and the SP in C++.
++
++Source and binary distributions are available from
++http://shibboleth.net/downloads/
++
++The source is available in Subversion, as described in the Shibboleth
++site. Mailing lists and a bug database (https://issues.shibboleth.net/) are
++also available.
++
++For basic information on building from source, using binaries, and deploying
++Shibboleth, refer to the web site and Wiki for the latest documentation.
+diff -rupN shibboleth-idp/doc/RELEASE-NOTES.txt shibboleth-idp/doc/RELEASE-NOTES.txt
+--- shibboleth-idp/doc/RELEASE-NOTES.txt	2018-05-14 23:49:56.000000000 -0400
++++ shibboleth-idp/doc/RELEASE-NOTES.txt	2019-07-01 13:03:37.429961900 -0400
+@@ -1,6 +1,6 @@
+-Identity Provider Release Notes
+-
+-See https://wiki.shibboleth.net/confluence/display/IDP30/ReleaseNotes
+-
+-Changes for all versions may be found at
+-https://issues.shibboleth.net/jira/secure/ReleaseNote.jspa?projectId=10010
++Identity Provider Release Notes
++
++See https://wiki.shibboleth.net/confluence/display/IDP30/ReleaseNotes
++
++Changes for all versions may be found at
++https://issues.shibboleth.net/jira/secure/ReleaseNote.jspa?projectId=10010
+diff -rupN shibboleth-idp/doc/SPYMEMCACHED-LICENSE.txt shibboleth-idp/doc/SPYMEMCACHED-LICENSE.txt
+--- shibboleth-idp/doc/SPYMEMCACHED-LICENSE.txt	2018-05-14 23:49:56.000000000 -0400
++++ shibboleth-idp/doc/SPYMEMCACHED-LICENSE.txt	2019-07-01 13:03:37.429961900 -0400
+@@ -1,20 +1,20 @@
+-Copyright (c) 2006-2009 Dustin Sallings
+-Copyright (c) 2009-2011 Couchbase, Inc.
+-
+-Permission is hereby granted, free of charge, to any person obtaining a copy of
+-this software and associated documentation files (the "Software"), to deal in
+-the Software without restriction, including without limitation the rights to
+-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+-of the Software, and to permit persons to whom the Software is furnished to do
+-so, subject to the following conditions:
+-
+-The above copyright notice and this permission notice shall be included in all
+-copies or substantial portions of the Software.
+-
+-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+-SOFTWARE.
++Copyright (c) 2006-2009 Dustin Sallings
++Copyright (c) 2009-2011 Couchbase, Inc.
++
++Permission is hereby granted, free of charge, to any person obtaining a copy of
++this software and associated documentation files (the "Software"), to deal in
++the Software without restriction, including without limitation the rights to
++use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
++of the Software, and to permit persons to whom the Software is furnished to do
++so, subject to the following conditions:
++
++The above copyright notice and this permission notice shall be included in all
++copies or substantial portions of the Software.
++
++THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
++SOFTWARE.

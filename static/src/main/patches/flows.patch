@@ -1,0 +1,350 @@
+diff -rupN shibboleth-idp/flows/authn/conditions/account-locked/account-locked-flow.xml shibboleth-idp/flows/authn/conditions/account-locked/account-locked-flow.xml
+--- shibboleth-idp/flows/authn/conditions/account-locked/account-locked-flow.xml	2018-05-14 23:49:38.000000000 -0400
++++ shibboleth-idp/flows/authn/conditions/account-locked/account-locked-flow.xml	2019-07-01 13:03:37.433961740 -0400
+@@ -1,16 +1,16 @@
+-<flow xmlns="http://www.springframework.org/schema/webflow"
+-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+-      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+-
+-    <!-- This is a placeholder flow that does nothing out of the box but reserves a subflow ID. -->
+-
+-    <!-- Rudimentary impediment to direct execution of subflow. -->
+-    <input name="calledAsSubflow" type="boolean" required="true" />
+-
+-    <on-start>
+-        <evaluate expression="'proceed'" />
+-    </on-start>    
+-
+-    <end-state id="proceed" />
+-
+-</flow>
++<flow xmlns="http://www.springframework.org/schema/webflow"
++      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow.xsd">
++
++    <!-- This is a placeholder flow that does nothing out of the box but reserves a subflow ID. -->
++
++    <!-- Rudimentary impediment to direct execution of subflow. -->
++    <input name="calledAsSubflow" type="boolean" required="true" />
++
++    <on-start>
++        <evaluate expression="'proceed'" />
++    </on-start>    
++
++    <end-state id="proceed" />
++
++</flow>
+diff -rupN shibboleth-idp/flows/authn/conditions/conditions-flow.xml shibboleth-idp/flows/authn/conditions/conditions-flow.xml
+--- shibboleth-idp/flows/authn/conditions/conditions-flow.xml	2018-05-14 23:49:38.000000000 -0400
++++ shibboleth-idp/flows/authn/conditions/conditions-flow.xml	2019-07-01 13:03:37.433961740 -0400
+@@ -1,35 +1,35 @@
+-<flow xmlns="http://www.springframework.org/schema/webflow"
+-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+-      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow.xsd"
+-      abstract="true">
+-
+-    <!-- Rudimentary impediment to direct execution of subflow. -->
+-    <input name="calledAsSubflow" type="boolean" required="true" />
+-
+-    <action-state id="ValidateUsernamePassword">
+-        
+-        <!-- Call outs for exceptional conditions. -->
+-        <transition on="AccountWarning" to="CallExpiringPassword" />
+-        <transition on="ExpiringPassword" to="CallExpiringPassword" />
+-        <transition on="ExpiredPassword" to="CallExpiredPassword" />
+-        <transition on="AccountLocked" to="CallAccountLocked" />
+-        
+-        <transition to="DisplayUsernamePasswordPage" />
+-    </action-state>
+-
+-    <subflow-state id="CallExpiringPassword" subflow="authn/conditions/expiring-password">
+-        <input name="calledAsSubflow" value="true" />
+-        <transition on="proceed" to="ContinueSuccessfulAuthentication" />
+-    </subflow-state>
+-
+-    <subflow-state id="CallExpiredPassword" subflow="authn/conditions/expired-password">
+-        <input name="calledAsSubflow" value="true" />
+-        <transition on="proceed" to="DisplayUsernamePasswordPage" />
+-    </subflow-state>
+-
+-    <subflow-state id="CallAccountLocked" subflow="authn/conditions/account-locked">
+-        <input name="calledAsSubflow" value="true" />
+-        <transition on="proceed" to="DisplayUsernamePasswordPage" />
+-    </subflow-state>
+-
+-</flow>
++<flow xmlns="http://www.springframework.org/schema/webflow"
++      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow.xsd"
++      abstract="true">
++
++    <!-- Rudimentary impediment to direct execution of subflow. -->
++    <input name="calledAsSubflow" type="boolean" required="true" />
++
++    <action-state id="ValidateUsernamePassword">
++        
++        <!-- Call outs for exceptional conditions. -->
++        <transition on="AccountWarning" to="CallExpiringPassword" />
++        <transition on="ExpiringPassword" to="CallExpiringPassword" />
++        <transition on="ExpiredPassword" to="CallExpiredPassword" />
++        <transition on="AccountLocked" to="CallAccountLocked" />
++        
++        <transition to="DisplayUsernamePasswordPage" />
++    </action-state>
++
++    <subflow-state id="CallExpiringPassword" subflow="authn/conditions/expiring-password">
++        <input name="calledAsSubflow" value="true" />
++        <transition on="proceed" to="ContinueSuccessfulAuthentication" />
++    </subflow-state>
++
++    <subflow-state id="CallExpiredPassword" subflow="authn/conditions/expired-password">
++        <input name="calledAsSubflow" value="true" />
++        <transition on="proceed" to="DisplayUsernamePasswordPage" />
++    </subflow-state>
++
++    <subflow-state id="CallAccountLocked" subflow="authn/conditions/account-locked">
++        <input name="calledAsSubflow" value="true" />
++        <transition on="proceed" to="DisplayUsernamePasswordPage" />
++    </subflow-state>
++
++</flow>
+diff -rupN shibboleth-idp/flows/authn/conditions/expired-password/expired-password-flow.xml shibboleth-idp/flows/authn/conditions/expired-password/expired-password-flow.xml
+--- shibboleth-idp/flows/authn/conditions/expired-password/expired-password-flow.xml	2018-05-14 23:49:38.000000000 -0400
++++ shibboleth-idp/flows/authn/conditions/expired-password/expired-password-flow.xml	2019-07-01 13:03:37.433961740 -0400
+@@ -1,16 +1,16 @@
+-<flow xmlns="http://www.springframework.org/schema/webflow"
+-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+-      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+-
+-    <!-- This is a placeholder flow that does nothing out of the box but reserves a subflow ID. -->
+-
+-    <!-- Rudimentary impediment to direct execution of subflow. -->
+-    <input name="calledAsSubflow" type="boolean" required="true" />
+-
+-    <on-start>
+-        <evaluate expression="'proceed'" />
+-    </on-start>    
+-
+-    <end-state id="proceed" />
+-
+-</flow>
++<flow xmlns="http://www.springframework.org/schema/webflow"
++      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow.xsd">
++
++    <!-- This is a placeholder flow that does nothing out of the box but reserves a subflow ID. -->
++
++    <!-- Rudimentary impediment to direct execution of subflow. -->
++    <input name="calledAsSubflow" type="boolean" required="true" />
++
++    <on-start>
++        <evaluate expression="'proceed'" />
++    </on-start>    
++
++    <end-state id="proceed" />
++
++</flow>
+diff -rupN shibboleth-idp/flows/authn/conditions/expiring-password/expiring-password-flow.xml shibboleth-idp/flows/authn/conditions/expiring-password/expiring-password-flow.xml
+--- shibboleth-idp/flows/authn/conditions/expiring-password/expiring-password-flow.xml	2018-05-14 23:49:38.000000000 -0400
++++ shibboleth-idp/flows/authn/conditions/expiring-password/expiring-password-flow.xml	2019-07-01 13:03:37.433961740 -0400
+@@ -1,32 +1,32 @@
+-<flow xmlns="http://www.springframework.org/schema/webflow"
+-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+-      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+-
+-    <!--
+-    This is an example flow that displays a view template in response to an expiring password.
+-    The view might display a pointer to the password change portal while automatically continuing
+-    after a few seconds.
+-    -->
+-
+-    <!-- Rudimentary impediment to direct execution of subflow. -->
+-    <input name="calledAsSubflow" type="boolean" required="true" />
+-
+-    <view-state id="ExpiringPassword" view="intercept/expiring-password">
+-        <on-render>
+-            <evaluate expression="environment" result="viewScope.environment" />
+-            <evaluate expression="opensamlProfileRequestContext" result="viewScope.profileRequestContext" />
+-            <evaluate expression="opensamlProfileRequestContext.getSubcontext(T(net.shibboleth.idp.authn.context.AuthenticationContext))" result="viewScope.authenticationContext" />
+-            <evaluate expression="authenticationContext.getSubcontext(T(net.shibboleth.idp.authn.context.AuthenticationErrorContext))" result="viewScope.authenticationErrorContext" />
+-            <evaluate expression="authenticationContext.getSubcontext(T(net.shibboleth.idp.authn.context.AuthenticationWarningContext))" result="viewScope.authenticationWarningContext" />
+-            <evaluate expression="authenticationContext.getSubcontext(T(net.shibboleth.idp.authn.context.LDAPResponseContext))" result="viewScope.ldapResponseContext" />
+-            <evaluate expression="T(net.shibboleth.utilities.java.support.codec.HTMLEncoder)" result="viewScope.encoder" />
+-            <evaluate expression="flowRequestContext.getExternalContext().getNativeRequest()" result="viewScope.request" />
+-            <evaluate expression="flowRequestContext.getExternalContext().getNativeResponse()" result="viewScope.response" />
+-            <evaluate expression="flowRequestContext.getActiveFlow().getApplicationContext().containsBean('shibboleth.CustomViewContext') ? flowRequestContext.getActiveFlow().getApplicationContext().getBean('shibboleth.CustomViewContext') : null" result="viewScope.custom" />
+-        </on-render>
+-        <transition on="proceed" to="proceed" />
+-    </view-state>
+-
+-    <end-state id="proceed" />
+-
+-</flow>
++<flow xmlns="http://www.springframework.org/schema/webflow"
++      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow.xsd">
++
++    <!--
++    This is an example flow that displays a view template in response to an expiring password.
++    The view might display a pointer to the password change portal while automatically continuing
++    after a few seconds.
++    -->
++
++    <!-- Rudimentary impediment to direct execution of subflow. -->
++    <input name="calledAsSubflow" type="boolean" required="true" />
++
++    <view-state id="ExpiringPassword" view="intercept/expiring-password">
++        <on-render>
++            <evaluate expression="environment" result="viewScope.environment" />
++            <evaluate expression="opensamlProfileRequestContext" result="viewScope.profileRequestContext" />
++            <evaluate expression="opensamlProfileRequestContext.getSubcontext(T(net.shibboleth.idp.authn.context.AuthenticationContext))" result="viewScope.authenticationContext" />
++            <evaluate expression="authenticationContext.getSubcontext(T(net.shibboleth.idp.authn.context.AuthenticationErrorContext))" result="viewScope.authenticationErrorContext" />
++            <evaluate expression="authenticationContext.getSubcontext(T(net.shibboleth.idp.authn.context.AuthenticationWarningContext))" result="viewScope.authenticationWarningContext" />
++            <evaluate expression="authenticationContext.getSubcontext(T(net.shibboleth.idp.authn.context.LDAPResponseContext))" result="viewScope.ldapResponseContext" />
++            <evaluate expression="T(net.shibboleth.utilities.java.support.codec.HTMLEncoder)" result="viewScope.encoder" />
++            <evaluate expression="flowRequestContext.getExternalContext().getNativeRequest()" result="viewScope.request" />
++            <evaluate expression="flowRequestContext.getExternalContext().getNativeResponse()" result="viewScope.response" />
++            <evaluate expression="flowRequestContext.getActiveFlow().getApplicationContext().containsBean('shibboleth.CustomViewContext') ? flowRequestContext.getActiveFlow().getApplicationContext().getBean('shibboleth.CustomViewContext') : null" result="viewScope.custom" />
++        </on-render>
++        <transition on="proceed" to="proceed" />
++    </view-state>
++
++    <end-state id="proceed" />
++
++</flow>
+diff -rupN shibboleth-idp/flows/authn/oxAuth/oxauth-authn-beans.xml shibboleth-idp/flows/authn/oxAuth/oxauth-authn-beans.xml
+--- shibboleth-idp/flows/authn/oxAuth/oxauth-authn-beans.xml	1969-12-31 19:00:00.000000000 -0500
++++ shibboleth-idp/flows/authn/oxAuth/oxauth-authn-beans.xml	2019-07-01 13:03:37.433961740 -0400
+@@ -0,0 +1,39 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<beans xmlns="http://www.springframework.org/schema/beans"
++       xmlns:context="http://www.springframework.org/schema/context"
++       xmlns:util="http://www.springframework.org/schema/util"
++       xmlns:p="http://www.springframework.org/schema/p"
++       xmlns:c="http://www.springframework.org/schema/c"
++       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
++                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
++                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
++
++       default-init-method="initialize"
++       default-destroy-method="destroy">
++    
++    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer"
++          p:placeholderPrefix="%{" p:placeholderSuffix="}" />
++
++    <bean class="net.shibboleth.ext.spring.config.IdentifiableBeanPostProcessor" />
++    <bean class="net.shibboleth.idp.profile.impl.ProfileActionBeanPostProcessor" />
++
++    <!-- Default strategy function to obtain the external path. -->
++    <bean id="shibboleth.authn.oxAuth.externalAuthnPathStrategy"
++          class="com.google.common.base.Functions" factory-method="constant"
++          c:_0-ref="shibboleth.authn.oxAuth.externalAuthnPath" />
++
++    <import resource="../../../conf/authn/oxauth-authn-config.xml" />
++
++    <bean id="ValidateExternalAuthentication"
++          class="net.shibboleth.idp.authn.impl.ValidateExternalAuthentication" scope="prototype"
++          p:matchExpression="#{getObject('shibboleth.authn.oxAuth.matchExpression')}"
++          p:addDefaultPrincipals="#{getObject('shibboleth.authn.oxAuth.addDefaultPrincipals') ?: true}"
++          p:classifiedMessages-ref="shibboleth.authn.oxAuth.ClassifiedMessageMap"
++          p:resultCachingPredicate="#{getObject('shibboleth.authn.oxAuth.resultCachingPredicate')}" />
++
++    <bean id="PopulateSubjectCanonicalizationContext"
++          class="net.shibboleth.idp.authn.impl.PopulateSubjectCanonicalizationContext" scope="prototype"
++          p:availableFlows-ref="shibboleth.PostLoginSubjectCanonicalizationFlows" />
++
++</beans>
+diff -rupN shibboleth-idp/flows/authn/oxAuth/oxauth-authn-flow.xml shibboleth-idp/flows/authn/oxAuth/oxauth-authn-flow.xml
+--- shibboleth-idp/flows/authn/oxAuth/oxauth-authn-flow.xml	1969-12-31 19:00:00.000000000 -0500
++++ shibboleth-idp/flows/authn/oxAuth/oxauth-authn-flow.xml	2019-07-01 13:03:37.433961740 -0400
+@@ -0,0 +1,35 @@
++<flow xmlns="http://www.springframework.org/schema/webflow"
++      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow.xsd"
++      parent="authn.abstract">
++
++    <!-- This is a login flow for external authentication handled outside the webflow engine. -->
++
++    <view-state id="ExternalTransfer" view="externalRedirect:#{T(net.shibboleth.idp.authn.ExternalAuthentication).getExternalRedirect(flowRequestContext.getActiveFlow().getApplicationContext().getBean('shibboleth.authn.oxAuth.externalAuthnPathStrategy').apply(opensamlProfileRequestContext), flowExecutionContext.getKey().toString())}">
++        <on-render>
++            <evaluate expression="opensamlProfileRequestContext.getSubcontext(T(net.shibboleth.idp.authn.context.AuthenticationContext)).addSubcontext(new net.shibboleth.idp.authn.context.ExternalAuthenticationContext(), true).setFlowExecutionUrl(flowExecutionUrl + '&amp;_eventId_proceed=1')" />
++            <evaluate expression="externalContext.getNativeRequest().getSession().setAttribute('conversation' + flowExecutionContext.getKey().toString(), new net.shibboleth.idp.authn.impl.ExternalAuthenticationImpl(opensamlProfileRequestContext, calledAsExtendedFlow?:false))" />
++        </on-render>
++        <transition to="ValidateExternalAuthentication" />
++    </view-state>
++
++    <action-state id="ValidateExternalAuthentication">
++        <evaluate expression="ValidateExternalAuthentication" />
++        <evaluate expression="PopulateSubjectCanonicalizationContext" />
++        <evaluate expression="'proceed'" />
++
++        <transition on="proceed" to="CallSubjectCanonicalization" />
++    </action-state>
++
++    <!-- This runs a c14n step on the result of the authentication. -->
++    <subflow-state id="CallSubjectCanonicalization" subflow="c14n">
++        <input name="calledAsSubflow" value="true" />
++        <transition on="proceed" to="proceed" />
++
++        <!-- This shouldn't generally happen, but if c14n fails, it's allowable to fall through. -->
++        <transition on="SubjectCanonicalizationError" to="ReselectFlow" />
++    </subflow-state>
++
++    <bean-import resource="oxauth-authn-beans.xml" />
++
++</flow>
+diff -rupN shibboleth-idp/flows/user/prefs/prefs-flow.xml shibboleth-idp/flows/user/prefs/prefs-flow.xml
+--- shibboleth-idp/flows/user/prefs/prefs-flow.xml	2018-05-14 23:49:38.000000000 -0400
++++ shibboleth-idp/flows/user/prefs/prefs-flow.xml	2019-07-01 13:03:37.433961740 -0400
+@@ -1,25 +1,25 @@
+-<flow xmlns="http://www.springframework.org/schema/webflow"
+-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+-      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+-
+-    <!--
+-    This flow allows a user to adjust various client-side preferences.
+-    
+-    It's partly example, partly a placeholder to allow adjustment of a few
+-    existing cookie-based options used by some features of the IdP for the time
+-    being while leaving the option of a more comprehensive UI down the road.
+-    
+-    As a flow, it's nothing much, just a view rendered to push some JS into
+-    the browser to maintain things. Notably, it doesn't require a user login.
+-    -->
+-
+-    <end-state id="RenderView" view="user-prefs">
+-        <on-entry>
+-            <evaluate expression="environment" result="requestScope.environment" />
+-            <evaluate expression="T(net.shibboleth.utilities.java.support.codec.HTMLEncoder)" result="requestScope.encoder" />
+-            <evaluate expression="flowRequestContext.getExternalContext().getNativeRequest()" result="requestScope.request" />
+-            <evaluate expression="flowRequestContext.getExternalContext().getNativeResponse()" result="requestScope.response" />
+-            <evaluate expression="flowRequestContext.getActiveFlow().getApplicationContext().containsBean('shibboleth.CustomViewContext') ? flowRequestContext.getActiveFlow().getApplicationContext().getBean('shibboleth.CustomViewContext') : null" result="requestScope.custom" />
+-        </on-entry>
+-    </end-state>
+-</flow>
++<flow xmlns="http://www.springframework.org/schema/webflow"
++      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow.xsd">
++
++    <!--
++    This flow allows a user to adjust various client-side preferences.
++    
++    It's partly example, partly a placeholder to allow adjustment of a few
++    existing cookie-based options used by some features of the IdP for the time
++    being while leaving the option of a more comprehensive UI down the road.
++    
++    As a flow, it's nothing much, just a view rendered to push some JS into
++    the browser to maintain things. Notably, it doesn't require a user login.
++    -->
++
++    <end-state id="RenderView" view="user-prefs">
++        <on-entry>
++            <evaluate expression="environment" result="requestScope.environment" />
++            <evaluate expression="T(net.shibboleth.utilities.java.support.codec.HTMLEncoder)" result="requestScope.encoder" />
++            <evaluate expression="flowRequestContext.getExternalContext().getNativeRequest()" result="requestScope.request" />
++            <evaluate expression="flowRequestContext.getExternalContext().getNativeResponse()" result="requestScope.response" />
++            <evaluate expression="flowRequestContext.getActiveFlow().getApplicationContext().containsBean('shibboleth.CustomViewContext') ? flowRequestContext.getActiveFlow().getApplicationContext().getBean('shibboleth.CustomViewContext') : null" result="requestScope.custom" />
++        </on-entry>
++    </end-state>
++</flow>

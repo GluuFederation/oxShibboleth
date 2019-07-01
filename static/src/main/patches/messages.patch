@@ -1,0 +1,8 @@
+diff -rupN shibboleth-idp/messages/messages.properties shibboleth-idp/messages/messages.properties
+--- shibboleth-idp/messages/messages.properties	2018-05-14 23:49:38.000000000 -0400
++++ shibboleth-idp/messages/messages.properties	2019-07-01 13:03:37.433961740 -0400
+@@ -1,2 +1,2 @@
+-# You can define message properties here to override messages defined in
+-# system/messages/ or to add your own messages.
++# You can define message properties here to override messages defined in
++# system/messages/ or to add your own messages.
