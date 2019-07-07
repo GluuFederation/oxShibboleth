@@ -89,8 +89,8 @@
                                 <property name="shib.basedir" value="${project.build.directory}/classes/shibboleth-identity-provider-${shibboleth.version}"/>
                                 <property name="shib.dest.basedir" value="${project.build.directory}/classes/shibboleth-idp"/>
 
-                                <!-- Delete not required webapps folder -->
-                                <delete dir="${shib.basedir}/webapps" />
+                                <!-- Delete not required webapp folder -->
+                                <delete dir="${shib.basedir}/webapp" />
 
                                 <!-- Delete destination shibboleth-idp folder -->
                                 <delete dir="${shib.dest.basedir}" />
