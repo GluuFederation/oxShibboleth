@@ -9,6 +9,12 @@
     <packaging>jar</packaging>
     <version>4.0.0-SNAPSHOT</version>
 
+	<parent>
+		<groupId>org.gluu</groupId>
+		<artifactId>oxShibboleth</artifactId>
+		<version>4.0.0-SNAPSHOT</version>
+	</parent>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.min-version>3.0.3</maven.min-version>
@@ -22,10 +28,37 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.4</version>
+            </plugin>
+
+            <plugin>
+                <groupId>com.googlecode.maven-download-plugin</groupId>
+                <artifactId>download-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <id>download-dist</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>http://shibboleth.net/downloads/identity-provider/${shibboleth.version}/shibboleth-identity-provider-${shibboleth.version}.tar.gz</url>
+                            <unpack>true</unpack>
+                            <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                            <md5>${shibboleth.dist.md5}</md5>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-patch-plugin</artifactId>
                 <version>1.1.1</version>
                 <configuration>
-                    <targetDirectory>${project.build.directory}/classes</targetDirectory>
+                    <targetDirectory>${project.build.directory}/classes/shibboleth-identity-provider-${shibboleth.version}</targetDirectory>
                 </configuration>
                 <executions>
                     <execution>
@@ -35,9 +68,41 @@
                             <patchDirectory>src/main/patches</patchDirectory>
                             <naturalOrderProcessing>true</naturalOrderProcessing>
                             <optimizations>false</optimizations>
+                            <strip>1</strip>
                         </configuration>
                         <goals>
                             <goal>apply</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <id>build-ipd-war</id>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <target>
+                                <property name="shib.basedir" value="${project.build.directory}/classes/shibboleth-identity-provider-${shibboleth.version}"/>
+                                <property name="shib.dest.basedir" value="${project.build.directory}/classes/shibboleth-idp"/>
+
+                                <!-- Delete not required webapps folder -->
+                                <delete dir="${shib.basedir}/webapps" />
+
+                                <!-- Delete destination shibboleth-idp folder -->
+                                <delete dir="${shib.dest.basedir}" />
+
+                                <!-- Move to shibboleth-idp folder -->
+                                <move todir="${shib.dest.basedir}" >
+                                    <fileset dir="${shib.basedir}" />
+                                </move>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
                         </goals>
                     </execution>
                 </executions>
