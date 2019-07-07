@@ -1,7 +1,7 @@
 diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/conf/authn/general-authn.xml shibboleth-idp-3.3.3.gluu/conf/authn/general-authn.xml
 --- shibboleth-idp-3.3.3.orig/conf/authn/general-authn.xml	2019-07-07 11:18:14.964749300 +0300
 +++ shibboleth-idp-3.3.3.gluu/conf/authn/general-authn.xml	2019-05-22 17:27:42.916581000 +0300
-@@ -122,6 +122,20 @@
+@@ -124,6 +124,20 @@
              </property>
          </bean>
  

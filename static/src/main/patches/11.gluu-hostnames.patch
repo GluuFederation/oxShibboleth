@@ -1,17 +1,17 @@
 diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/conf/attribute-filter.xml shibboleth-idp-3.3.3.gluu/conf/attribute-filter.xml
 --- shibboleth-idp-3.3.3.orig/conf/attribute-filter.xml	2018-05-15 06:49:38.000000000 +0300
 +++ shibboleth-idp-3.3.3.gluu/conf/attribute-filter.xml	2019-02-22 10:08:15.490785100 +0300
-@@ -15,7 +15,7 @@
+@@ -78,7 +78,7 @@
  
-     <!-- Release some attributes to an SP. -->
+     <!-- Release an additional attribute to an SP. -->
      <AttributeFilterPolicy id="example1">
 -        <PolicyRequirementRule xsi:type="Requester" value="https://sp.example.org" />
 +        <PolicyRequirementRule xsi:type="Requester" value="https://ce.gluu.info" />
  
-         <AttributeRule attributeID="eduPersonPrincipalName">
-             <PermitValueRule xsi:type="ANY" />
-@@ -33,8 +33,8 @@
-     <!-- Release eduPersonAffiliation to two specific SPs. -->
+         <AttributeRule attributeID="uid" permitAny="true" />
+     </AttributeFilterPolicy>
+@@ -86,8 +86,8 @@
+     <!-- Release eduPersonScopedAffiliation to two specific SPs. -->
      <AttributeFilterPolicy id="example2">
          <PolicyRequirementRule xsi:type="OR">
 -            <Rule xsi:type="Requester" value="https://sp.example.org" />
@@ -20,7 +20,7 @@ diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/conf/attribute-filter.xm
 +            <Rule xsi:type="Requester" value="https://anothersp.gluu.info/shibboleth" />
          </PolicyRequirementRule>
  
-         <AttributeRule attributeID="eduPersonScopedAffiliation">
+         <AttributeRule attributeID="eduPersonScopedAffiliation" permitAny="true" />
 diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/conf/c14n/subject-c14n.xml shibboleth-idp-3.3.3.gluu/conf/c14n/subject-c14n.xml
 --- shibboleth-idp-3.3.3.orig/conf/c14n/subject-c14n.xml	2018-05-15 06:49:38.000000000 +0300
 +++ shibboleth-idp-3.3.3.gluu/conf/c14n/subject-c14n.xml	2019-02-22 10:08:15.502117600 +0300
@@ -61,8 +61,8 @@ diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/conf/intercept/context-c
      <bean id="shibboleth.context-check.Condition" parent="shibboleth.Conditions.AND">
          <constructor-arg>
              <list>
--                <bean parent="shibboleth.Conditions.RelyingPartyId" c:candidates="#{ 'https://sp.example.org' }" />
-+                <bean parent="shibboleth.Conditions.RelyingPartyId" c:candidates="#{ 'https://sp.gluu.info' }" />
+-                <bean parent="shibboleth.Conditions.RelyingPartyId" c:candidates="#{{'https://sp.example.org'}}" />
++                <bean parent="shibboleth.Conditions.RelyingPartyId" c:candidates="#{{'https://sp.gluu.info'}}" />
                  <bean class="net.shibboleth.idp.profile.logic.SimpleAttributePredicate"
                          p:useUnfilteredAttributes="true">
                      <property name="attributeValueMap">

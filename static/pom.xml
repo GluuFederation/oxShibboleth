@@ -92,6 +92,9 @@
                                 <!-- Delete not required webapp folder -->
                                 <delete dir="${shib.basedir}/webapp" />
 
+                                <!-- Delete .orig files in all folders -->
+                                <delete dir="${shib.basedir}" includes="**/*.orig" />
+
                                 <!-- Delete destination shibboleth-idp folder -->
                                 <delete dir="${shib.dest.basedir}" />
 
