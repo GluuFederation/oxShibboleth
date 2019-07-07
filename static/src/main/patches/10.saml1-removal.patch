@@ -1,0 +1,93 @@
+diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/conf/authn/general-authn.xml shibboleth-idp-3.3.3.gluu/conf/authn/general-authn.xml
+--- shibboleth-idp-3.3.3.orig/conf/authn/general-authn.xml	2018-05-15 06:49:38.000000000 +0300
++++ shibboleth-idp-3.3.3.gluu/conf/authn/general-authn.xml	2019-07-07 11:18:14.964749300 +0300
+@@ -45,8 +45,6 @@
+                 <list>
+                     <bean parent="shibboleth.SAML2AuthnContextClassRef"
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:Kerberos" />
+-                    <bean parent="shibboleth.SAML1AuthenticationMethod"
+-                        c:method="urn:ietf:rfc:1510" />
+                 </list>
+             </property>
+         </bean>
+@@ -67,8 +65,6 @@
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:X509" />
+                     <bean parent="shibboleth.SAML2AuthnContextClassRef"
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:TLSClient" />
+-                    <bean parent="shibboleth.SAML1AuthenticationMethod"
+-                        c:method="urn:ietf:rfc:2246" />
+                 </list>
+             </property>
+         </bean>
+@@ -80,8 +76,6 @@
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:X509" />
+                     <bean parent="shibboleth.SAML2AuthnContextClassRef"
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:TLSClient" />
+-                    <bean parent="shibboleth.SAML1AuthenticationMethod"
+-                        c:method="urn:ietf:rfc:2246" />
+                 </list>
+             </property>
+         </bean>
+@@ -103,8 +97,6 @@
+                 <list>
+                     <bean parent="shibboleth.SAML2AuthnContextClassRef"
+                         c:classRef="http://example.org/ac/classes/mfa" />
+-                    <bean parent="shibboleth.SAML1AuthenticationMethod"
+-                        c:method="http://example.org/ac/classes/mfa" />
+                 </list>
+             </property>
+         </bean>
+@@ -126,8 +118,6 @@
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport" />
+                     <bean parent="shibboleth.SAML2AuthnContextClassRef"
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:Password" />
+-                    <bean parent="shibboleth.SAML1AuthenticationMethod"
+-                        c:method="urn:oasis:names:tc:SAML:1.0:am:password" />
+                 </list>
+             </property>
+         </bean>
+diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/conf/authn/password-authn-config.xml shibboleth-idp-3.3.3.gluu/conf/authn/password-authn-config.xml
+--- shibboleth-idp-3.3.3.orig/conf/authn/password-authn-config.xml	2018-05-15 06:49:38.000000000 +0300
++++ shibboleth-idp-3.3.3.gluu/conf/authn/password-authn-config.xml	2019-02-22 10:08:15.498128200 +0300
+@@ -113,8 +113,6 @@
+             c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport" />
+         <bean parent="shibboleth.SAML2AuthnContextClassRef"
+             c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:Password" />
+-        <bean parent="shibboleth.SAML1AuthenticationMethod"
+-            c:method="urn:oasis:names:tc:SAML:1.0:am:password" />
+     </util:list>
+     -->
+     
+diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/conf/c14n/subject-c14n.xml shibboleth-idp-3.3.3.gluu/conf/c14n/subject-c14n.xml
+--- shibboleth-idp-3.3.3.orig/conf/c14n/subject-c14n.xml	2018-05-15 06:49:38.000000000 +0300
++++ shibboleth-idp-3.3.3.gluu/conf/c14n/subject-c14n.xml	2019-02-22 10:08:15.502117600 +0300
+@@ -61,8 +61,6 @@
+         <!-- The next four are for handling transient IDs (in-storage and stateless variants). -->
+         <ref bean="c14n/SAML2Transient" />
+         <ref bean="c14n/SAML2CryptoTransient" />
+-        <ref bean="c14n/SAML1Transient" /> 
+-        <ref bean="c14n/SAML1CryptoTransient" /> 
+         
+         <!-- Handle a SAML 2 persistent ID, provided a stored strategy is in use. -->
+         <!-- <ref bean="c14n/SAML2Persistent" /> -->
+@@ -72,7 +70,6 @@
+         having *no* circumstances for which they apply (see shibboleth.TransformNamePredicate below).
+         -->
+         <ref bean="c14n/SAML2Transform" />
+-        <ref bean="c14n/SAML1Transform" />
+     </util:list>
+     
+     <!-- What SAML NameID formats do you want to support direct transformations for? -->
+diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/conf/relying-party.xml shibboleth-idp-3.3.3.gluu/conf/relying-party.xml
+--- shibboleth-idp-3.3.3.orig/conf/relying-party.xml	2018-05-15 06:49:38.000000000 +0300
++++ shibboleth-idp-3.3.3.gluu/conf/relying-party.xml	2019-07-07 11:41:31.096859900 +0300
+@@ -34,9 +34,6 @@
+     <bean id="shibboleth.DefaultRelyingParty" parent="RelyingParty">
+         <property name="profileConfigurations">
+             <list>
+-                <bean parent="Shibboleth.SSO" p:postAuthenticationFlows="attribute-release" />
+-                <ref bean="SAML1.AttributeQuery" />
+-                <ref bean="SAML1.ArtifactResolution" />
+                 <bean parent="SAML2.SSO" p:postAuthenticationFlows="attribute-release" />
+                 <ref bean="SAML2.ECP" />
+                 <ref bean="SAML2.Logout" />

@@ -1,0 +1,21 @@
+diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/conf/relying-party.xml shibboleth-idp-3.3.3.gluu/conf/relying-party.xml
+--- shibboleth-idp-3.3.3.orig/conf/relying-party.xml	2018-05-15 06:49:38.000000000 +0300
++++ shibboleth-idp-3.3.3.gluu/conf/relying-party.xml	2019-07-07 11:41:31.096859900 +0300
+@@ -22,7 +22,7 @@
+     <bean id="shibboleth.UnverifiedRelyingParty" parent="RelyingParty">
+         <property name="profileConfigurations">
+             <list>
+-            <!-- <bean parent="SAML2.SSO" p:encryptAssertions="false" /> -->
++                <bean parent="SAML2.SSO" p:encryptAssertions="false" />
+             </list>
+         </property>
+     </bean>
+@@ -40,8 +40,6 @@
+                 <bean parent="SAML2.SSO" p:postAuthenticationFlows="attribute-release" />
+                 <ref bean="SAML2.ECP" />
+                 <ref bean="SAML2.Logout" />
+-                <ref bean="SAML2.AttributeQuery" />
+-                <ref bean="SAML2.ArtifactResolution" />
+                 <ref bean="Liberty.SSOS" />
+             </list>
+         </property>

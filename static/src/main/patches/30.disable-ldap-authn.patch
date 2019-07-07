@@ -1,0 +1,12 @@
+diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/conf/authn/password-authn-config.xml shibboleth-idp-3.3.3.gluu/conf/authn/password-authn-config.xml
+--- shibboleth-idp-3.3.3.orig/conf/authn/password-authn-config.xml	2018-05-15 06:49:38.000000000 +0300
++++ shibboleth-idp-3.3.3.gluu/conf/authn/password-authn-config.xml	2019-02-22 10:08:15.498128200 +0300
+@@ -15,7 +15,7 @@
+     <!-- Choose an import based on the back-end you want to use. -->
+     <!-- <import resource="jaas-authn-config.xml" /> -->
+     <!-- <import resource="krb5-authn-config.xml" /> -->
+-    <import resource="ldap-authn-config.xml" />
++    <!-- <import resource="ldap-authn-config.xml" /> -->
+     
+     
+     <!-- Names of form fields to pull username and password from. -->

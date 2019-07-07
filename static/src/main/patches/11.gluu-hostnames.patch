@@ -1,0 +1,82 @@
+diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/conf/attribute-filter.xml shibboleth-idp-3.3.3.gluu/conf/attribute-filter.xml
+--- shibboleth-idp-3.3.3.orig/conf/attribute-filter.xml	2018-05-15 06:49:38.000000000 +0300
++++ shibboleth-idp-3.3.3.gluu/conf/attribute-filter.xml	2019-02-22 10:08:15.490785100 +0300
+@@ -15,7 +15,7 @@
+ 
+     <!-- Release some attributes to an SP. -->
+     <AttributeFilterPolicy id="example1">
+-        <PolicyRequirementRule xsi:type="Requester" value="https://sp.example.org" />
++        <PolicyRequirementRule xsi:type="Requester" value="https://ce.gluu.info" />
+ 
+         <AttributeRule attributeID="eduPersonPrincipalName">
+             <PermitValueRule xsi:type="ANY" />
+@@ -33,8 +33,8 @@
+     <!-- Release eduPersonAffiliation to two specific SPs. -->
+     <AttributeFilterPolicy id="example2">
+         <PolicyRequirementRule xsi:type="OR">
+-            <Rule xsi:type="Requester" value="https://sp.example.org" />
+-            <Rule xsi:type="Requester" value="https://another.example.org/shibboleth" />
++            <Rule xsi:type="Requester" value="https://sp.gluu.info" />
++            <Rule xsi:type="Requester" value="https://anothersp.gluu.info/shibboleth" />
+         </PolicyRequirementRule>
+ 
+         <AttributeRule attributeID="eduPersonScopedAffiliation">
+diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/conf/c14n/subject-c14n.xml shibboleth-idp-3.3.3.gluu/conf/c14n/subject-c14n.xml
+--- shibboleth-idp-3.3.3.orig/conf/c14n/subject-c14n.xml	2018-05-15 06:49:38.000000000 +0300
++++ shibboleth-idp-3.3.3.gluu/conf/c14n/subject-c14n.xml	2019-02-22 10:08:15.502117600 +0300
+@@ -88,7 +88,7 @@
+     <bean id="shibboleth.NameTransformPredicate" parent="shibboleth.Conditions.RelyingPartyId">
+         <constructor-arg name="candidates">
+             <list>
+-                <!-- <value>https://sp.example.org</value> -->
++                <!-- <value>https://sp.gluu.info</value> -->
+             </list>
+         </constructor-arg>
+     </bean>
+diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/conf/intercept/consent-intercept-config.xml shibboleth-idp-3.3.3.gluu/conf/intercept/consent-intercept-config.xml
+--- shibboleth-idp-3.3.3.orig/conf/intercept/consent-intercept-config.xml	2018-05-15 06:49:38.000000000 +0300
++++ shibboleth-idp-3.3.3.gluu/conf/intercept/consent-intercept-config.xml	2019-02-22 10:08:15.503764800 +0300
+@@ -30,7 +30,7 @@
+             <bean class="com.google.common.base.Functions" factory-method="forMap" c:defaultValue="terms-of-use">
+                 <constructor-arg name="map">
+                     <map>
+-                        <entry key="https://sp.example.org/shibboleth" value="example-terms" />
++                        <entry key="https://sp.gluu.info/shibboleth" value="example-terms" />
+                     </map>
+                 </constructor-arg>
+             </bean>
+@@ -93,7 +93,7 @@
+ 
+     <!--
+     For attribute-release consent, the default entry is :
+-     'YYYYMMDDTHHMMSSZ|https://sp.example.org|AttributeReleaseConsent|jdoe|email,eduPersonAffiliation|rHo...rrw=,rHo...rrw=|false,false'
++     'YYYYMMDDTHHMMSSZ|https://sp.gluu.info|AttributeReleaseConsent|jdoe|email,eduPersonAffiliation|rHo...rrw=,rHo...rrw=|false,false'
+     -->
+     <util:map id="shibboleth.consent.attribute-release.AuditFormattingMap">
+         <entry key="Shibboleth-Consent-Audit" value="%T|%SP|%e|%u|%CCI|%CCV|%CCA" />
+diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/conf/intercept/context-check-intercept-config.xml shibboleth-idp-3.3.3.gluu/conf/intercept/context-check-intercept-config.xml
+--- shibboleth-idp-3.3.3.orig/conf/intercept/context-check-intercept-config.xml	2018-05-15 06:49:38.000000000 +0300
++++ shibboleth-idp-3.3.3.gluu/conf/intercept/context-check-intercept-config.xml	2019-02-22 10:08:15.504761300 +0300
+@@ -22,7 +22,7 @@
+     <bean id="shibboleth.context-check.Condition" parent="shibboleth.Conditions.AND">
+         <constructor-arg>
+             <list>
+-                <bean parent="shibboleth.Conditions.RelyingPartyId" c:candidates="#{ 'https://sp.example.org' }" />
++                <bean parent="shibboleth.Conditions.RelyingPartyId" c:candidates="#{ 'https://sp.gluu.info' }" />
+                 <bean class="net.shibboleth.idp.profile.logic.SimpleAttributePredicate"
+                         p:useUnfilteredAttributes="true">
+                     <property name="attributeValueMap">
+diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/conf/relying-party.xml shibboleth-idp-3.3.3.gluu/conf/relying-party.xml
+--- shibboleth-idp-3.3.3.orig/conf/relying-party.xml	2018-05-15 06:49:38.000000000 +0300
++++ shibboleth-idp-3.3.3.gluu/conf/relying-party.xml	2019-07-07 11:41:31.096859900 +0300
+@@ -50,8 +50,9 @@
+         Override example that identifies a single RP by name and configures it
+         for SAML 2 SSO without encryption. This is a common "vendor" scenario.
+         -->
++
+         <!--
+-        <bean parent="RelyingPartyByName" c:relyingPartyIds="https://sp.example.org">
++        <bean parent="RelyingPartyByName" c:relyingPartyIds="https://ce.gluu.info/shibboleth">
+             <property name="profileConfigurations">
+                 <list>
+                     <bean parent="SAML2.SSO" p:encryptAssertions="false" />
