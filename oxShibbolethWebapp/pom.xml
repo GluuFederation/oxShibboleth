@@ -174,7 +174,7 @@
                             <Implementation-Build>${buildNumber}</Implementation-Build>
                         </manifestEntries>
                     </archive>
-                    <packagingExcludes>WEB-INF/classes, WEB-INF/lib/activation-1.1.jar, WEB-INF/lib/commons-codec-1.10.jar, WEB-INF/lib/httpcore-4.4.6.jar, WEB-INF/lib/httpclient-cache-4.3.6.jar, WEB-INF/lib/slf4j-api-1.7.25.jar, WEB-INF/lib/stax-api-1.0-2.jar, WEB-INF/lib/commons-collections-3.2.1.jar, WEB-INF/lib/guava-20.0.jar, WEB-INF/lib/jackson-annotations-2.8.3.jar, WEB-INF/lib/jackson-core-2.8.3.jar, WEB-INF/lib/jackson-databind-2.8.3.jar, WEB-INF/lib/jackson-datatype-joda-2.8.3.jar, WEB-INF/lib/unboundid-ldapsdk-4.0.7.jar, WEB-INF/lib/jcip-annotations-1.0.jar, WEB-INF/lib/jsr305-3.0.1.jar</packagingExcludes>
+                    <packagingExcludes>WEB-INF/classes, WEB-INF/lib/activation-1.1.jar, WEB-INF/lib/httpcore-4.4.6.jar, WEB-INF/lib/httpclient-cache-4.3.6.jar, WEB-INF/lib/slf4j-api-1.7.25.jar, WEB-INF/lib/stax-api-1.0-2.jar, WEB-INF/lib/commons-collections-3.2.1.jar, WEB-INF/lib/guava-20.0.jar, WEB-INF/lib/jackson-annotations-2.8.3.jar, WEB-INF/lib/jackson-core-2.8.3.jar, WEB-INF/lib/jackson-databind-2.8.3.jar, WEB-INF/lib/jackson-datatype-joda-2.8.3.jar, WEB-INF/lib/unboundid-ldapsdk-4.0.7.jar, WEB-INF/lib/jcip-annotations-1.0.jar, WEB-INF/lib/jsr305-3.0.1.jar</packagingExcludes>
                 </configuration>
                 <executions>
                     <execution>
