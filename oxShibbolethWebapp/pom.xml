@@ -33,6 +33,9 @@
         <resteasy.version>3.0.12.Final</resteasy.version>
         <httpcore.version>4.3.3</httpcore.version>
         <httpclient.version>4.3.6</httpclient.version>
+
+		<log4j.version>2.11.2</log4j.version>
+		<slf4j.version>1.7.26</slf4j.version>
     </properties>
 
     <repositories>
@@ -354,11 +357,23 @@
             <artifactId>oxcore-persistence-hybrid</artifactId>
             <version>${oxcore.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.gluu</groupId>
-            <artifactId>oxcore-util</artifactId>
-            <version>${oxcore.version}</version>
-        </dependency>
+
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
 
 		<!-- Google -->
 		<dependency>
