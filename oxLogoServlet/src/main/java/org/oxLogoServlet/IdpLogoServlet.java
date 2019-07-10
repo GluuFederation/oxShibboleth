@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 
+import javax.inject.Inject;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,9 @@ import org.slf4j.LoggerFactory;
 
 @WebServlet(urlPatterns = "/servlet/logo")
 public class IdpLogoServlet extends HttpServlet {
+	
+	@Inject
+	Logger logger;
 
 	private static final long serialVersionUID = 5445488800130871634L;
 
@@ -38,10 +42,10 @@ public class IdpLogoServlet extends HttpServlet {
 	private boolean readDefaultLogo(HttpServletResponse response) {
 		String defaultLogoFileName = "logo.png";
 		File defaultLogo = getResourceFile(defaultLogoFileName);
-		log.info("==============================================");
+		logger.info("==============================================");
 		if(defaultLogo!=null) {
-			log.info("File exist: " + defaultLogo.exists());
-			log.info("File exist: " + defaultLogo.getAbsolutePath());
+			logger.info("File exist: " + defaultLogo.exists());
+			logger.info("File exist: " + defaultLogo.getAbsolutePath());
 		}
 		InputStream in = null;
 		OutputStream out = null;
@@ -51,7 +55,7 @@ public class IdpLogoServlet extends HttpServlet {
 			IOUtils.copy(in, out);
 			return true;
 		} catch (IOException e) {
-			log.debug("Error loading default logo: " + e.getMessage());
+			logger.debug("Error loading default logo: " + e);
 			return false;
 		} finally {
 			if (in != null) {
