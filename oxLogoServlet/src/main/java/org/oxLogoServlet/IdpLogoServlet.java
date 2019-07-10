@@ -25,14 +25,10 @@ public class IdpLogoServlet extends HttpServlet {
 
 	public static final String BASE_IDP_LOGO_PATH = "/opt/gluu/jetty/idp/custom/static/logo/";
 
-	// @Inject
-	// private OrganizationService organizationService;
-
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		response.setContentType("image/jpg");
 		response.setDateHeader("Expires", new Date().getTime() + 1000L * 1800);
-		// GluuOrganization organization = organizationService.getOrganization();
 		boolean hasSucceed = readCustomLogo(response, null);
 		if (!hasSucceed) {
 			readDefaultLogo(response);
@@ -40,11 +36,17 @@ public class IdpLogoServlet extends HttpServlet {
 	}
 
 	private boolean readDefaultLogo(HttpServletResponse response) {
-		String defaultLogoFileName = "/WEB-INF/static/images/logo.png";
+		String defaultLogoFileName = "logo.png";
+		File defaultLogo = getResourceFile(defaultLogoFileName);
+		log.info("==============================================");
+		if(defaultLogo!=null) {
+			log.info("File exist: " + defaultLogo.exists());
+			log.info("File exist: " + defaultLogo.getAbsolutePath());
+		}
 		InputStream in = null;
 		OutputStream out = null;
 		try {
-			in = getServletContext().getResourceAsStream(defaultLogoFileName);
+			in = getClass().getResourceAsStream(defaultLogo.getAbsolutePath());
 			out = response.getOutputStream();
 			IOUtils.copy(in, out);
 			return true;
@@ -88,8 +90,8 @@ public class IdpLogoServlet extends HttpServlet {
 			out = response.getOutputStream();
 			IOUtils.copy(in, out);
 			return true;
-		} catch (IOException e) {
-			log.debug("Error loading custom logo: " + e.getMessage());
+		} catch (Exception e) {
+			log.debug("Error loading custom logo: " + e);
 			return false;
 		} finally {
 			if (in != null) {
@@ -107,5 +109,10 @@ public class IdpLogoServlet extends HttpServlet {
 				}
 			}
 		}
+	}
+
+	protected static File getResourceFile(String resName) {
+		ClassLoader classLoader = IdpLogoServlet.class.getClassLoader();
+		return new File(classLoader.getResource(resName).getFile());
 	}
 }
