@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 
-import javax.inject.Inject;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +19,7 @@ import org.slf4j.LoggerFactory;
 @WebServlet(urlPatterns = "/servlet/logo")
 public class IdpLogoServlet extends HttpServlet {
 	
-	@Inject
-	Logger logger;
+	private Logger logger;
 
 	private static final long serialVersionUID = 5445488800130871634L;
 
@@ -31,6 +29,7 @@ public class IdpLogoServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+		logger=LoggerFactory.getLogger(IdpLogoServlet.class);
 		response.setContentType("image/jpg");
 		response.setDateHeader("Expires", new Date().getTime() + 1000L * 1800);
 		boolean hasSucceed = readCustomLogo(response, null);
