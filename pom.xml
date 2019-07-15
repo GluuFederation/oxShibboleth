@@ -62,7 +62,6 @@
 		<module>oxShibbolethWebapp</module>
         <module>keygenerator</module>
         <module>oxLogoServlet</module>
-        <module>sharedResources</module>
     </modules>
 
 	<dependencyManagement>

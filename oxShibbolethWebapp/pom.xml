@@ -93,7 +93,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
@@ -170,10 +169,14 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>3.2.2</version>
 				<configuration>
 					<useCache>true</useCache>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<webResources>
+						<resource>
+							<directory>oxLogoServlet/src/main/resources</directory>
+						</resource>
+					</webResources>
 					<archive>
 						<manifest>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
@@ -375,14 +378,6 @@
 			<artifactId>oxLogoServlet</artifactId>
 			<version>${oxtrust.version}</version>
 		</dependency>
-		
-		<!-- shared resources -->
-		<dependency>
-			<groupId>org.gluu.shareresources</groupId>
-			<artifactId>sharedResources</artifactId>
-			<version>${oxtrust.version}</version>
-		</dependency>
-
 
 
 		<!-- <dependency> <groupId>org.gluu</groupId> <artifactId>openid-auth-client</artifactId> 
