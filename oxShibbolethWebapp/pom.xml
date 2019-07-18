@@ -4,8 +4,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>oxshibbolethIdp</artifactId>
-	<name>OX Shibboleth IDP</name>
-	<url>http://ox.gluu.org</url>
+	<name>Gluu Shibboleth IDP</name>
+	<url>http://www.gluu.org</url>
 	<packaging>war</packaging>
 
 	<parent>
@@ -36,6 +36,9 @@
 
 		<log4j.version>2.11.2</log4j.version>
 		<slf4j.version>1.7.26</slf4j.version>
+
+		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+		<buildDate>${maven.build.timestamp}</buildDate>
 	</properties>
 
 	<repositories>
@@ -219,6 +222,25 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<doCheck>false</doCheck>
+					<doUpdate>false</doUpdate>
+				</configuration>
+			</plugin>
+
+			<!-- Build number plugin -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.1</version>
 				<executions>
 					<execution>
 						<phase>validate</phase>
