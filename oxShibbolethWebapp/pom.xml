@@ -175,11 +175,6 @@
 				<configuration>
 					<useCache>true</useCache>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
-					<webResources>
-						<resource>
-							<directory>oxLogoServlet/src/main/resources</directory>
-						</resource>
-					</webResources>
 					<archive>
 						<manifest>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>

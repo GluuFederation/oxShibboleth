@@ -39,17 +39,10 @@ public class IdpLogoServlet extends HttpServlet {
 	}
 
 	private boolean readDefaultLogo(HttpServletResponse response) {
-		String defaultLogoFileName = "dummylogo.png";
-		File defaultLogo = getResourceFile(defaultLogoFileName);
-		logger.info("==============================================");
-		if(defaultLogo!=null) {
-			logger.info("File exist: " + defaultLogo.exists());
-			logger.info("File exist: " + defaultLogo.getAbsolutePath());
-		}
-		InputStream in = null;
+		String defaultLogoFileName = "logo.png";
+		InputStream in = getServletContext().getResourceAsStream(defaultLogoFileName);
 		OutputStream out = null;
 		try {
-			in = getClass().getResourceAsStream(defaultLogo.getAbsolutePath());
 			out = response.getOutputStream();
 			IOUtils.copy(in, out);
 			return true;

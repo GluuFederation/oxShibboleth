@@ -58,7 +58,7 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${project.basedir}/../static/images</outputDirectory>
+							<outputDirectory>${project.basedir}/../static/src/main/resources</outputDirectory>
 							<resources>
 								<resource>
 									<directory>${project.basedir}/../oxLogoServlet/src/main/resources</directory>
