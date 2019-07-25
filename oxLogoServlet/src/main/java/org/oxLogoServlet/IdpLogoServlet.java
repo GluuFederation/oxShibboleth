@@ -41,7 +41,7 @@ public class IdpLogoServlet extends HttpServlet {
 	private boolean readDefaultLogo(HttpServletResponse response) {
 		String defaultLogoFileName = "logo.png";
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		InputStream in = classLoader.getResourceAsStream("META-INF/" + defaultLogoFileName);
+		InputStream in = classLoader.getResourceAsStream(defaultLogoFileName);
 		OutputStream out = null;
 		try {
 			out = response.getOutputStream();
