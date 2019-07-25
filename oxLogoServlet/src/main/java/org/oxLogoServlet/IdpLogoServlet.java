@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 @WebServlet(urlPatterns = "/servlet/logo")
 public class IdpLogoServlet extends HttpServlet {
-	
+
 	private Logger logger;
 
 	private static final long serialVersionUID = 5445488800130871634L;
@@ -29,7 +29,7 @@ public class IdpLogoServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-		logger=LoggerFactory.getLogger(IdpLogoServlet.class);
+		logger = LoggerFactory.getLogger(IdpLogoServlet.class);
 		response.setContentType("image/jpg");
 		response.setDateHeader("Expires", new Date().getTime() + 1000L * 1800);
 		boolean hasSucceed = readCustomLogo(response, null);
@@ -40,7 +40,8 @@ public class IdpLogoServlet extends HttpServlet {
 
 	private boolean readDefaultLogo(HttpServletResponse response) {
 		String defaultLogoFileName = "logo.png";
-		InputStream in = getServletContext().getResourceAsStream(defaultLogoFileName);
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		InputStream in = classLoader.getResourceAsStream("META-INF/" + defaultLogoFileName);
 		OutputStream out = null;
 		try {
 			out = response.getOutputStream();
