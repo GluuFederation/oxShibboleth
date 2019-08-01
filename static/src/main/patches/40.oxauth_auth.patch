@@ -1,26 +1,21 @@
 diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/conf/authn/general-authn.xml shibboleth-idp-3.3.3.gluu/conf/authn/general-authn.xml
 --- shibboleth-idp-3.3.3.orig/conf/authn/general-authn.xml	2019-07-07 11:18:14.964749300 +0300
 +++ shibboleth-idp-3.3.3.gluu/conf/authn/general-authn.xml	2019-05-22 17:27:42.916581000 +0300
-@@ -124,6 +124,20 @@
+@@ -25,6 +25,7 @@
+     expressions for password-based authentication over a secure channel, so anything more exotic requires
+     customization, as the examples below for IP address and SPNEGO authentication illustrate.
+     -->
++    <import resource="oxauth-supported-principals.xml"/>
+
+     <util:list id="shibboleth.AvailableAuthenticationFlows">
+
+@@ -124,6 +125,7 @@
              </property>
          </bean>
- 
-+        <bean id="authn/oxAuth" parent="shibboleth.AuthenticationFlow"
-+                p:forcedAuthenticationSupported="true"
-+                p:nonBrowserSupported="false" >
-+            <property name="supportedPrincipals">
-+                <list>
-+                    <bean parent="shibboleth.SAML2AuthnContextClassRef"
-+                        c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:InternetProtocol" />
-+                    <bean parent="shibboleth.SAML2AuthnContextClassRef"
-+                        c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport" />
-+                    <bean parent="shibboleth.SAML2AuthnContextClassRef"
-+                        c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:Password" />
-+                </list>
-+            </property>
-+        </bean>
+
++       <ref bean="authn/oxAuth"/>
      </util:list>
- 
+
      <!--
 diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/conf/authn/oxauth-authn-config.xml shibboleth-idp-3.3.3.gluu/conf/authn/oxauth-authn-config.xml
 --- shibboleth-idp-3.3.3.orig/conf/authn/oxauth-authn-config.xml	1970-01-01 03:00:00.000000000 +0300
@@ -178,3 +173,35 @@ diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/flows/authn/oxAuth/oxaut
 +    <bean-import resource="oxauth-authn-beans.xml" />
 +
 +</flow>
+diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/flows/authn/oxAuth/oxauth-supported-principals.xml shibboleth-idp-3.3.3.gluu/flows/authn/oxAuth/oxauth-supported-principals.xml
+--- shibboleth-idp-3.3.3.orig/flows/authn/oxAuth/oxauth-supported-principals.xml	1970-01-01 03:00:00.000000000 +0300
++++ shibboleth-idp-3.3.3.gluu/flows/authn/oxAuth/oxauth-supported-principals.xml	2019-02-22 10:08:15.539180300 +0300
+@@ -0,0 +1,28 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<beans xmlns="http://www.springframework.org/schema/beans"
++       xmlns:context="http://www.springframework.org/schema/context"
++       xmlns:util="http://www.springframework.org/schema/util"
++       xmlns:p="http://www.springframework.org/schema/p"
++       xmlns:c="http://www.springframework.org/schema/c"
++       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
++                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
++                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
++       default-init-method="initialize"
++       default-destroy-method="destroy">
++
++          <bean id="authn/oxAuth" parent="shibboleth.AuthenticationFlow"
++                p:forcedAuthenticationSupported="true"
++                p:nonBrowserSupported="false" >
++            <property name="supportedPrincipals">
++                <list>
++                    <bean parent="shibboleth.SAML2AuthnContextClassRef"
++                        c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:InternetProtocol" />
++                    <bean parent="shibboleth.SAML2AuthnContextClassRef"
++                        c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport" />
++                    <bean parent="shibboleth.SAML2AuthnContextClassRef"
++                        c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:Password" />
++                </list>
++            </property>
++          </bean>
++</beans>
