@@ -58,7 +58,8 @@
 	<modules>
 		<module>static</module>
 		<module>oxShibbolethWebapp</module>
-        <module>keygenerator</module>
+		<module>keygenerator</module>
+		<module>oxLogoServlet</module>
 	</modules>
 
 	<dependencyManagement>
