@@ -8,6 +8,11 @@
     <packaging>war</packaging>
     <version>3.1.7.Final</version>
 
+	<parent>
+		<groupId>org.xdi</groupId>
+		<artifactId>oxShibboleth</artifactId>
+		<version>3.1.7.Final</version>
+	</parent>
     <prerequisites>
         <maven>2.3</maven>
     </prerequisites>
@@ -18,9 +23,6 @@
         
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <shibboleth.version>3.3.3</shibboleth.version>
-        <shibboleth.dist.md5>318ffa6b3992a17a0528a07a21c19865</shibboleth.dist.md5>
-
         <oxcore.version>3.1.7.Final</oxcore.version>
         <oxauth.version>3.1.7.Final</oxauth.version>
         <oxtrust.version>3.1.7.Final</oxtrust.version>
@@ -30,6 +32,12 @@
         <resteasy.version>3.0.12.Final</resteasy.version>
         <httpcore.version>4.3.3</httpcore.version>
         <httpclient.version>4.3.6</httpclient.version>
+
+	<log4j.version>2.11.2</log4j.version>
+	<slf4j.version>1.7.26</slf4j.version>
+
+	<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+	<buildDate>${maven.build.timestamp}</buildDate>
     </properties>
 
     <repositories>
@@ -56,151 +64,201 @@
         </repository>
     </repositories>
 
-    <build>
-        <defaultGoal>package</defaultGoal>
-        <finalName>${project.artifactId}-${project.version}</finalName>
+	<build>
+		<defaultGoal>package</defaultGoal>
+		<finalName>${project.artifactId}-${project.version}</finalName>
 
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-                <version>2.4</version>
-            </plugin>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.4</version>
+			</plugin>
 
-            <plugin>
-                <groupId>com.googlecode.maven-download-plugin</groupId>
-                <artifactId>download-maven-plugin</artifactId>
-                <version>1.2.1</version>
-                <executions>
-                    <execution>
-                        <id>download-dist</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>wget</goal>
-                        </goals>
-                        <configuration>
-                            <url>http://shibboleth.net/downloads/identity-provider/${shibboleth.version}/shibboleth-identity-provider-${shibboleth.version}.tar.gz</url>
-                            <unpack>true</unpack>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
-                            <md5>${shibboleth.dist.md5}</md5>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+			<plugin>
+				<groupId>com.googlecode.maven-download-plugin</groupId>
+				<artifactId>download-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<executions>
+					<execution>
+						<id>download-dist</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>http://shibboleth.net/downloads/identity-provider/${shibboleth.version}/shibboleth-identity-provider-${shibboleth.version}.tar.gz</url>
+							<unpack>true</unpack>
+							<outputDirectory>${project.build.directory}</outputDirectory>
+							<md5>${shibboleth.dist.md5}</md5>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>build-ipd-war</id>
+						<phase>process-sources</phase>
+						<configuration>
+							<target>
+								<property name="shib.basedir"
+									value="${project.build.directory}/shibboleth-identity-provider-${shibboleth.version}" />
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.7</version>
-                <executions>
-                    <execution>
-                        <id>build-ipd-war</id>
-                        <phase>process-sources</phase>
-                        <configuration>
-                            <target>
-                                <property name="shib.basedir" value="${project.build.directory}/shibboleth-identity-provider-${shibboleth.version}"/>
+								<property name="webapp.dir"
+									value="${shib.basedir}/webapp" />
+								<property name="idp.home.path"
+									value="file:/opt/shibboleth-idp" />
 
-                                <property name="webapp.dir" value="${shib.basedir}/webapp"/>
-                                <property name="idp.home.path" value="file:/opt/shibboleth-idp"/>
+								<delete dir="${shib.basedir}/target" />
 
-                                <delete dir="${shib.basedir}/target" />
+								<mkdir dir="${shib.basedir}/target" />
 
-                                <mkdir dir="${shib.basedir}/target" />
+								<!-- create web.xml -->
+								<copy file="${webapp.dir}/WEB-INF/web.xml"
+									todir="${shib.basedir}/target" preservelastmodified="true"
+									overwrite="true">
+									<filterset begintoken="${" endtoken="}">
+										<filter token="idp.home" value="${idp.home.path}" />
+									</filterset>
+								</copy>
 
-                                <!-- create web.xml -->
-                                <copy file="${webapp.dir}/WEB-INF/web.xml" todir="${shib.basedir}/target" preservelastmodified="true" overwrite="true">
-                                    <filterset begintoken="${" endtoken="}">
-                                        <filter token="idp.home" value="${idp.home.path}"/>
-                                    </filterset>
-                                </copy>
+								<!-- build the war file -->
+								<war
+									warfile="${shib.basedir}/target/${project.build.finalName}.war"
+									webxml="${shib.basedir}/target/web.xml">
+									<!--<lib dir="${shib.basedir}/lib" excludes="servlet-api*.jar,jsp-api*.jar"/> -->
+									<webinf dir="${webapp.dir}/WEB-INF" excludes="web.xml" />
+									<fileset dir="${webapp.dir}" excludes="WEB-INF/**" />
+								</war>
+								<unwar
+									dest="${project.build.directory}/${project.build.finalName}"
+									src="${shib.basedir}/target/${project.build.finalName}.war" />
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-patch-plugin</artifactId> 
+				<version>1.1.1</version> <configuration> <targetDirectory>${project.build.directory}/${project.build.finalName}</targetDirectory> 
+				</configuration> <executions> <execution> <id>gluu-patch</id> <phase>generate-resources</phase> 
+				<configuration> <patchDirectory>src/main/patches</patchDirectory> <naturalOrderProcessing>true</naturalOrderProcessing> 
+				<optimizations>false</optimizations> </configuration> <goals> <goal>apply</goal> 
+				</goals> </execution> </executions> </plugin> -->
+			<plugin>
+				<groupId>pl.project13.maven</groupId>
+				<artifactId>git-commit-id-plugin</artifactId>
+				<version>2.1.12</version>
+				<executions>
+					<execution>
+						<id>get-the-git-infos</id>
+						<goals>
+							<goal>revision</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<generateGitPropertiesFile>true</generateGitPropertiesFile>
+					<failOnNoGitDirectory>false</failOnNoGitDirectory>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<useCache>true</useCache>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+						</manifest>
+						<manifestEntries>
+							<Implementation-Build>${buildNumber}</Implementation-Build>
+							<Build-Branch>${git.branch}</Build-Branch>
+						</manifestEntries>
+					</archive>
+					<packagingExcludes>WEB-INF/classes, WEB-INF/lib/activation-1.1.jar,
+						WEB-INF/lib/httpcore-4.4.6.jar,
+						WEB-INF/lib/httpclient-cache-4.3.6.jar,
+						WEB-INF/lib/slf4j-api-1.7.25.jar, WEB-INF/lib/stax-api-1.0-2.jar,
+						WEB-INF/lib/commons-collections-3.2.1.jar,
+						WEB-INF/lib/guava-20.0.jar,
+						WEB-INF/lib/jackson-annotations-2.9.9.jar,
+						WEB-INF/lib/unboundid-ldapsdk-4.0.7.jar,
+						WEB-INF/lib/jcip-annotations-1.0.jar, WEB-INF/lib/jsr305-3.0.1.jar</packagingExcludes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>prepare-war</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>exploded</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-war</id>
+						<phase>package</phase>
+						<goals>
+							<goal>war</goal>
+						</goals>
+						<configuration>
+							<warSourceDirectory>${project.build.directory}/${project.build.finalName}</warSourceDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<doCheck>false</doCheck>
+					<doUpdate>false</doUpdate>
+				</configuration>
+			</plugin>
 
-                                <!-- build the war file -->
-                                <war warfile="${shib.basedir}/target/${project.build.finalName}.war" webxml="${shib.basedir}/target/web.xml">
-                                    <!--<lib dir="${shib.basedir}/lib" excludes="servlet-api*.jar,jsp-api*.jar"/>-->
-                                    <webinf dir="${webapp.dir}/WEB-INF" excludes="web.xml"/>
-                                    <fileset dir="${webapp.dir}" excludes="WEB-INF/**"/>
-                                </war>
-                                <unwar dest="${project.build.directory}/${project.build.finalName}" src="${shib.basedir}/target/${project.build.finalName}.war" />
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-<!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-patch-plugin</artifactId>
-                <version>1.1.1</version>
-                <configuration>
-                    <targetDirectory>${project.build.directory}/${project.build.finalName}</targetDirectory>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>gluu-patch</id>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <patchDirectory>src/main/patches</patchDirectory>
-                            <naturalOrderProcessing>true</naturalOrderProcessing>
-                            <optimizations>false</optimizations>
-                        </configuration>
-                        <goals>
-                            <goal>apply</goal>
-                        </goals>
-                    </execution>
-                </executions>
-	        </plugin>
--->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.2.2</version>
-                <configuration>
-                    <useCache>true</useCache>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <archive>
-                        <manifest>
-                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                        </manifest>
-                        <manifestEntries>
-                            <Implementation-Build>${buildNumber}</Implementation-Build>
-                        </manifestEntries>
-                    </archive>
-                    <packagingExcludes>WEB-INF/classes, WEB-INF/lib/activation-1.1.jar, WEB-INF/lib/commons-codec-1.7.jar, WEB-INF/lib/httpcore-4.4.6.jar, WEB-INF/lib/httpclient-4.5.3.jar, WEB-INF/lib/jboss-logging-3.1.3.GA.jar, WEB-INF/lib/slf4j-api-1.7.12.jar, WEB-INF/lib/stax-api-1.0.1.jar</packagingExcludes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>prepare-war</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>exploded</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>default-war</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>war</goal>
-                        </goals>
-                        <configuration>
-                            <warSourceDirectory>${project.build.directory}/${project.build.finalName}</warSourceDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>2.5.2</version>
-            </plugin>
-        </plugins>
-    </reporting>
+			<!-- Build number plugin -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<doCheck>false</doCheck>
+					<doUpdate>false</doUpdate>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>2.5.2</version>
+			</plugin>
+		</plugins>
+	</reporting>
 
     <dependencies>
 <!--
