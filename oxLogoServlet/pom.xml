@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.gluu</groupId>
 		<artifactId>oxShibboleth</artifactId>
-		<version>4.0.Final</version>
+		<version>4.0.1.Final</version>
 	</parent>
 	<artifactId>oxLogoServlet</artifactId>
 	<name>oxLogoServlet</name>
@@ -16,7 +16,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<oxcore.version>4.0.Final</oxcore.version>
 		<oxauth.version>4.0.Final</oxauth.version>
-		<oxtrust.version>4.0.Final</oxtrust.version>
+		<oxtrust.version>4.0.1.Final</oxtrust.version>
 	</properties>
 	<dependencies>
 		<dependency>
