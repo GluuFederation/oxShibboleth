@@ -305,7 +305,7 @@
 		<dependency>
 			<groupId>org.gluu</groupId>
 			<artifactId>shib-oxauth-authn3</artifactId>
-			<version>${oxtrust.version}</version>
+			<version>4.0.Final</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.logging.log4j</groupId>
