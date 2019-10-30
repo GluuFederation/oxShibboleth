@@ -14,8 +14,8 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<oxcore.version>4.0.Final</oxcore.version>
-		<oxauth.version>4.0.Final</oxauth.version>
+		<oxcore.version>4.0.1.Final</oxcore.version>
+		<oxauth.version>4.0.1.Final</oxauth.version>
 		<oxtrust.version>4.0.1.Final</oxtrust.version>
 	</properties>
 	<dependencies>
