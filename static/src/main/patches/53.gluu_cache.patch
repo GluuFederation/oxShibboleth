@@ -1,0 +1,17 @@
+diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/conf/global.xml shibboleth-idp-3.3.3.gluu/conf/global.xml
+--- shibboleth-idp-3.3.3.orig/conf/global.xml	2019-07-07 11:18:14.964749300 +0300
++++ shibboleth-idp-3.3.3.gluu/conf/global.xml	2019-05-22 17:27:42.916581000 +0300
+@@ -48,5 +48,13 @@
+         <entry key="foo" value="bar"/>
+     </util:map>
+     -->
++
++     <bean id="idpConfigurationFactory"
++          class="org.gluu.idp.externalauth.openid.conf.IdpConfigurationFactory" />
++
++     <bean id="shibboleth.GluuStorageService"
++          class="org.gluu.idp.storage.GluuStorageService">
++        <constructor-arg name="configurationFactory" value="#{idpConfigurationFactory.instance()}" />
++    </bean>
+     
+ </beans>
