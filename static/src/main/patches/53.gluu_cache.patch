@@ -10,7 +10,7 @@ diff -aurN --ignore-all-space shibboleth-idp-3.3.3.orig/conf/global.xml shibbole
 +          class="org.gluu.idp.externalauth.openid.conf.IdpConfigurationFactory" />
 +
 +     <bean id="shibboleth.GluuStorageService"
-+          class="org.gluu.idp.storage.GluuStorageService" p:cleanupInterval="%{idp.storage.cleanupInterval:PT10M}">
++          class="org.gluu.idp.storage.GluuStorageService" p:cleanupInterval="%{idp.storage.cleanupInterval:PT10M}" p:contextExpiration="%{idp.session.slop:P1D}">
 +        <constructor-arg name="configurationFactory" value="#{idpConfigurationFactory.instance()}" />
 +    </bean>
      
