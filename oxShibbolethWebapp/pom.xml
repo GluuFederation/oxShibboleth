@@ -24,9 +24,9 @@
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<oxcore.version>4.1.0.Final</oxcore.version>
-		<oxauth.version>4.1.0.Final</oxauth.version>
-		<oxtrust.version>4.1.0.Final</oxtrust.version>
+		<oxcore.version>4.1.1.Final</oxcore.version>
+		<oxauth.version>4.1.1.Final</oxauth.version>
+		<oxtrust.version>4.1.1.Final</oxtrust.version>
 
 		<jackson.version>1.9.1f1</jackson.version>
 		<jaxrs.version>3.0.12.Final</jaxrs.version>
