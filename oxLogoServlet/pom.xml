@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.gluu</groupId>
 		<artifactId>oxShibboleth</artifactId>
-		<version>4.1.0.Final</version>
+		<version>4.1.1.Final</version>
 	</parent>
 	<artifactId>oxLogoServlet</artifactId>
 	<name>oxLogoServlet</name>
