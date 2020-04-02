@@ -7,12 +7,12 @@
     <name>OX Shibboleth IDP static resources</name>
     <url>http://ox.gluu.org</url>
     <packaging>jar</packaging>
-    <version>3.1.7.Final</version>
+    <version>3.1.8.Final</version>
 
 	<parent>
 		<groupId>org.xdi</groupId>
 		<artifactId>oxShibboleth</artifactId>
-		<version>3.1.7.Final</version>
+		<version>3.1.8.Final</version>
 	</parent>
 
 	<properties>

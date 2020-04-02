@@ -11,7 +11,7 @@
 	<parent>
 		<groupId>org.xdi</groupId>
 		<artifactId>oxShibboleth</artifactId>
-		<version>3.1.7.Final</version>
+		<version>3.1.8.Final</version>
 	</parent>
 
 	<prerequisites>
@@ -24,9 +24,9 @@
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<oxcore.version>3.1.7.Final</oxcore.version>
-		<oxauth.version>3.1.7.Final</oxauth.version>
-		<oxtrust.version>3.1.7.Final</oxtrust.version>
+		<oxcore.version>3.1.8.Final</oxcore.version>
+		<oxauth.version>3.1.8.Final</oxauth.version>
+		<oxtrust.version>3.1.8.Final</oxtrust.version>
 
 		<jackson.version>1.9.1f1</jackson.version>
 		<jaxrs.version>3.0.12.Final</jaxrs.version>
