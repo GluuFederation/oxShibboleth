@@ -14,8 +14,8 @@
 		<maven.compiler.target>1.6</maven.compiler.target>
 		<maven.min-version>3.0.3</maven.min-version>
 
-        	<shibboleth.version>3.4.6</shibboleth.version>
-	        <shibboleth.dist.md5>84097f1250040150d1ea3dd3acfc94f6</shibboleth.dist.md5>
+        	<shibboleth.version>4.0.0</shibboleth.version>
+	        <shibboleth.dist.md5>7d08384d3473cfe31d9107fc0670ebf9</shibboleth.dist.md5>
 	</properties>
 
 	<prerequisites>
