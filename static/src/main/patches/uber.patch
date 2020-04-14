@@ -1,0 +1,413 @@
+diff --git a/conf/attribute-filter.xml b/conf/attribute-filter.xml
+index 7787d0c..99b2017 100644
+--- a/conf/attribute-filter.xml
++++ b/conf/attribute-filter.xml
+@@ -78,7 +78,7 @@
+ 
+     <!-- Release an additional attribute to an SP. -->
+     <AttributeFilterPolicy id="example1">
+-        <PolicyRequirementRule xsi:type="Requester" value="https://sp.example.org" />
++        <PolicyRequirementRule xsi:type="Requester" value="https://ce.gluu.info" />
+ 
+         <AttributeRule attributeID="uid" permitAny="true" />
+     </AttributeFilterPolicy>
+@@ -86,8 +86,8 @@
+     <!-- Release eduPersonScopedAffiliation to two specific SPs. -->
+     <AttributeFilterPolicy id="example2">
+         <PolicyRequirementRule xsi:type="OR">
+-            <Rule xsi:type="Requester" value="https://sp.example.org" />
+-            <Rule xsi:type="Requester" value="https://another.example.org/shibboleth" />
++            <Rule xsi:type="Requester" value="https://sp.gluu.info" />
++            <Rule xsi:type="Requester" value="https://anothersp.gluu.info/shibboleth" />
+         </PolicyRequirementRule>
+ 
+         <AttributeRule attributeID="eduPersonScopedAffiliation" permitAny="true" />
+diff --git a/conf/attribute-resolver-ldap.xml b/conf/attribute-resolver-ldap.xml
+index 19b68d6..b223335 100644
+--- a/conf/attribute-resolver-ldap.xml
++++ b/conf/attribute-resolver-ldap.xml
+@@ -33,6 +33,27 @@
+ 
+     <AttributeDefinition xsi:type="Scoped" id="eduPersonScopedAffiliation" scope="%{idp.scope}">
+         <InputDataConnector ref="myLDAP" attributeNames="eduPersonAffiliation"/>
++        <AttributeEncoder xsi:type="SAML2ScopedString" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.6" friendlyName="eduPersonPrincipalName" encodeType="false" />
++    </AttributeDefinition>
++
++    <!--
++    The uid is the closest thing to a "standard" LDAP attribute
++    representing a local username, but you should generally *never*
++    expose uid to federated services, as it is rarely globally unique.
++    -->
++    <AttributeDefinition id="uid" xsi:type="Simple" >
++        <InputDataConnector ref="myLDAP" attributeNames="uid"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:0.9.2342.19200300.100.1.1" friendlyName="uid" encodeType="false" />
++    </AttributeDefinition>
++
++    <!--
++    In the rest of the world, the email address is the standard identifier,
++    despite the problems with that practice. Consider making the EPPN value
++    the same as your official email addresses whenever possible.
++    -->
++    <AttributeDefinition id="mail" xsi:type="Simple" >
++        <InputDataConnector ref="myLDAP" attributeNames="mail"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:0.9.2342.19200300.100.1.3" friendlyName="mail" encodeType="false" />
+     </AttributeDefinition>
+ -->
+ 
+diff --git a/conf/attribute-resolver.xml b/conf/attribute-resolver.xml
+index 0ee236b..e648324 100644
+--- a/conf/attribute-resolver.xml
++++ b/conf/attribute-resolver.xml
+@@ -32,6 +32,7 @@
+     -->
+     <AttributeDefinition id="eduPersonPrincipalName" xsi:type="Scoped" scope="%{idp.scope}">
+         <InputAttributeDefinition ref="uid" />
++        <AttributeEncoder xsi:type="SAML2ScopedString" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.6" friendlyName="eduPersonPrincipalName" encodeType="false" />
+     </AttributeDefinition>
+ 
+     <!--
+@@ -39,7 +40,9 @@
+     representing a local username, but you should generally *never*
+     expose uid to federated services, as it is rarely globally unique.
+     -->
+-    <AttributeDefinition id="uid" xsi:type="PrincipalName" />
++    <AttributeDefinition id="uid" xsi:type="PrincipalName">
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:0.9.2342.19200300.100.1.1" friendlyName="uid" encodeType="false" />
++    </AttributeDefinition>
+ 
+     <!--
+     In the rest of the world, the email address is the standard identifier,
+@@ -48,6 +51,7 @@
+     -->
+     <AttributeDefinition id="mail" xsi:type="Template">
+         <InputAttributeDefinition ref="uid" />
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:0.9.2342.19200300.100.1.3" friendlyName="mail" encodeType="false" />
+         <Template>
+           <![CDATA[
+                ${uid}@example.org
+@@ -60,6 +64,7 @@
+     -->
+     <AttributeDefinition id="eduPersonScopedAffiliation" xsi:type="Scoped" scope="%{idp.scope}">
+         <InputDataConnector ref="staticAttributes" attributeNames="affiliation" />
++        <AttributeEncoder xsi:type="SAML2ScopedString" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.9" friendlyName="eduPersonScopedAffiliation" encodeType="false" />
+     </AttributeDefinition>
+ 
+ 
+diff --git a/conf/authn/general-authn.xml b/conf/authn/general-authn.xml
+index b936f97..81da51d 100644
+--- a/conf/authn/general-authn.xml
++++ b/conf/authn/general-authn.xml
+@@ -25,6 +25,7 @@
+     expressions for password-based authentication over a secure channel, so anything more exotic requires
+     customization, as the examples below for IP address and SPNEGO authentication illustrate.
+     -->
++    <import resource="oxauth-supported-principals.xml"/>
+ 
+     <util:list id="shibboleth.AvailableAuthenticationFlows">
+         
+@@ -45,8 +46,6 @@
+                 <list>
+                     <bean parent="shibboleth.SAML2AuthnContextClassRef"
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:Kerberos" />
+-                    <bean parent="shibboleth.SAML1AuthenticationMethod"
+-                        c:method="urn:ietf:rfc:1510" />
+                 </list>
+             </property>
+         </bean>
+@@ -61,8 +60,6 @@
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:X509" />
+                     <bean parent="shibboleth.SAML2AuthnContextClassRef"
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:TLSClient" />
+-                    <bean parent="shibboleth.SAML1AuthenticationMethod"
+-                        c:method="urn:ietf:rfc:2246" />
+                 </list>
+             </property>
+         </bean>
+@@ -74,8 +71,6 @@
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:X509" />
+                     <bean parent="shibboleth.SAML2AuthnContextClassRef"
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:TLSClient" />
+-                    <bean parent="shibboleth.SAML1AuthenticationMethod"
+-                        c:method="urn:ietf:rfc:2246" />
+                 </list>
+             </property>
+         </bean>
+@@ -97,8 +92,6 @@
+                 <list>
+                     <bean parent="shibboleth.SAML2AuthnContextClassRef"
+                         c:classRef="http://example.org/ac/classes/mfa" />
+-                    <bean parent="shibboleth.SAML1AuthenticationMethod"
+-                        c:method="http://example.org/ac/classes/mfa" />
+                 </list>
+             </property>
+         </bean>
+@@ -120,8 +113,6 @@
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport" />
+                     <bean parent="shibboleth.SAML2AuthnContextClassRef"
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:Password" />
+-                    <bean parent="shibboleth.SAML1AuthenticationMethod"
+-                        c:method="urn:oasis:names:tc:SAML:1.0:am:password" />
+                 </list>
+             </property>
+         </bean>
+@@ -149,6 +140,7 @@
+ 
+         <bean id="authn/RemoteUserInternal" parent="shibboleth.AuthenticationFlow" />
+ 
++        <ref bean="authn/oxAuth"/>
+     </util:list>
+ 
+     <!--
+diff --git a/conf/authn/password-authn-config.xml b/conf/authn/password-authn-config.xml
+index 73ac7f8..5d60431 100644
+--- a/conf/authn/password-authn-config.xml
++++ b/conf/authn/password-authn-config.xml
+@@ -16,9 +16,10 @@
+     You can optionally comment out anything you don't need, but make sure not to
+     reference the corresponding validator in the list below if you do remove any.
+     -->
+-    <import resource="jaas-authn-config.xml" />
+-    <import resource="krb5-authn-config.xml" />
+-    <import resource="ldap-authn-config.xml" />
++    <!-- Choose an import based on the back-end you want to use. -->
++    <!-- <import resource="jaas-authn-config.xml" /> -->
++    <!-- <import resource="krb5-authn-config.xml" /> -->
++    <!-- <import resource="ldap-authn-config.xml" /> -->
+     
+     <!-- Ordered list of CredentialValidators to apply to a request. -->
+     <util:list id="shibboleth.authn.Password.Validators">
+@@ -130,8 +131,6 @@
+             c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport" />
+         <bean parent="shibboleth.SAML2AuthnContextClassRef"
+             c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:Password" />
+-        <bean parent="shibboleth.SAML1AuthenticationMethod"
+-            c:method="urn:oasis:names:tc:SAML:1.0:am:password" />
+     </util:list>
+     -->
+     
+diff --git a/conf/authn/remoteuser-authn-config.xml b/conf/authn/remoteuser-authn-config.xml
+index 4b7e722..35a6352 100644
+--- a/conf/authn/remoteuser-authn-config.xml
++++ b/conf/authn/remoteuser-authn-config.xml
+@@ -16,6 +16,9 @@
+     <bean id="shibboleth.authn.RemoteUser.externalAuthnPath" class="java.lang.String"
+         c:_0="contextRelative:Authn/RemoteUser" />
+     
++    <!-- Populate RP UI info from metadata? -->
++    <util:constant id="shibboleth.authn.RemoteUser.populateUIInfo" static-field="java.lang.Boolean.FALSE" />
++    
+     <!--
+     Default is to always use the path in the bean above. If you want to determine it
+     dynamically, define a bean called "shibboleth.authn.RemoteUser.externalAuthnPathStrategy"
+diff --git a/conf/c14n/subject-c14n.xml b/conf/c14n/subject-c14n.xml
+index e4b772f..daee424 100644
+--- a/conf/c14n/subject-c14n.xml
++++ b/conf/c14n/subject-c14n.xml
+@@ -102,8 +102,6 @@
+         <!-- The next four are for handling transient IDs (in-storage and stateless variants). -->
+         <ref bean="c14n/SAML2Transient" />
+         <ref bean="c14n/SAML2CryptoTransient" />
+-        <ref bean="c14n/SAML1Transient" /> 
+-        <ref bean="c14n/SAML1CryptoTransient" /> 
+         
+         <!-- Handle a SAML 2 persistent ID, provided a stored strategy is in use. -->
+         <!-- <ref bean="c14n/SAML2Persistent" /> -->
+@@ -113,7 +111,6 @@
+         having *no* circumstances for which they apply (see shibboleth.TransformNamePredicate below).
+         -->
+         <ref bean="c14n/SAML2Transform" />
+-        <ref bean="c14n/SAML1Transform" />
+     </util:list>
+     
+     <!-- What SAML NameID formats do you want to support direct transformations for? -->
+@@ -132,7 +129,7 @@
+     <bean id="shibboleth.NameTransformPredicate" parent="shibboleth.Conditions.RelyingPartyId">
+         <constructor-arg name="candidates">
+             <list>
+-                <!-- <value>https://sp.example.org</value> -->
++                <!-- <value>https://sp.gluu.info</value> -->
+             </list>
+         </constructor-arg>
+     </bean>
+diff --git a/conf/global.xml b/conf/global.xml
+index 457a814..7f4a0e8 100644
+--- a/conf/global.xml
++++ b/conf/global.xml
+@@ -48,5 +48,13 @@
+         <entry key="foo" value="bar"/>
+     </util:map>
+     -->
++
++     <bean id="idpConfigurationFactory"
++          class="org.gluu.idp.externalauth.openid.conf.IdpConfigurationFactory" />
++
++     <bean id="shibboleth.GluuStorageService"
++          class="org.gluu.idp.storage.GluuStorageService" p:cleanupInterval="%{idp.storage.cleanupInterval:PT10M}" p:contextExpiration="%{idp.session.slop:P1D}">
++        <constructor-arg name="configurationFactory" value="#{idpConfigurationFactory.instance()}" />
++    </bean>
+     
+ </beans>
+diff --git a/conf/intercept/consent-intercept-config.xml b/conf/intercept/consent-intercept-config.xml
+index 6e899e6..d611b01 100644
+--- a/conf/intercept/consent-intercept-config.xml
++++ b/conf/intercept/consent-intercept-config.xml
+@@ -29,7 +29,7 @@
+             <bean class="com.google.common.base.Functions" factory-method="forMap" c:defaultValue="terms-of-use">
+                 <constructor-arg name="map">
+                     <map>
+-                        <entry key="https://sp.example.org/shibboleth" value="example-terms" />
++                        <entry key="https://sp.gluu.info/shibboleth" value="example-terms" />
+                     </map>
+                 </constructor-arg>
+             </bean>
+@@ -90,7 +90,7 @@
+ 
+     <!--
+     For attribute-release consent, the default entry is :
+-     'YYYYMMDDTHHMMSSZ|https://sp.example.org|AttributeReleaseConsent|jdoe|email,eduPersonAffiliation|rHo...rrw=,rHo...rrw=|false,false'
++     'YYYYMMDDTHHMMSSZ|https://sp.gluu.info|AttributeReleaseConsent|jdoe|email,eduPersonAffiliation|rHo...rrw=,rHo...rrw=|false,false'
+     -->
+     <util:map id="shibboleth.consent.attribute-release.AuditFormattingMap">
+         <entry key="Shibboleth-Consent-Audit" value="%T|%SP|%e|%u|%CCI|%CCV|%CCA" />
+diff --git a/conf/intercept/context-check-intercept-config.xml b/conf/intercept/context-check-intercept-config.xml
+index aae07f0..35797a8 100644
+--- a/conf/intercept/context-check-intercept-config.xml
++++ b/conf/intercept/context-check-intercept-config.xml
+@@ -22,7 +22,7 @@
+     <bean id="shibboleth.context-check.Condition" parent="shibboleth.Conditions.AND">
+         <constructor-arg>
+             <list>
+-                <bean parent="shibboleth.Conditions.RelyingPartyId" c:candidates="#{{'https://sp.example.org'}}" />
++                <bean parent="shibboleth.Conditions.RelyingPartyId" c:candidates="#{{'https://sp.gluu.info'}}" />
+                 <bean class="net.shibboleth.idp.profile.logic.SimpleAttributePredicate"
+                         p:useUnfilteredAttributes="true">
+                     <property name="attributeValueMap">
+diff --git a/conf/relying-party.xml b/conf/relying-party.xml
+index 5045b93..f378ab3 100644
+--- a/conf/relying-party.xml
++++ b/conf/relying-party.xml
+@@ -22,7 +22,7 @@
+     <bean id="shibboleth.UnverifiedRelyingParty" parent="RelyingParty">
+         <property name="profileConfigurations">
+             <list>
+-            <!-- <bean parent="SAML2.SSO" p:encryptAssertions="false" /> -->
++                <bean parent="SAML2.SSO" p:encryptAssertions="false" />
+             </list>
+         </property>
+     </bean>
+@@ -60,8 +60,9 @@
+         Override example that identifies a single RP by name and configures it
+         for SAML 2 SSO without encryption. This is a common "vendor" scenario.
+         -->
++
+         <!--
+-        <bean parent="RelyingPartyByName" c:relyingPartyIds="https://sp.example.org">
++        <bean parent="RelyingPartyByName" c:relyingPartyIds="https://ce.gluu.info/shibboleth">
+             <property name="profileConfigurations">
+                 <list>
+                     <bean parent="SAML2.SSO" p:encryptAssertions="false" />
+diff --git a/views/duo.vm b/views/duo.vm
+index d212df7..79d4018 100644
+--- a/views/duo.vm
++++ b/views/duo.vm
+@@ -39,7 +39,7 @@
+     <div class="wrapper">
+       <div class="container">
+         <header>
+-          <img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
++          <img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
+         </header>
+ 
+         <div class="content">
+diff --git a/views/error.vm b/views/error.vm
+index dcb8e2b..343426a 100644
+--- a/views/error.vm
++++ b/views/error.vm
+@@ -53,7 +53,7 @@
+     <div class="wrapper">
+     	<div class="container">
+         	<header>
+-				<img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
++				<img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
+ 				<h3>$title - $titleSuffix</h3>
+ 			</header>
+ 		
+diff --git a/views/login.vm b/views/login.vm
+index 7609d40..6d4cb93 100644
+--- a/views/login.vm
++++ b/views/login.vm
+@@ -38,7 +38,7 @@
+     <div class="wrapper">
+       <div class="container">
+         <header>
+-          <img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
++          <img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
+         </header>
+ 
+         <div class="content">
+diff --git a/views/logout-complete.vm b/views/logout-complete.vm
+index 7341e69..a4f0f1a 100644
+--- a/views/logout-complete.vm
++++ b/views/logout-complete.vm
+@@ -29,7 +29,7 @@
+     <div class="wrapper">
+       <div class="container">
+         <header>
+-          <img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
++          <img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
+         </header>
+ 
+         <div class="content">
+diff --git a/views/logout-propagate.vm b/views/logout-propagate.vm
+index 470eff5..bc8fa52 100644
+--- a/views/logout-propagate.vm
++++ b/views/logout-propagate.vm
+@@ -30,7 +30,7 @@
+     <div class="wrapper">
+       <div class="container">
+         <header>
+-          <img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
++          <img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
+         </header>
+ 
+         <div class="content">
+diff --git a/views/logout.vm b/views/logout.vm
+index 0b9103b..b253e8e 100644
+--- a/views/logout.vm
++++ b/views/logout.vm
+@@ -40,7 +40,7 @@
+     <div class="wrapper">   
+       <div class="container">
+         <header>
+-          <img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
++          <img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
+         </header>
+ 
+         <div class="content">
+diff --git a/views/spnego-unavailable.vm b/views/spnego-unavailable.vm
+index 3673f02..580ce5d 100644
+--- a/views/spnego-unavailable.vm
++++ b/views/spnego-unavailable.vm
+@@ -25,7 +25,7 @@
+     <div class="wrapper">
+       <div class="container">
+         <header>
+-          <img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
++          <img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
+           <h3>#springMessageText("idp.title", "Web Login Sevice") - #springMessage("idp.title.suffix", "Error")</h3>
+         </header>
+                 
+diff --git a/views/user-prefs.vm b/views/user-prefs.vm
+index 8de0503..71b7408 100644
+--- a/views/user-prefs.vm
++++ b/views/user-prefs.vm
+@@ -24,7 +24,7 @@
+     <div class="wrapper">
+       <div class="container">
+         <header>
+-          <img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
++          <img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
+           <h3>#springMessageText("idp.title", "Web Login Service") - #springMessageText("idp.userprefs.title.suffix", "Login Preferences")</h3>
+           <p>
+           #springMessage("idp.userprefs.info")
+
