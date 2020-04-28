@@ -26,7 +26,7 @@
 
 		<oxcore.version>4.2.0-SNAPSHOT</oxcore.version>
 		<oxauth.version>4.2.0-SNAPSHOT</oxauth.version>
-		<oxtrust.version>4.2.0-SNAPSHOT</oxtrust.version>
+		<oxtrust.version>4.2.0.idp4-SNAPSHOT</oxtrust.version>
 
 		<jackson.version>1.9.1f1</jackson.version>
 		<jaxrs.version>3.0.12.Final</jaxrs.version>

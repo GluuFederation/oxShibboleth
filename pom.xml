@@ -6,7 +6,7 @@
     <name>OX Shibboleth</name>
     <packaging>pom</packaging>
     <url>http://ox.gluu.org</url>
-    <version>4.2.0-SNAPSHOT</version>
+    <version>4.2.0.idp4-SNAPSHOT</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
