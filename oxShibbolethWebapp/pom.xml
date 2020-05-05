@@ -208,7 +208,8 @@
                                                 WEB-INF/lib/joda-time-2.9.9.jar,
                                                 WEB-INF/lib/slf4j-api-1.7.26.jar,
                                                 WEB-INF/lib/stax-ex-1.8.jar,
-                                                WEB-INF/lib/txw2-2.3.1.jar
+                                                WEB-INF/lib/txw2-2.3.1.jar,
+                                                WEB-INF/lib/txw2-2.3.3-b02.jar
                                         </packagingExcludes>					
 				</configuration>
 				<executions>
