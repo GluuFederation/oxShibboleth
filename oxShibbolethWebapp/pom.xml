@@ -185,21 +185,31 @@
 							<Build-Branch>${git.branch}</Build-Branch>
 						</manifestEntries>
 					</archive>
-					<packagingExcludes>WEB-INF/classes, WEB-INF/lib/activation-1.1.jar,
-						WEB-INF/lib/httpcore-4.4.6.jar,
-						WEB-INF/lib/httpclient-cache-4.3.6.jar,
-						WEB-INF/lib/slf4j-api-1.7.25.jar, WEB-INF/lib/stax-api-1.0-2.jar,
-						WEB-INF/lib/commons-collections-3.2.1.jar,
-						WEB-INF/lib/guava-20.0.jar,
-						WEB-INF/lib/javassist-3.18.1-GA.jar,
-						WEB-INF/lib/jboss-logging-3.1.3.GA.jar,
-						WEB-INF/lib/joda-time-2.9.9.jar,
-						WEB-INF/lib/jackson-annotations-2.9.9.jar,
-						WEB-INF/lib/unboundid-ldapsdk-4.0.9.jar,
-						WEB-INF/lib/jcip-annotations-1.0.jar, WEB-INF/lib/jsr305-3.0.1.jar,
-						WEB-INF/lib/jackson-annotations-2.8.3.jar, WEB-INF/lib/jackson-core-2.8.3.jar,
-						WEB-INF/lib/jackson-databind-2.8.3.jar, WEB-INF/lib/jackson-datatype-joda-2.8.3.jar
-					</packagingExcludes>
+                                        <packagingExcludes>
+                                                WEB-INF/classes,
+                                                WEB-INF/lib/FastInfoset-1.2.16.jar,
+                                                WEB-INF/lib/annotations-18.0.0.jar,
+                                                WEB-INF/lib/checker-qual-2.5.2.jar,
+                                                WEB-INF/lib/commons-cli-1.3.1.jar,
+                                                WEB-INF/lib/commons-lang3-3.8.1.jar,
+                                                WEB-INF/lib/commons-pool2-2.4.3.jar,
+                                                WEB-INF/lib/error_prone_annotations-2.2.0.jar,
+                                                WEB-INF/lib/guava-27.1-jre.jar,
+                                                WEB-INF/lib/httpclient-4.5.3.jar,
+                                                WEB-INF/lib/httpcore-4.4.6.jar,
+                                                WEB-INF/lib/istack-commons-runtime-3.0.8.jar,
+                                                WEB-INF/lib/j2objc-annotations-1.1.jar,
+                                                WEB-INF/lib/jackson-annotations-2.10.1.jar,
+                                                WEB-INF/lib/jackson-core-2.10.1.jar,
+                                                WEB-INF/lib/jackson-databind-2.10.1.jar,
+                                                WEB-INF/lib/jakarta.activation-1.2.1.jar,
+						WEB-INF/lib/javassist-3.21.0-GA.jar,
+                                                WEB-INF/lib/jaxb-runtime-2.3.2.jar,
+                                                WEB-INF/lib/joda-time-2.9.9.jar,
+                                                WEB-INF/lib/slf4j-api-1.7.26.jar,
+                                                WEB-INF/lib/stax-ex-1.8.jar,
+                                                WEB-INF/lib/txw2-2.3.1.jar
+                                        </packagingExcludes>					
 				</configuration>
 				<executions>
 					<execution>
