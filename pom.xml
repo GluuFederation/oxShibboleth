@@ -11,13 +11,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<maven.min-version>3.0.3</maven.min-version>
 		<shibboleth.version>4.0.0</shibboleth.version>
 		<shibboleth.dist.md5>7d08384d3473cfe31d9107fc0670ebf9</shibboleth.dist.md5>
 	</properties>
-	<prerequisites>
-		<maven>${maven.min-version}</maven>
-	</prerequisites>
 	<repositories>
 		<repository>
 			<id>central</id>
