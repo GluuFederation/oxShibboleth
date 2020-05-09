@@ -1,46 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>oxshibbolethIdp</artifactId>
 	<name>Gluu Shibboleth IDP</name>
 	<url>http://www.gluu.org</url>
 	<packaging>war</packaging>
-
 	<parent>
 		<groupId>org.gluu</groupId>
 		<artifactId>oxShibboleth</artifactId>
 		<version>4.2.0-SNAPSHOT</version>
 	</parent>
-
 	<prerequisites>
 		<maven>2.3</maven>
 	</prerequisites>
-
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
 		<oxcore.version>4.2.0-SNAPSHOT</oxcore.version>
 		<oxauth.version>4.2.0-SNAPSHOT</oxauth.version>
 		<oxtrust.version>4.2.0-SNAPSHOT</oxtrust.version>
-
 		<jackson.version>1.9.1f1</jackson.version>
 		<jaxrs.version>3.0.12.Final</jaxrs.version>
 		<resteasy.version>3.0.12.Final</resteasy.version>
 		<httpcore.version>4.3.3</httpcore.version>
 		<httpclient.version>4.3.6</httpclient.version>
-
 		<log4j.version>2.11.2</log4j.version>
 		<slf4j.version>1.7.26</slf4j.version>
-
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
 		<buildDate>${maven.build.timestamp}</buildDate>
 	</properties>
-
 	<repositories>
 		<repository>
 			<id>central</id>
@@ -64,18 +53,15 @@
 			<url>http://ox.gluu.org/maven</url>
 		</repository>
 	</repositories>
-
 	<build>
 		<defaultGoal>package</defaultGoal>
 		<finalName>${project.artifactId}-${project.version}</finalName>
-
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-install-plugin</artifactId>
 				<version>2.4</version>
 			</plugin>
-
 			<plugin>
 				<groupId>com.googlecode.maven-download-plugin</groupId>
 				<artifactId>download-maven-plugin</artifactId>
@@ -106,38 +92,24 @@
 						<phase>process-sources</phase>
 						<configuration>
 							<target>
-								<property name="shib.basedir"
-									value="${project.build.directory}/shibboleth-identity-provider-${shibboleth.version}" />
-
-								<property name="webapp.dir"
-									value="${shib.basedir}/webapp" />
-								<property name="idp.home.path"
-									value="file:/opt/shibboleth-idp" />
-
-								<delete dir="${shib.basedir}/target" />
-
-								<mkdir dir="${shib.basedir}/target" />
-
+								<property name="shib.basedir" value="${project.build.directory}/shibboleth-identity-provider-${shibboleth.version}"/>
+								<property name="webapp.dir" value="${shib.basedir}/webapp"/>
+								<property name="idp.home.path" value="file:/opt/shibboleth-idp"/>
+								<delete dir="${shib.basedir}/target"/>
+								<mkdir dir="${shib.basedir}/target"/>
 								<!-- create web.xml -->
-								<copy file="${webapp.dir}/WEB-INF/web.xml"
-									todir="${shib.basedir}/target" preservelastmodified="true"
-									overwrite="true">
+								<copy file="${webapp.dir}/WEB-INF/web.xml" todir="${shib.basedir}/target" preservelastmodified="true" overwrite="true">
 									<filterset begintoken="${" endtoken="}">
-										<filter token="idp.home" value="${idp.home.path}" />
+										<filter token="idp.home" value="${idp.home.path}"/>
 									</filterset>
 								</copy>
-
 								<!-- build the war file -->
-								<war
-									warfile="${shib.basedir}/target/${project.build.finalName}.war"
-									webxml="${shib.basedir}/target/web.xml">
+								<war warfile="${shib.basedir}/target/${project.build.finalName}.war" webxml="${shib.basedir}/target/web.xml">
 									<!--<lib dir="${shib.basedir}/lib" excludes="servlet-api*.jar,jsp-api*.jar"/> -->
-									<webinf dir="${webapp.dir}/WEB-INF" excludes="web.xml" />
-									<fileset dir="${webapp.dir}" excludes="WEB-INF/**" />
+									<webinf dir="${webapp.dir}/WEB-INF" excludes="web.xml"/>
+									<fileset dir="${webapp.dir}" excludes="WEB-INF/**"/>
 								</war>
-								<unwar
-									dest="${project.build.directory}/${project.build.finalName}"
-									src="${shib.basedir}/target/${project.build.finalName}.war" />
+								<unwar dest="${project.build.directory}/${project.build.finalName}" src="${shib.basedir}/target/${project.build.finalName}.war"/>
 							</target>
 						</configuration>
 						<goals>
@@ -185,7 +157,7 @@
 							<Build-Branch>${git.branch}</Build-Branch>
 						</manifestEntries>
 					</archive>
-                                        <packagingExcludes>
+					<packagingExcludes>
                                                 WEB-INF/classes,
                                                 WEB-INF/lib/FastInfoset-1.2.16.jar,
                                                 WEB-INF/lib/annotations-18.0.0.jar,
@@ -210,7 +182,7 @@
                                                 WEB-INF/lib/stax-ex-1.8.jar,
                                                 WEB-INF/lib/txw2-2.3.1.jar,
                                                 WEB-INF/lib/txw2-2.3.3-b02.jar
-                                        </packagingExcludes>					
+                                        </packagingExcludes>
 				</configuration>
 				<executions>
 					<execution>
@@ -248,7 +220,6 @@
 					<doUpdate>false</doUpdate>
 				</configuration>
 			</plugin>
-
 			<!-- Build number plugin -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -278,7 +249,6 @@
 			</plugin>
 		</plugins>
 	</reporting>
-
 	<dependencies>
 		<!-- <dependency> <groupId>commons-codec</groupId> <artifactId>commons-codec</artifactId> 
 			<version>1.7</version> </dependency> <dependency> <groupId>commons-logging</groupId> 
@@ -294,7 +264,6 @@
 			<artifactId>unimr-memcached</artifactId> <version>idp2.4-rev218</version> 
 			</dependency> <dependency> <groupId>org.slf4j</groupId> <artifactId>log4j-over-slf4j</artifactId> 
 			<version>1.7.7</version> </dependency> -->
-
 		<!--START: Couchbase JDBC section -->
 		<dependency>
 			<groupId>org.gluu.jdbc</groupId>
@@ -313,10 +282,7 @@
 			<version>1.4</version>
 		</dependency>
 		<!--END: Couchbase JDBC section -->
-
-
 		<!--START: OX OpenId Authentication -->
-
 		<dependency>
 			<groupId>org.gluu</groupId>
 			<artifactId>shib-oxauth-authn3</artifactId>
@@ -387,7 +353,6 @@
 			<artifactId>oxcore-persistence-hybrid</artifactId>
 			<version>${oxcore.version}</version>
 		</dependency>
-
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -399,35 +364,29 @@
 			<artifactId>slf4j-simple</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-
 		<!-- Google -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>27.1-jre</version>
 		</dependency>
-
 		<!-- oxLogoServlet -->
 		<dependency>
 			<groupId>org.gluu</groupId>
 			<artifactId>oxLogoServlet</artifactId>
 			<version>${oxtrust.version}</version>
 		</dependency>
-
-
 		<!-- Jackson update -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.10.1</version>
 		</dependency>
-
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-joda</artifactId>
 			<version>2.10.1</version>
 		</dependency>
-
 		<!-- <dependency> <groupId>org.gluu</groupId> <artifactId>openid-auth-client</artifactId> 
 			<version>${oxtrust.version}</version> <exclusions> <exclusion> <artifactId>*</artifactId> 
 			<groupId>*</groupId> </exclusion> </exclusions> </dependency> <dependency> 
