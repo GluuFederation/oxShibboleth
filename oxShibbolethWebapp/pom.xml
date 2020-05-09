@@ -18,8 +18,6 @@
 		<maven.compiler.target>11</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<oxcore.version>4.2.0-SNAPSHOT</oxcore.version>
-		<oxauth.version>4.2.0-SNAPSHOT</oxauth.version>
-		<oxtrust.version>4.2.0-SNAPSHOT</oxtrust.version>
 		<jackson.version>1.9.1f1</jackson.version>
 		<jaxrs.version>3.0.12.Final</jaxrs.version>
 		<resteasy.version>3.0.12.Final</resteasy.version>
@@ -35,22 +33,27 @@
 			<id>central</id>
 			<name>Maven Repository Switchboard</name>
 			<layout>default</layout>
-			<url>http://repo1.maven.org/maven2</url>
+			<url>https://repo1.maven.org/maven2</url>
 		</repository>
 		<repository>
 			<id>repository.jboss.org</id>
 			<name>JBoss Repository</name>
-			<url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+			<url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
 		</repository>
 		<repository>
 			<id>shibboleth</id>
 			<name>Shibboleth releases</name>
 			<url>https://build.shibboleth.net/nexus/content/repositories/releases</url>
 		</repository>
+                <repository>
+                        <id>bouncycastle</id>
+                        <name>bouncycastle releases</name>
+			<url>https://repo1.maven.org/maven2/org/bouncycastle</url>
+                </repository>
 		<repository>
 			<id>gluu</id>
 			<name>Gluu repository</name>
-			<url>http://ox.gluu.org/maven</url>
+			<url>https://ox.gluu.org/maven</url>
 		</repository>
 	</repositories>
 	<build>
@@ -118,12 +121,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-patch-plugin</artifactId> 
-				<version>1.1.1</version> <configuration> <targetDirectory>${project.build.directory}/${project.build.finalName}</targetDirectory> 
-				</configuration> <executions> <execution> <id>gluu-patch</id> <phase>generate-resources</phase> 
-				<configuration> <patchDirectory>src/main/patches</patchDirectory> <naturalOrderProcessing>true</naturalOrderProcessing> 
-				<optimizations>false</optimizations> </configuration> <goals> <goal>apply</goal> 
-				</goals> </execution> </executions> </plugin> -->
 			<plugin>
 				<groupId>pl.project13.maven</groupId>
 				<artifactId>git-commit-id-plugin</artifactId>
@@ -250,21 +247,6 @@
 		</plugins>
 	</reporting>
 	<dependencies>
-		<!-- <dependency> <groupId>commons-codec</groupId> <artifactId>commons-codec</artifactId> 
-			<version>1.7</version> </dependency> <dependency> <groupId>commons-logging</groupId> 
-			<artifactId>commons-logging</artifactId> <version>1.1.1</version> </dependency> 
-			<dependency> <groupId>commons-io</groupId> <artifactId>commons-io</artifactId> 
-			<version>2.2</version> </dependency> <dependency> <groupId>commons-lang</groupId> 
-			<artifactId>commons-lang</artifactId> <version>2.6</version> </dependency> 
-			<dependency> <groupId>commons-configuration</groupId> <artifactId>commons-configuration</artifactId> 
-			<version>1.9</version> <exclusions> <exclusion> <artifactId>commons-beanutils-core</artifactId> 
-			<groupId>commons-beanutils</groupId> </exclusion> </exclusions> </dependency> 
-			<dependency> <groupId>spy</groupId> <artifactId>spymemcached</artifactId> 
-			<version>2.8.1</version> </dependency> <dependency> <groupId>unimr.shib2</groupId> 
-			<artifactId>unimr-memcached</artifactId> <version>idp2.4-rev218</version> 
-			</dependency> <dependency> <groupId>org.slf4j</groupId> <artifactId>log4j-over-slf4j</artifactId> 
-			<version>1.7.7</version> </dependency> -->
-		<!--START: Couchbase JDBC section -->
 		<dependency>
 			<groupId>org.gluu.jdbc</groupId>
 			<artifactId>jdbc-n1ql</artifactId>
@@ -370,13 +352,6 @@
 			<artifactId>guava</artifactId>
 			<version>27.1-jre</version>
 		</dependency>
-		<!-- oxLogoServlet -->
-		<dependency>
-			<groupId>org.gluu</groupId>
-			<artifactId>oxLogoServlet</artifactId>
-			<version>${oxtrust.version}</version>
-		</dependency>
-		<!-- Jackson update -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -387,56 +362,5 @@
 			<artifactId>jackson-datatype-joda</artifactId>
 			<version>2.10.1</version>
 		</dependency>
-		<!-- <dependency> <groupId>org.gluu</groupId> <artifactId>openid-auth-client</artifactId> 
-			<version>${oxtrust.version}</version> <exclusions> <exclusion> <artifactId>*</artifactId> 
-			<groupId>*</groupId> </exclusion> </exclusions> </dependency> <dependency> 
-			<groupId>org.gluu</groupId> <artifactId>oxtrust-saml-openid-auth-client</artifactId> 
-			<version>${oxtrust.version}</version> <exclusions> <exclusion> <artifactId>*</artifactId> 
-			<groupId>*</groupId> </exclusion> </exclusions> </dependency> <dependency> 
-			<groupId>org.gluu</groupId> <artifactId>oxcore-util</artifactId> <version>${oxcore.version}</version> 
-			<exclusions> <exclusion> <artifactId>*</artifactId> <groupId>*</groupId> 
-			</exclusion> </exclusions> </dependency> <dependency> <groupId>org.gluu</groupId> 
-			<artifactId>oxcore-persistence-annotation</artifactId> <version>${oxcore.version}</version> 
-			<exclusions> <exclusion> <artifactId>*</artifactId> <groupId>*</groupId> 
-			</exclusion> </exclusions> </dependency> <dependency> <groupId>org.gluu</groupId> 
-			<artifactId>oxcore-persistence-ldap</artifactId> <version>${oxcore.version}</version> 
-			<exclusions> <exclusion> <artifactId>*</artifactId> <groupId>*</groupId> 
-			</exclusion> </exclusions> </dependency> <dependency> <groupId>org.gluu</groupId> 
-			<artifactId>oxauth-model</artifactId> <version>${oxauth.version}</version> 
-			<exclusions> <exclusion> <artifactId>*</artifactId> <groupId>*</groupId> 
-			</exclusion> </exclusions> </dependency> <dependency> <groupId>org.gluu</groupId> 
-			<artifactId>oxauth-client</artifactId> <version>${oxauth.version}</version> 
-			<exclusions> <exclusion> <artifactId>*</artifactId> <groupId>*</groupId> 
-			</exclusion> </exclusions> </dependency> <dependency> <groupId>org.jboss.resteasy</groupId> 
-			<artifactId>resteasy-jaxrs</artifactId> <version>${resteasy.version}</version> 
-			<exclusions> <exclusion> <artifactId>*</artifactId> <groupId>*</groupId> 
-			</exclusion> </exclusions> </dependency> <dependency> <groupId>org.apache.httpcomponents</groupId> 
-			<artifactId>httpcore</artifactId> <version>${httpcore.version}</version> 
-			<exclusions> <exclusion> <artifactId>*</artifactId> <groupId>*</groupId> 
-			</exclusion> </exclusions> </dependency> <dependency> <groupId>org.apache.httpcomponents</groupId> 
-			<artifactId>httpclient</artifactId> <version>${httpclient.version}</version> 
-			<exclusions> <exclusion> <artifactId>*</artifactId> <groupId>*</groupId> 
-			</exclusion> </exclusions> </dependency> <dependency> <groupId>org.codehaus.jettison</groupId> 
-			<artifactId>jettison</artifactId> <version>1.3.7</version> <exclusions> <exclusion> 
-			<artifactId>*</artifactId> <groupId>*</groupId> </exclusion> </exclusions> 
-			</dependency> <dependency> <groupId>com.unboundid</groupId> <artifactId>unboundid-ldapsdk</artifactId> 
-			<version>3.2.0</version> <exclusions> <exclusion> <artifactId>*</artifactId> 
-			<groupId>*</groupId> </exclusion> </exclusions> </dependency> <dependency> 
-			<groupId>javax.persistence</groupId> <artifactId>persistence-api</artifactId> 
-			<version>1.0</version> <exclusions> <exclusion> <artifactId>*</artifactId> 
-			<groupId>*</groupId> </exclusion> </exclusions> </dependency> <dependency> 
-			<groupId>org.codehaus.jackson</groupId> <artifactId>jackson-core-asl</artifactId> 
-			<version>${jackson.version}</version> <exclusions> <exclusion> <artifactId>*</artifactId> 
-			<groupId>*</groupId> </exclusion> </exclusions> </dependency> <dependency> 
-			<groupId>org.codehaus.jackson</groupId> <artifactId>jackson-mapper-asl</artifactId> 
-			<version>${jackson.version}</version> <exclusions> <exclusion> <artifactId>*</artifactId> 
-			<groupId>*</groupId> </exclusion> </exclusions> </dependency> <dependency> 
-			<groupId>org.codehaus.jackson</groupId> <artifactId>jackson-xc</artifactId> 
-			<version>${jackson.version}</version> <exclusions> <exclusion> <artifactId>*</artifactId> 
-			<groupId>*</groupId> </exclusion> </exclusions> </dependency> <dependency> 
-			<groupId>javax.servlet.jsp.jstl</groupId> <artifactId>jstl-api</artifactId> 
-			<version>1.2</version> <exclusions> <exclusion> <artifactId>*</artifactId> 
-			<groupId>*</groupId> </exclusion> </exclusions> </dependency> -->
-		<!--END: OX OpenId Authentication -->
 	</dependencies>
 </project>
