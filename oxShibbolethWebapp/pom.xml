@@ -172,13 +172,14 @@
                                                 WEB-INF/lib/jackson-core-2.10.1.jar,
                                                 WEB-INF/lib/jackson-databind-2.10.1.jar,
                                                 WEB-INF/lib/jakarta.activation-1.2.1.jar,
-						WEB-INF/lib/javassist-3.21.0-GA.jar,
+												WEB-INF/lib/javassist-3.21.0-GA.jar,
                                                 WEB-INF/lib/jaxb-runtime-2.3.2.jar,
                                                 WEB-INF/lib/joda-time-2.9.9.jar,
                                                 WEB-INF/lib/slf4j-api-1.7.26.jar,
                                                 WEB-INF/lib/stax-ex-1.8.jar,
                                                 WEB-INF/lib/txw2-2.3.1.jar,
-                                                WEB-INF/lib/txw2-2.3.3-b02.jar
+                                                WEB-INF/lib/txw2-2.3.3-b02.jar,
+                                                WEB-INF/lib/jakarta.xml.bind-api-2.3.2.jar
                                         </packagingExcludes>
 				</configuration>
 				<executions>
