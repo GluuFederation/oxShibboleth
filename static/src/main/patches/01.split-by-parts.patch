@@ -643,7 +643,7 @@ index 457a814..7f4a0e8 100644
 +          class="org.gluu.idp.externalauth.openid.conf.IdpConfigurationFactory" />
 +
 +     <bean id="shibboleth.GluuStorageService"
-+          class="org.gluu.idp.storage.GluuStorageService" p:cleanupInterval="%{idp.storage.cleanupInterval:PT10M}" >
++          class="org.gluu.idp.storage.GluuStorageService" p:cleanupInterval="%{idp.storage.cleanupInterval:PT10M}" p:contextExpiration="%{idp.storage.contextExpiration:PT24H}">
 +        <constructor-arg name="configurationFactory" value="#{idpConfigurationFactory.instance()}" />
 +    </bean>
      

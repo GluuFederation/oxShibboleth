@@ -1,7 +1,7 @@
 --- shibboleth-idp.orig/conf/global.xml	2020-06-23 14:31:46.093910300 +0300
 +++ shibboleth-idp/conf/global.xml	2020-06-23 14:31:31.308222200 +0300
 @@ -56,5 +56,11 @@
-           class="org.gluu.idp.storage.GluuStorageService" p:cleanupInterval="%{idp.storage.cleanupInterval:PT10M}" >
+          class="org.gluu.idp.storage.GluuStorageService" p:cleanupInterval="%{idp.storage.cleanupInterval:PT10M}" p:contextExpiration="%{idp.storage.contextExpiration:PT24H}">
          <constructor-arg name="configurationFactory" value="#{idpConfigurationFactory.instance()}" />
      </bean>
 -    
