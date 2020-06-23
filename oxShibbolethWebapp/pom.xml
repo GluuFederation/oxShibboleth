@@ -181,7 +181,8 @@
                                                 WEB-INF/lib/txw2-2.3.3-b02.jar,
                                                 WEB-INF/lib/jakarta.xml.bind-api-2.3.2.jar,
                                                 WEB-INF/lib/spring-web-5.0.9.RELEASE.jar,
-                                                WEB-INF/lib/spring-webmvc-5.0.9.RELEASE.jar
+                                                WEB-INF/lib/spring-webmvc-5.0.9.RELEASE.jar,
+                                                WEB-INF/lib/slf4j-simple-1.7.26.jar
                                         </packagingExcludes>
 				</configuration>
 				<executions>
