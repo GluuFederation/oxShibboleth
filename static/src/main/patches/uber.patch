@@ -696,17 +696,6 @@ index 5045b93..f378ab3 100644
              </list>
          </property>
      </bean>
-@@ -60,8 +60,9 @@
-         Override example that identifies a single RP by name and configures it
-         for SAML 2 SSO without encryption. This is a common "vendor" scenario.
-         -->
-+
-         <!--
--        <bean parent="RelyingPartyByName" c:relyingPartyIds="https://sp.example.org">
-+        <bean parent="RelyingPartyByName" c:relyingPartyIds="https://ce.gluu.info/shibboleth">
-             <property name="profileConfigurations">
-                 <list>
-                     <bean parent="SAML2.SSO" p:encryptAssertions="false" />
 diff --git a/flows/authn/oxAuth/oxauth-authn-beans.xml b/flows/authn/oxAuth/oxauth-authn-beans.xml
 new file mode 100644
 index 0000000..b8c03c4
