@@ -1,7 +1,6 @@
-diff --git a/conf/attribute-filter.xml b/conf/attribute-filter.xml
-index 7787d0c..99b2017 100644
---- a/conf/attribute-filter.xml
-+++ b/conf/attribute-filter.xml
+diff -aurN shibboleth-idp.orig/conf/attribute-filter.xml shibboleth-idp/conf/attribute-filter.xml
+--- shibboleth-idp.orig/conf/attribute-filter.xml	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/conf/attribute-filter.xml	2020-06-24 13:10:06.904000000 +0300
 @@ -78,7 +78,7 @@
  
      <!-- Release an additional attribute to an SP. -->
@@ -22,11 +21,9 @@ index 7787d0c..99b2017 100644
          </PolicyRequirementRule>
  
          <AttributeRule attributeID="eduPersonScopedAffiliation" permitAny="true" />
-diff --git a/conf/attribute-resolver-full.xml b/conf/attribute-resolver-full.xml
-new file mode 100644
-index 0000000..012656f
---- /dev/null
-+++ b/conf/attribute-resolver-full.xml
+diff -aurN shibboleth-idp.orig/conf/attribute-resolver-full.xml shibboleth-idp/conf/attribute-resolver-full.xml
+--- shibboleth-idp.orig/conf/attribute-resolver-full.xml	1970-01-01 03:00:00.000000000 +0300
++++ shibboleth-idp/conf/attribute-resolver-full.xml	2020-06-24 13:10:06.907000000 +0300
 @@ -0,0 +1,285 @@
 +<?xml version="1.0" encoding="UTF-8"?>
 +<!--
@@ -313,10 +310,9 @@ index 0000000..012656f
 +-->
 +
 +</AttributeResolver>
-diff --git a/conf/attribute-resolver-ldap.xml b/conf/attribute-resolver-ldap.xml
-index 19b68d6..b223335 100644
---- a/conf/attribute-resolver-ldap.xml
-+++ b/conf/attribute-resolver-ldap.xml
+diff -aurN shibboleth-idp.orig/conf/attribute-resolver-ldap.xml shibboleth-idp/conf/attribute-resolver-ldap.xml
+--- shibboleth-idp.orig/conf/attribute-resolver-ldap.xml	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/conf/attribute-resolver-ldap.xml	2020-06-24 13:10:06.909000000 +0300
 @@ -33,6 +33,27 @@
  
      <AttributeDefinition xsi:type="Scoped" id="eduPersonScopedAffiliation" scope="%{idp.scope}">
@@ -345,10 +341,9 @@ index 19b68d6..b223335 100644
      </AttributeDefinition>
  -->
  
-diff --git a/conf/attribute-resolver.xml b/conf/attribute-resolver.xml
-index 0ee236b..e648324 100644
---- a/conf/attribute-resolver.xml
-+++ b/conf/attribute-resolver.xml
+diff -aurN shibboleth-idp.orig/conf/attribute-resolver.xml shibboleth-idp/conf/attribute-resolver.xml
+--- shibboleth-idp.orig/conf/attribute-resolver.xml	2020-06-02 18:56:08.000000000 +0300
++++ shibboleth-idp/conf/attribute-resolver.xml	2020-06-24 13:10:06.911000000 +0300
 @@ -32,6 +32,7 @@
      -->
      <AttributeDefinition id="eduPersonPrincipalName" xsi:type="Scoped" scope="%{idp.scope}">
@@ -384,10 +379,9 @@ index 0ee236b..e648324 100644
      </AttributeDefinition>
  
  
-diff --git a/conf/authn/general-authn.xml b/conf/authn/general-authn.xml
-index b936f97..4df6594 100644
---- a/conf/authn/general-authn.xml
-+++ b/conf/authn/general-authn.xml
+diff -aurN shibboleth-idp.orig/conf/authn/general-authn.xml shibboleth-idp/conf/authn/general-authn.xml
+--- shibboleth-idp.orig/conf/authn/general-authn.xml	2020-06-02 18:56:08.000000000 +0300
++++ shibboleth-idp/conf/authn/general-authn.xml	2020-06-24 13:10:06.914000000 +0300
 @@ -25,6 +25,7 @@
      expressions for password-based authentication over a secure channel, so anything more exotic requires
      customization, as the examples below for IP address and SPNEGO authentication illustrate.
@@ -449,11 +443,9 @@ index b936f97..4df6594 100644
      </util:list>
  
      <!--
-diff --git a/conf/authn/oxauth-authn-config.xml b/conf/authn/oxauth-authn-config.xml
-new file mode 100644
-index 0000000..9d9d662
---- /dev/null
-+++ b/conf/authn/oxauth-authn-config.xml
+diff -aurN shibboleth-idp.orig/conf/authn/oxauth-authn-config.xml shibboleth-idp/conf/authn/oxauth-authn-config.xml
+--- shibboleth-idp.orig/conf/authn/oxauth-authn-config.xml	1970-01-01 03:00:00.000000000 +0300
++++ shibboleth-idp/conf/authn/oxauth-authn-config.xml	2020-06-24 13:10:06.916000000 +0300
 @@ -0,0 +1,70 @@
 +<?xml version="1.0" encoding="UTF-8"?>
 +<beans xmlns="http://www.springframework.org/schema/beans"
@@ -525,11 +517,9 @@ index 0000000..9d9d662
 +    </util:map>
 +    
 +</beans>
-diff --git a/conf/authn/oxauth-supported-principals.xml b/conf/authn/oxauth-supported-principals.xml
-new file mode 100644
-index 0000000..bda44c4
---- /dev/null
-+++ b/conf/authn/oxauth-supported-principals.xml
+diff -aurN shibboleth-idp.orig/conf/authn/oxauth-supported-principals.xml shibboleth-idp/conf/authn/oxauth-supported-principals.xml
+--- shibboleth-idp.orig/conf/authn/oxauth-supported-principals.xml	1970-01-01 03:00:00.000000000 +0300
++++ shibboleth-idp/conf/authn/oxauth-supported-principals.xml	2020-06-24 13:10:06.918000000 +0300
 @@ -0,0 +1,28 @@
 +<?xml version="1.0" encoding="UTF-8"?>
 +<beans xmlns="http://www.springframework.org/schema/beans"
@@ -559,10 +549,9 @@ index 0000000..bda44c4
 +            </property>
 +          </bean>
 +</beans>
-diff --git a/conf/authn/password-authn-config.xml b/conf/authn/password-authn-config.xml
-index 73ac7f8..5d60431 100644
---- a/conf/authn/password-authn-config.xml
-+++ b/conf/authn/password-authn-config.xml
+diff -aurN shibboleth-idp.orig/conf/authn/password-authn-config.xml shibboleth-idp/conf/authn/password-authn-config.xml
+--- shibboleth-idp.orig/conf/authn/password-authn-config.xml	2020-06-02 18:56:08.000000000 +0300
++++ shibboleth-idp/conf/authn/password-authn-config.xml	2020-06-24 13:10:06.920000000 +0300
 @@ -16,9 +16,10 @@
      You can optionally comment out anything you don't need, but make sure not to
      reference the corresponding validator in the list below if you do remove any.
@@ -586,10 +575,9 @@ index 73ac7f8..5d60431 100644
      </util:list>
      -->
      
-diff --git a/conf/authn/remoteuser-authn-config.xml b/conf/authn/remoteuser-authn-config.xml
-index 4b7e722..35a6352 100644
---- a/conf/authn/remoteuser-authn-config.xml
-+++ b/conf/authn/remoteuser-authn-config.xml
+diff -aurN shibboleth-idp.orig/conf/authn/remoteuser-authn-config.xml shibboleth-idp/conf/authn/remoteuser-authn-config.xml
+--- shibboleth-idp.orig/conf/authn/remoteuser-authn-config.xml	2020-06-02 18:56:08.000000000 +0300
++++ shibboleth-idp/conf/authn/remoteuser-authn-config.xml	2020-06-24 13:10:06.922000000 +0300
 @@ -16,6 +16,9 @@
      <bean id="shibboleth.authn.RemoteUser.externalAuthnPath" class="java.lang.String"
          c:_0="contextRelative:Authn/RemoteUser" />
@@ -600,10 +588,9 @@ index 4b7e722..35a6352 100644
      <!--
      Default is to always use the path in the bean above. If you want to determine it
      dynamically, define a bean called "shibboleth.authn.RemoteUser.externalAuthnPathStrategy"
-diff --git a/conf/c14n/subject-c14n.xml b/conf/c14n/subject-c14n.xml
-index e4b772f..daee424 100644
---- a/conf/c14n/subject-c14n.xml
-+++ b/conf/c14n/subject-c14n.xml
+diff -aurN shibboleth-idp.orig/conf/c14n/subject-c14n.xml shibboleth-idp/conf/c14n/subject-c14n.xml
+--- shibboleth-idp.orig/conf/c14n/subject-c14n.xml	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/conf/c14n/subject-c14n.xml	2020-06-24 13:10:06.924000000 +0300
 @@ -102,8 +102,6 @@
          <!-- The next four are for handling transient IDs (in-storage and stateless variants). -->
          <ref bean="c14n/SAML2Transient" />
@@ -630,11 +617,10 @@ index e4b772f..daee424 100644
              </list>
          </constructor-arg>
      </bean>
-diff --git a/conf/global.xml b/conf/global.xml
-index 457a814..7f4a0e8 100644
---- a/conf/global.xml
-+++ b/conf/global.xml
-@@ -48,5 +48,13 @@
+diff -aurN shibboleth-idp.orig/conf/global.xml shibboleth-idp/conf/global.xml
+--- shibboleth-idp.orig/conf/global.xml	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/conf/global.xml	2020-06-24 13:12:51.884653400 +0300
+@@ -48,5 +48,18 @@
          <entry key="foo" value="bar"/>
      </util:map>
      -->
@@ -642,16 +628,20 @@ index 457a814..7f4a0e8 100644
 +     <bean id="idpConfigurationFactory"
 +          class="org.gluu.idp.externalauth.openid.conf.IdpConfigurationFactory" />
 +
++     <bean id="idpAuthClient"
++          class="org.gluu.idp.externalauth.openid.client.IdpAuthClient">
++        <constructor-arg name="configurationFactory" value="#{idpConfigurationFactory.instance()}" />
++    </bean>
++
 +     <bean id="shibboleth.GluuStorageService"
 +          class="org.gluu.idp.storage.GluuStorageService" p:cleanupInterval="%{idp.storage.cleanupInterval:PT10M}" p:contextExpiration="%{idp.storage.contextExpiration:PT24H}">
 +        <constructor-arg name="configurationFactory" value="#{idpConfigurationFactory.instance()}" />
 +    </bean>
      
  </beans>
-diff --git a/conf/intercept/consent-intercept-config.xml b/conf/intercept/consent-intercept-config.xml
-index 6e899e6..d611b01 100644
---- a/conf/intercept/consent-intercept-config.xml
-+++ b/conf/intercept/consent-intercept-config.xml
+diff -aurN shibboleth-idp.orig/conf/intercept/consent-intercept-config.xml shibboleth-idp/conf/intercept/consent-intercept-config.xml
+--- shibboleth-idp.orig/conf/intercept/consent-intercept-config.xml	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/conf/intercept/consent-intercept-config.xml	2020-06-24 13:10:06.928000000 +0300
 @@ -29,7 +29,7 @@
              <bean class="com.google.common.base.Functions" factory-method="forMap" c:defaultValue="terms-of-use">
                  <constructor-arg name="map">
@@ -670,10 +660,9 @@ index 6e899e6..d611b01 100644
      -->
      <util:map id="shibboleth.consent.attribute-release.AuditFormattingMap">
          <entry key="Shibboleth-Consent-Audit" value="%T|%SP|%e|%u|%CCI|%CCV|%CCA" />
-diff --git a/conf/intercept/context-check-intercept-config.xml b/conf/intercept/context-check-intercept-config.xml
-index aae07f0..35797a8 100644
---- a/conf/intercept/context-check-intercept-config.xml
-+++ b/conf/intercept/context-check-intercept-config.xml
+diff -aurN shibboleth-idp.orig/conf/intercept/context-check-intercept-config.xml shibboleth-idp/conf/intercept/context-check-intercept-config.xml
+--- shibboleth-idp.orig/conf/intercept/context-check-intercept-config.xml	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/conf/intercept/context-check-intercept-config.xml	2020-06-24 13:10:06.930000000 +0300
 @@ -22,7 +22,7 @@
      <bean id="shibboleth.context-check.Condition" parent="shibboleth.Conditions.AND">
          <constructor-arg>
@@ -683,10 +672,9 @@ index aae07f0..35797a8 100644
                  <bean class="net.shibboleth.idp.profile.logic.SimpleAttributePredicate"
                          p:useUnfilteredAttributes="true">
                      <property name="attributeValueMap">
-diff --git a/conf/relying-party.xml b/conf/relying-party.xml
-index 5045b93..f378ab3 100644
---- a/conf/relying-party.xml
-+++ b/conf/relying-party.xml
+diff -aurN shibboleth-idp.orig/conf/relying-party.xml shibboleth-idp/conf/relying-party.xml
+--- shibboleth-idp.orig/conf/relying-party.xml	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/conf/relying-party.xml	2020-06-24 13:10:06.931000000 +0300
 @@ -22,7 +22,7 @@
      <bean id="shibboleth.UnverifiedRelyingParty" parent="RelyingParty">
          <property name="profileConfigurations">
@@ -696,11 +684,9 @@ index 5045b93..f378ab3 100644
              </list>
          </property>
      </bean>
-diff --git a/flows/authn/oxAuth/oxauth-authn-beans.xml b/flows/authn/oxAuth/oxauth-authn-beans.xml
-new file mode 100644
-index 0000000..b8c03c4
---- /dev/null
-+++ b/flows/authn/oxAuth/oxauth-authn-beans.xml
+diff -aurN shibboleth-idp.orig/flows/authn/oxAuth/oxauth-authn-beans.xml shibboleth-idp/flows/authn/oxAuth/oxauth-authn-beans.xml
+--- shibboleth-idp.orig/flows/authn/oxAuth/oxauth-authn-beans.xml	1970-01-01 03:00:00.000000000 +0300
++++ shibboleth-idp/flows/authn/oxAuth/oxauth-authn-beans.xml	2020-06-24 13:10:06.933000000 +0300
 @@ -0,0 +1,39 @@
 +<?xml version="1.0" encoding="UTF-8"?>
 +<beans xmlns="http://www.springframework.org/schema/beans"
@@ -741,11 +727,9 @@ index 0000000..b8c03c4
 +          p:availableFlows-ref="shibboleth.PostLoginSubjectCanonicalizationFlows" />
 +
 +</beans>
-diff --git a/flows/authn/oxAuth/oxauth-authn-flow.xml b/flows/authn/oxAuth/oxauth-authn-flow.xml
-new file mode 100644
-index 0000000..d91f285
---- /dev/null
-+++ b/flows/authn/oxAuth/oxauth-authn-flow.xml
+diff -aurN shibboleth-idp.orig/flows/authn/oxAuth/oxauth-authn-flow.xml shibboleth-idp/flows/authn/oxAuth/oxauth-authn-flow.xml
+--- shibboleth-idp.orig/flows/authn/oxAuth/oxauth-authn-flow.xml	1970-01-01 03:00:00.000000000 +0300
++++ shibboleth-idp/flows/authn/oxAuth/oxauth-authn-flow.xml	2020-06-24 13:10:06.935000000 +0300
 @@ -0,0 +1,34 @@
 +<flow xmlns="http://www.springframework.org/schema/webflow"
 +      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -781,10 +765,9 @@ index 0000000..d91f285
 +    <bean-import resource="oxauth-authn-beans.xml" />
 +
 +</flow>
-diff --git a/system/conf/mvc-beans.xml b/system/conf/mvc-beans.xml
-index 20d5c71..d96f8ba 100644
---- a/system/conf/mvc-beans.xml
-+++ b/system/conf/mvc-beans.xml
+diff -aurN shibboleth-idp.orig/system/conf/mvc-beans.xml shibboleth-idp/system/conf/mvc-beans.xml
+--- shibboleth-idp.orig/system/conf/mvc-beans.xml	2020-06-02 18:55:58.000000000 +0300
++++ shibboleth-idp/system/conf/mvc-beans.xml	2020-06-24 13:10:06.937000000 +0300
 @@ -92,7 +92,14 @@
      </bean>
  
@@ -801,10 +784,9 @@ index 20d5c71..d96f8ba 100644
      </bean>
      
      <!-- Import any user defined beans or overrides for the MVC config. -->
-diff --git a/views/duo.vm b/views/duo.vm
-index d212df7..79d4018 100644
---- a/views/duo.vm
-+++ b/views/duo.vm
+diff -aurN shibboleth-idp.orig/views/duo.vm shibboleth-idp/views/duo.vm
+--- shibboleth-idp.orig/views/duo.vm	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/views/duo.vm	2020-06-24 13:10:06.939000000 +0300
 @@ -39,7 +39,7 @@
      <div class="wrapper">
        <div class="container">
@@ -814,10 +796,9 @@ index d212df7..79d4018 100644
          </header>
  
          <div class="content">
-diff --git a/views/error.vm b/views/error.vm
-index dcb8e2b..343426a 100644
---- a/views/error.vm
-+++ b/views/error.vm
+diff -aurN shibboleth-idp.orig/views/error.vm shibboleth-idp/views/error.vm
+--- shibboleth-idp.orig/views/error.vm	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/views/error.vm	2020-06-24 13:10:06.941000000 +0300
 @@ -53,7 +53,7 @@
      <div class="wrapper">
      	<div class="container">
@@ -827,10 +808,9 @@ index dcb8e2b..343426a 100644
  				<h3>$title - $titleSuffix</h3>
  			</header>
  		
-diff --git a/views/login.vm b/views/login.vm
-index 7609d40..6d4cb93 100644
---- a/views/login.vm
-+++ b/views/login.vm
+diff -aurN shibboleth-idp.orig/views/login.vm shibboleth-idp/views/login.vm
+--- shibboleth-idp.orig/views/login.vm	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/views/login.vm	2020-06-24 13:10:06.944000000 +0300
 @@ -38,7 +38,7 @@
      <div class="wrapper">
        <div class="container">
@@ -840,10 +820,9 @@ index 7609d40..6d4cb93 100644
          </header>
  
          <div class="content">
-diff --git a/views/logout-complete.vm b/views/logout-complete.vm
-index 7341e69..a4f0f1a 100644
---- a/views/logout-complete.vm
-+++ b/views/logout-complete.vm
+diff -aurN shibboleth-idp.orig/views/logout-complete.vm shibboleth-idp/views/logout-complete.vm
+--- shibboleth-idp.orig/views/logout-complete.vm	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/views/logout-complete.vm	2020-06-24 13:10:06.946000000 +0300
 @@ -29,7 +29,7 @@
      <div class="wrapper">
        <div class="container">
@@ -853,10 +832,9 @@ index 7341e69..a4f0f1a 100644
          </header>
  
          <div class="content">
-diff --git a/views/logout-propagate.vm b/views/logout-propagate.vm
-index 470eff5..bc8fa52 100644
---- a/views/logout-propagate.vm
-+++ b/views/logout-propagate.vm
+diff -aurN shibboleth-idp.orig/views/logout-propagate.vm shibboleth-idp/views/logout-propagate.vm
+--- shibboleth-idp.orig/views/logout-propagate.vm	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/views/logout-propagate.vm	2020-06-24 13:10:06.948000000 +0300
 @@ -30,7 +30,7 @@
      <div class="wrapper">
        <div class="container">
@@ -866,10 +844,9 @@ index 470eff5..bc8fa52 100644
          </header>
  
          <div class="content">
-diff --git a/views/logout.vm b/views/logout.vm
-index 0b9103b..b253e8e 100644
---- a/views/logout.vm
-+++ b/views/logout.vm
+diff -aurN shibboleth-idp.orig/views/logout.vm shibboleth-idp/views/logout.vm
+--- shibboleth-idp.orig/views/logout.vm	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/views/logout.vm	2020-06-24 13:10:06.950000000 +0300
 @@ -40,7 +40,7 @@
      <div class="wrapper">   
        <div class="container">
@@ -879,10 +856,9 @@ index 0b9103b..b253e8e 100644
          </header>
  
          <div class="content">
-diff --git a/views/spnego-unavailable.vm b/views/spnego-unavailable.vm
-index 3673f02..580ce5d 100644
---- a/views/spnego-unavailable.vm
-+++ b/views/spnego-unavailable.vm
+diff -aurN shibboleth-idp.orig/views/spnego-unavailable.vm shibboleth-idp/views/spnego-unavailable.vm
+--- shibboleth-idp.orig/views/spnego-unavailable.vm	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/views/spnego-unavailable.vm	2020-06-24 13:10:06.952000000 +0300
 @@ -25,7 +25,7 @@
      <div class="wrapper">
        <div class="container">
@@ -892,10 +868,9 @@ index 3673f02..580ce5d 100644
            <h3>#springMessageText("idp.title", "Web Login Sevice") - #springMessage("idp.title.suffix", "Error")</h3>
          </header>
                  
-diff --git a/views/user-prefs.vm b/views/user-prefs.vm
-index 8de0503..71b7408 100644
---- a/views/user-prefs.vm
-+++ b/views/user-prefs.vm
+diff -aurN shibboleth-idp.orig/views/user-prefs.vm shibboleth-idp/views/user-prefs.vm
+--- shibboleth-idp.orig/views/user-prefs.vm	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/views/user-prefs.vm	2020-06-24 13:10:06.954000000 +0300
 @@ -24,7 +24,7 @@
      <div class="wrapper">
        <div class="container">
@@ -905,4 +880,3 @@ index 8de0503..71b7408 100644
            <h3>#springMessageText("idp.title", "Web Login Service") - #springMessageText("idp.userprefs.title.suffix", "Login Preferences")</h3>
            <p>
            #springMessage("idp.userprefs.info")
-
