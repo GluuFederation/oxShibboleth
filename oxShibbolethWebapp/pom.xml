@@ -182,7 +182,11 @@
                                                 WEB-INF/lib/jakarta.xml.bind-api-2.3.2.jar,
                                                 WEB-INF/lib/spring-web-5.0.9.RELEASE.jar,
                                                 WEB-INF/lib/spring-webmvc-5.0.9.RELEASE.jar,
-                                                WEB-INF/lib/slf4j-simple-1.7.26.jar
+                                                WEB-INF/lib/slf4j-simple-1.7.26.jar,
+                                                WEB-INF/lib/log4j-1.2-api-2.11.2.jar,
+                                                WEB-INF/lib/log4j-api-2.11.2.jar,
+                                                WEB-INF/lib/log4j-core-2.11.2.jar,
+                                                WEB-INF/lib/commons-logging-1.2.jar,
                                         </packagingExcludes>
 				</configuration>
 				<executions>
