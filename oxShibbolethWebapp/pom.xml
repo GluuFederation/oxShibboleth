@@ -321,6 +321,14 @@
 					<groupId>net.shibboleth.idp</groupId>
 					<artifactId>idp-authn-api</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>net.shibboleth.idp</groupId>
+					<artifactId>idp-consent-impl</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.opensaml</groupId>
+					<artifactId>opensaml-storage-impl</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
