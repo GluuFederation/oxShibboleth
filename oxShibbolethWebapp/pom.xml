@@ -187,6 +187,18 @@
                                                 WEB-INF/lib/log4j-api-2.11.2.jar,
                                                 WEB-INF/lib/log4j-core-2.11.2.jar,
                                                 WEB-INF/lib/commons-logging-1.2.jar,
+                                                WEB-INF/lib/idp-attribute-api-3.4.5.jar,
+                                                WEB-INF/lib/idp-consent-api-3.4.5.jar,
+                                                WEB-INF/lib/idp-consent-impl-3.4.5.jar,
+                                                WEB-INF/lib/opensaml-core-3.4.4.jar,
+                                                WEB-INF/lib/opensaml-messaging-api-3.4.4.jar,
+                                                WEB-INF/lib/opensaml-profile-api-3.4.5.jar,
+                                                WEB-INF/lib/opensaml-saml-api-3.4.4.jar,
+                                                WEB-INF/lib/opensaml-security-api-3.4.4.jar,
+                                                WEB-INF/lib/opensaml-soap-api-3.4.4.jar,
+                                                WEB-INF/lib/opensaml-storage-api-3.4.4.jar,
+                                                WEB-INF/lib/opensaml-storage-impl-3.4.5.jar,
+                                                WEB-INF/lib/opensaml-xmlsec-api-3.4.4.jar
                                         </packagingExcludes>
 				</configuration>
 				<executions>
