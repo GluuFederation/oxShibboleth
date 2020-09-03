@@ -37,7 +37,7 @@ diff -aurN shibboleth-idp.orig/flows/intercept/gluu-release-attributes-post-proc
 +		<transition on="proceed" to="proceed" />
 +	</action-state>
 +
-+	<bean-import resource="gluu-release-attributes-post-processor/gluu-release-attributes-post-processor-beans.xml" />
++	<bean-import resource="gluu-release-attributes-post-processor-beans.xml" />
 +
 +</flow>
 diff -aurN shibboleth-idp.orig/conf/intercept/profile-intercept.xml shibboleth-idp/conf/intercept/profile-intercept.xml
