@@ -680,7 +680,7 @@ diff -aurN shibboleth-idp.orig/conf/relying-party.xml shibboleth-idp/conf/relyin
          <property name="profileConfigurations">
              <list>
 -            <!-- <bean parent="SAML2.SSO" p:encryptAssertions="false" /> -->
-+                <bean parent="SAML2.SSO" p:encryptAssertions="false" />
++            <!-- <bean parent="SAML2.SSO" p:encryptAssertions="false" />  -->
              </list>
          </property>
      </bean>
