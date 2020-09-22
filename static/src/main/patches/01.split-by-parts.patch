@@ -672,18 +672,6 @@ diff -aurN shibboleth-idp.orig/conf/intercept/context-check-intercept-config.xml
                  <bean class="net.shibboleth.idp.profile.logic.SimpleAttributePredicate"
                          p:useUnfilteredAttributes="true">
                      <property name="attributeValueMap">
-diff -aurN shibboleth-idp.orig/conf/relying-party.xml shibboleth-idp/conf/relying-party.xml
---- shibboleth-idp.orig/conf/relying-party.xml	2020-06-02 18:56:06.000000000 +0300
-+++ shibboleth-idp/conf/relying-party.xml	2020-06-24 13:10:06.931000000 +0300
-@@ -22,7 +22,7 @@
-     <bean id="shibboleth.UnverifiedRelyingParty" parent="RelyingParty">
-         <property name="profileConfigurations">
-             <list>
--            <!-- <bean parent="SAML2.SSO" p:encryptAssertions="false" /> -->
-+            <!-- <bean parent="SAML2.SSO" p:encryptAssertions="false" />  -->
-             </list>
-         </property>
-     </bean>
 diff -aurN shibboleth-idp.orig/flows/authn/oxAuth/oxauth-authn-beans.xml shibboleth-idp/flows/authn/oxAuth/oxauth-authn-beans.xml
 --- shibboleth-idp.orig/flows/authn/oxAuth/oxauth-authn-beans.xml	1970-01-01 03:00:00.000000000 +0300
 +++ shibboleth-idp/flows/authn/oxAuth/oxauth-authn-beans.xml	2020-06-24 13:10:06.933000000 +0300
