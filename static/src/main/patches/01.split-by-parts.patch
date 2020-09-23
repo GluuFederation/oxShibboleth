@@ -1,3 +1,14 @@
+diff -aurN shibboleth-idp.orig/conf/services.xml shibboleth-idp/conf/services.xml
+--- shibboleth-idp.orig/conf/services.xml    2020-09-23 03:58:52.333210754 +0000
++++ shibboleth-idp/conf/services.xml 2020-09-23 02:57:31.726575473 +0000
+@@ -34,7 +34,7 @@
+     <util:list id ="shibboleth.AttributeRegistryResources">
+         <value>%{idp.home}/conf/attribute-registry.xml</value>
+         <value>%{idp.home}/system/conf/attribute-registry-system.xml</value>
+-        <value>%{idp.home}/conf/attributes/default-rules.xml</value>
++        <!--value>%{idp.home}/conf/attributes/default-rules.xml</value-->
+         <value>%{idp.home}/conf/attribute-resolver.xml</value>
+     </util:list>
 diff -aurN shibboleth-idp.orig/conf/attribute-filter.xml shibboleth-idp/conf/attribute-filter.xml
 --- shibboleth-idp.orig/conf/attribute-filter.xml	2020-06-02 18:56:06.000000000 +0300
 +++ shibboleth-idp/conf/attribute-filter.xml	2020-06-24 13:10:06.904000000 +0300
