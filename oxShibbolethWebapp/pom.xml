@@ -323,6 +323,16 @@
 		</dependency>
 		<dependency>
 			<groupId>org.gluu</groupId>
+			<artifactId>gluu-orm-spanner</artifactId>
+			<version>${oxcore.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.gluu</groupId>
+			<artifactId>gluu-orm-sql</artifactId>
+			<version>${oxcore.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.gluu</groupId>
 			<artifactId>gluu-orm-hybrid</artifactId>
 			<version>${oxcore.version}</version>
 		</dependency>
