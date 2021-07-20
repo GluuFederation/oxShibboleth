@@ -33,7 +33,7 @@ public class IdpLogoServlet extends HttpServlet {
 		logger = LoggerFactory.getLogger(IdpLogoServlet.class);
 		response.setContentType("image/jpg");
 		response.setDateHeader("Expires", new Date().getTime() + 1000L * 1800);
-		boolean hasSucceed = readCustomLogo(response, null);
+		boolean hasSucceed = readCustomLogo(response);
 		if (!hasSucceed) {
 			readDefaultLogo(response);
 		}
@@ -68,10 +68,7 @@ public class IdpLogoServlet extends HttpServlet {
 		}
 	}
 
-	private boolean readCustomLogo(HttpServletResponse response, Object organization) {
-		if (organization == null) {
-			return false;
-		}
+	private boolean readCustomLogo(HttpServletResponse response) {
 		File directory = new File(BASE_IDP_LOGO_PATH);
 		if (!directory.exists()) {
 			directory.mkdir();
