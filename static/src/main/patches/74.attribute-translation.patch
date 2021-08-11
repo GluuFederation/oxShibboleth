@@ -1,0 +1,821 @@
+diff -aurN shibboleth-idp.orig/conf/attributes/gluu-attribute-rules.xml shibboleth-idp/conf/attributes/gluu-attribute-rules.xml
+--- shibboleth-idp.orig/conf/attributes/gluu-attribute-rules.xml	1970-01-01 01:00:00.000000000 +0100
++++ shibboleth-idp/conf/attributes/gluu-attribute-rules.xml	2021-08-05 15:21:49.116689446 +0100
+@@ -0,0 +1,792 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<beans xmlns="http://www.springframework.org/schema/beans"
++       xmlns:context="http://www.springframework.org/schema/context"
++       xmlns:util="http://www.springframework.org/schema/util"
++       xmlns:p="http://www.springframework.org/schema/p"
++       xmlns:c="http://www.springframework.org/schema/c"
++       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
++                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
++                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
++                           
++       default-init-method="initialize"
++       default-destroy-method="destroy">
++
++
++       <bean parent="shibboleth.TranscodingRuleLoader">
++        <constructor-arg>
++              <list>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">birthdate</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.326</prop>
++                          <prop key="displayName.en">Birthdate</prop>
++                          <prop key="description.en">End-User's birthday, represented as an ISO 8601:2004 [ISO8601] YYYY-MM-DD format.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">oxAuthBackchannelDeviceRegistrationToken</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.424</prop>
++                          <prop key="displayName.en">CIBA Device Registration Token</prop>
++                          <prop key="description.en">CIBA Device Registration Token</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">oxAuthBackchannelUserCode</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.425</prop>
++                          <prop key="displayName.en">CIBA User code</prop>
++                          <prop key="description.en">CIBA User code</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">l</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.5.4.7</prop>
++                          <prop key="displayName.en">City</prop>
++                          <prop key="description.en">City</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">c</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.5.4.6</prop>
++                          <prop key="displayName.en">Country</prop>
++                          <prop key="description.en">Country</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">departmentNumber</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.16.840.1.113730.3.1.2</prop>
++                          <prop key="displayName.en">Department</prop>
++                          <prop key="description.en">Organizational Department</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">description</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.5.4.13</prop>
++                          <prop key="displayName.en">Description</prop>
++                          <prop key="description.en">Description</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">displayName</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.16.840.1.113730.3.1.241</prop>
++                          <prop key="displayName.en">Display Name</prop>
++                          <prop key="description.en">End-User's full name in displayable formincluding all name parts, possibly including titles andsuffixes, ordered according to the End-User's locale and preferences.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">eduPersonAffiliation</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.5923.1.1.1.1</prop>
++                          <prop key="displayName.en">eduPersonAffiliation</prop>
++                          <prop key="description.en">Specifies the person's relationship(s) to the institutionin broad categories such as student, faculty, staff, alum, etc.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">eduPersonAssurance</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.5923.1.1.1.11</prop>
++                          <prop key="displayName.en">eduPersonAssurance</prop>
++                          <prop key="description.en">Set of URIs that assert compliance with specific standardsfor identity assurance.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">eduPersonEntitlement</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.5923.1.1.1.7</prop>
++                          <prop key="displayName.en">eduPersonEntitlement</prop>
++                          <prop key="description.en">URI (either URN or URL) that indicates a set of rights to specific resources.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">eduPersonNickName</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.5923.1.1.1.2</prop>
++                          <prop key="displayName.en">eduPersonNickName</prop>
++                          <prop key="description.en">Person's nickname, or the informal name by which the End-User is accustomedto be hailed. A casual name that may or may not be the same asthe given_name. For instance,a nickname value of Mike might be returned alongside a given_name value of Michael.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">eduPersonOrcid</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.5923.1.1.1.16</prop>
++                          <prop key="displayName.en">eduPersonOrcid</prop>
++                          <prop key="description.en">ORCID researcher identifiers belonging to the principal</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">eduPersonOrgDN</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.5923.1.1.1.3</prop>
++                          <prop key="displayName.en">eduPersonOrgDN</prop>
++                          <prop key="description.en">The distinguished name (DN) of the directory entryrepresentingthe institution with which the person is associated.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">eduPersonOrgUnitDN</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.5923.1.1.1.4</prop>
++                          <prop key="displayName.en">eduPersonOrgUnitDN</prop>
++                          <prop key="description.en">The distinguished name(s) (DN) of the directory entriesrepresenting the person's Organizational Unit(s). May be multivalued,as for example, in the case of a faculty member with appointments inmultiple departmentsor a person who is a student in one departmentand an employee in another.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">eduPersonPrimaryAffiliation</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.5923.1.1.1.5</prop>
++                          <prop key="displayName.en">eduPersonPrimaryAffiliation</prop>
++                          <prop key="description.en">Specifies the person's primary relationship to theinstitution in broad categories such as student, faculty, staff,alum, etc. (See controlled vocabulary).</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">eduPersonPrimaryOrgUnitDN</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.5923.1.1.1.8</prop>
++                          <prop key="displayName.en">eduPersonPrimaryOrgUnitDN</prop>
++                          <prop key="description.en">The distinguished name (DN) of the directory entry representingthe person's primary Organizational Unit(s).</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">eduPersonPrincipalName</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.5923.1.1.1.6</prop>
++                          <prop key="displayName.en">eduPersonPrincipalName</prop>
++                          <prop key="description.en">A scoped identifier for a person. It should berepresented in the form "user@scope" where 'user' is aname-based identifier for the person and where 'scope'defines a local security domain. Each value of 'scope' definesa namespace within which the assigned identifiers MUST be unique.Given this rule, if two eduPersonPrincipalName (ePPN) values arethe same at a given point in time, they refer to the same person.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">eduPersonPrincipalNamePrior</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.5923.1.1.1.12</prop>
++                          <prop key="displayName.en">eduPersonPrincipalNamePrior</prop>
++                          <prop key="description.en">Person principal name prior</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">eduPersonScopedAffiliation</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.5923.1.1.1.9</prop>
++                          <prop key="displayName.en">eduPersonScopedAffiliation</prop>
++                          <prop key="description.en">Specifies the person's affiliation within a particular security domainin broad categories such as student, faculty, staff, alum, etc. Thevalues consistof a left and right component separated by an "@" sign. The left component is one ofthe values from the eduPersonAffiliation controlledvocabulary.This right-hand side syntaxof eduPersonScopedAffiliation intentionally matches that used for the right-hand sidevalues for eduPersonPrincipalName since both identify a security domain. Multiple "@" signsare not recommended, but in any case, the first occurrence of the "@" sign starting from theleft is to be taken as the delimiter between components. Thus, user identifier is to the left,security domain to the right of the first "@". This parsing rule conforms to the POSIX "greedy"disambiguation method in regular expression processing.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">eduPersonTargetedID</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.5923.1.1.1.10</prop>
++                          <prop key="displayName.en">eduPersonTargetedID</prop>
++                          <prop key="description.en">A persistent, non-reassigned, opaque identifier for a principal.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">eduPersonUniqueId</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.5923.1.1.1.13</prop>
++                          <prop key="displayName.en">eduPersonUniqueId</prop>
++                          <prop key="description.en">Person unique Id</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">mail</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:0.9.2342.19200300.100.1.3</prop>
++                          <prop key="displayName.en">Email</prop>
++                          <prop key="description.en">Primary Email Address</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">emailVerified</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.324</prop>
++                          <prop key="displayName.en">Email Verified</prop>
++                          <prop key="description.en">True if the End-User's e-mail address has been verified; otherwise false</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">employeeNumber</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.16.840.1.113730.3.1.3</prop>
++                          <prop key="displayName.en">Employee Number</prop>
++                          <prop key="description.en">Employee Number</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">employeeType</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.16.840.1.113730.3.1.4</prop>
++                          <prop key="displayName.en">Employee Type</prop>
++                          <prop key="description.en">Employee Type</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">oxEnrollmentCode</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.239</prop>
++                          <prop key="displayName.en">Enrollment code</prop>
++                          <prop key="description.en">oxEnrollmentCode</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">facsimileTelephoneNumber</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.5.4.23</prop>
++                          <prop key="displayName.en">Fax Number</prop>
++                          <prop key="description.en">Fax Telephone Number</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">givenName</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.5.4.42</prop>
++                          <prop key="displayName.en">First Name</prop>
++                          <prop key="description.en">Given name(s) or first name(s) of the End-User.Note that in some cultures, people can have multiple given names;all can be present, with the names being separated by space characters.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">gender</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.325</prop>
++                          <prop key="displayName.en">Gender, male or female</prop>
++                          <prop key="description.en">Gender of the person, either male or female</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">homePostalAddress</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:0.9.2342.19200300.100.1.39</prop>
++                          <prop key="displayName.en">Home Address</prop>
++                          <prop key="description.en">Home Address</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">telephoneNumber</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.5.4.20</prop>
++                          <prop key="displayName.en">Home Telephone Number</prop>
++                          <prop key="description.en">Home Telephone Number</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">gluuIMAPData</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.355</prop>
++                          <prop key="displayName.en">IMAP Data</prop>
++                          <prop key="description.en">IMAP Data</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">iname</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.116</prop>
++                          <prop key="displayName.en">iname</prop>
++                          <prop key="description.en">iname</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">inum</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.117</prop>
++                          <prop key="displayName.en">Inum</prop>
++                          <prop key="description.en">XRI i-number, persistent non-reassignable identifier</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">sn</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.5.4.4</prop>
++                          <prop key="displayName.en">Last Name</prop>
++                          <prop key="description.en">Last Name</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">updatedAt</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.331</prop>
++                          <prop key="displayName.en">Last Updated</prop>
++                          <prop key="description.en">Time the End-User's information was last updated. Its value isaJSON number representing the number of seconds from 1970-01-01T0:0:0Z as measured inUTC until the date/time.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">carLicense</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.16.840.1.113730.3.1.1</prop>
++                          <prop key="displayName.en">License Plate</prop>
++                          <prop key="description.en">Vehicle License Plate Number</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">locale</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.328</prop>
++                          <prop key="displayName.en">Locale</prop>
++                          <prop key="description.en">End-User's locale, represented as a BCP47 (RFC5646) language tag.This is typically anISO 639-1 Alpha-2 [ISO639] language code in lowercase andan ISO 3166-1 Alpha-2country code in uppercase, separated by a dash. For example,en-US or fr-CA. As a compatibility note,some implementations have used an underscoreas the separator rather than a dash, for example, en_US;Relying Parties MAY chooseto accept this locale syntax as well.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">manager</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:0.9.2342.19200300.100.1.10</prop>
++                          <prop key="displayName.en">Manager</prop>
++                          <prop key="description.en">Manager</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">memberOf</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.121</prop>
++                          <prop key="displayName.en">memberOf</prop>
++                          <prop key="description.en">memberOf</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">middleName</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.318</prop>
++                          <prop key="displayName.en">Middle Name</prop>
++                          <prop key="description.en">Middle name(s) of the End-User. Note that in some cultures,people can have multiple middle names; all can be present, with the namesbeingseparated by space characters. Also note that in some cultures,middle names are not used.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">mobile</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:0.9.2342.19200300.100.1.41</prop>
++                          <prop key="displayName.en">Mobile Telephone Number</prop>
++                          <prop key="description.en">Mobile Telephone Number</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">cn</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.5.4.3</prop>
++                          <prop key="displayName.en">Name search keywords</prop>
++                          <prop key="description.en">Name search keywords</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">nickname</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.319</prop>
++                          <prop key="displayName.en">Nickname</prop>
++                          <prop key="description.en">Casual name of the End-User that may or may not be the same asthe given_name.For instance, a nickname value of Mike might be returned alongside a given_name value of Michael.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">address</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.330</prop>
++                          <prop key="displayName.en">OpenID Connect JSON formatted address</prop>
++                          <prop key="description.en">End-User's preferred postal address. The value of the address member is aJSON [RFC4627] structure containing some or all of the members defined inOpenID Connect 1.0 Core Standard Section 5.1.1</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">o</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.5.4.10</prop>
++                          <prop key="displayName.en">Organization</prop>
++                          <prop key="description.en">Organization</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">userPassword</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.5.4.35</prop>
++                          <prop key="displayName.en">Password</prop>
++                          <prop key="description.en">User secret string</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">phoneNumberVerified</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.329</prop>
++                          <prop key="displayName.en">Phone Number Verified</prop>
++                          <prop key="description.en">True if the End-User's phone number has been verified; otherwise false</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">picture</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.322</prop>
++                          <prop key="displayName.en">Picture URL</prop>
++                          <prop key="description.en">URL of the End-User's profile picture</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">postOfficeBox</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.5.4.18</prop>
++                          <prop key="displayName.en">PO Box</prop>
++                          <prop key="description.en">Postal Box</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">postalCode</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.5.4.17</prop>
++                          <prop key="displayName.en">Postal Code</prop>
++                          <prop key="description.en">Postal or Zip Code</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">preferredDeliveryMethod</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.5.4.28</prop>
++                          <prop key="displayName.en">Preferred Delivery Method</prop>
++                          <prop key="description.en">Preferred Delivery Method</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">preferredLanguage</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.16.840.1.113730.3.1.39</prop>
++                          <prop key="displayName.en">Preferred Language</prop>
++                          <prop key="description.en">Preferred Language</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">preferredUsername</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.320</prop>
++                          <prop key="displayName.en">Preferred Username</prop>
++                          <prop key="description.en">A domain issued and managed identifier for the person.Subject - Identifier for the End-User at the Issuer.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">profile</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.321</prop>
++                          <prop key="displayName.en">Profile URL</prop>
++                          <prop key="description.en">URL of the End-User's profile page. The contents of this Web page SHOULD be about the End-User.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">roomNumber</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:0.9.2342.19200300.100.1.6</prop>
++                          <prop key="displayName.en">Room Number</prop>
++                          <prop key="description.en">Room Number</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">secretAnswer</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.305</prop>
++                          <prop key="displayName.en">Secret Answer</prop>
++                          <prop key="description.en">Secret Answer</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">secretQuestion</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.306</prop>
++                          <prop key="displayName.en">Secret Question</prop>
++                          <prop key="description.en">Secret Question</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">secretary</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:0.9.2342.19200300.100.1.21</prop>
++                          <prop key="displayName.en">Secretary</prop>
++                          <prop key="description.en">Secretary</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">st</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.5.4.8</prop>
++                          <prop key="displayName.en">State or Province</prop>
++                          <prop key="description.en">State or Province</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">street</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.5.4.9</prop>
++                          <prop key="displayName.en">Street</prop>
++                          <prop key="description.en">Street</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">zoneinfo</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.327</prop>
++                          <prop key="displayName.en">Time zone info</prop>
++                          <prop key="description.en">String from time zone database representing the End-User's time zone. For example,Europe/Paris or America/Los_Angeles.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">title</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.5.4.12</prop>
++                          <prop key="displayName.en">Title</prop>
++                          <prop key="description.en">Organizational Title</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">userCertificate</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.5.4.36</prop>
++                          <prop key="displayName.en">User certificate</prop>
++                          <prop key="description.en">User certificate</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">role</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.299</prop>
++                          <prop key="displayName.en">User Permission</prop>
++                          <prop key="description.en">gluuPermission</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">gluuStatus</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.97</prop>
++                          <prop key="displayName.en">User Status</prop>
++                          <prop key="description.en">User status to allow/disable user access</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">uid</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:0.9.2342.19200300.100.1.1</prop>
++                          <prop key="displayName.en">Username</prop>
++                          <prop key="description.en">A domain issued and managed identifier for the person.Subject - Identifier for the End-User at the Issuer.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">website</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:1.3.6.1.4.1.48710.1.3.323</prop>
++                          <prop key="displayName.en">Website URL</prop>
++                          <prop key="description.en">URL of the End-User's Web page or blog.</prop>
++                       </props>
++                     </property>
++                 </bean>
++                 <bean parent="shibboleth.TranscodingProperties">
++                     <property name="properties">
++                       <props merge="true">
++                          <prop key="id">telephoneNumber</prop>
++                          <prop key="transcoder">SAML2StringTranscoder</prop>
++                          <prop key="saml2.name">urn:oid:2.5.4.20</prop>
++                          <prop key="displayName.en">Work Telephone Number</prop>
++                          <prop key="description.en">Work Telephone Number</prop>
++                       </props>
++                     </property>
++                 </bean>
++              </list>
++        </constructor-arg>
++       </bean>
++</beans>
+diff -aurN shibboleth-idp.orig/conf/global.xml shibboleth-idp/conf/global.xml
+--- shibboleth-idp.orig/conf/global.xml	2021-08-05 15:07:52.577000000 +0100
++++ shibboleth-idp/conf/global.xml	2021-08-05 15:13:18.783960834 +0100
+@@ -69,4 +69,10 @@
+     </bean>    
+ 
+     <bean id="ShibOxAuthHealthCheck" class="org.gluu.idp.status.HealthCheckServlet" />
++    
++    <bean id="gluuAttributeMappingService"
++    	class="org.gluu.idp.service.GluuAttributeMappingService">
++    	<constructor-arg name="configurationFactory" value="#{idpConfigurationFactory.instance()}" />
++    </bean>
++    
+ </beans>
+diff -aurN shibboleth-idp.orig/conf/services.xml shibboleth-idp/conf/services.xml
+--- shibboleth-idp.orig/conf/services.xml	2021-08-05 15:07:52.561000000 +0100
++++ shibboleth-idp/conf/services.xml	2021-08-05 15:26:59.637606128 +0100
+@@ -36,6 +36,7 @@
+         <value>%{idp.home}/system/conf/attribute-registry-system.xml</value>
+         <!--value>%{idp.home}/conf/attributes/default-rules.xml</value-->
+         <value>%{idp.home}/conf/attribute-resolver.xml</value>
++        <value>%{idp.home}/conf/attributes/gluu-attribute-rules.xml</value>
+     </util:list>
+ 
+     <util:list id ="shibboleth.AttributeFilterResources">
