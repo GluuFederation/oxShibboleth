@@ -26,6 +26,7 @@ public class IdpLogoServlet extends HttpServlet {
 	private static final Logger log = LoggerFactory.getLogger(IdpLogoServlet.class);
 
 	public static final String BASE_IDP_LOGO_PATH = "/opt/gluu/jetty/idp/custom/static/logo/";
+	public static final String LOGO_FILE_NAME = "logo.png";
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
@@ -39,9 +40,9 @@ public class IdpLogoServlet extends HttpServlet {
 	}
 
 	private boolean readDefaultLogo(HttpServletResponse response) {
-		String defaultLogoFileName = "logo.png";
+		
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		InputStream in = classLoader.getResourceAsStream(defaultLogoFileName);
+		InputStream in = classLoader.getResourceAsStream(LOGO_FILE_NAME);
 		OutputStream out = null;
 		try {
 			out = response.getOutputStream();
@@ -69,14 +70,12 @@ public class IdpLogoServlet extends HttpServlet {
 	}
 
 	private boolean readCustomLogo(HttpServletResponse response, Object organization) {
-		if (organization == null) {
-			return false;
-		}
+		
 		File directory = new File(BASE_IDP_LOGO_PATH);
 		if (!directory.exists()) {
 			directory.mkdir();
 		}
-		File logoPath = new File(BASE_IDP_LOGO_PATH + "");
+		File logoPath = new File(BASE_IDP_LOGO_PATH + LOGO_FILE_NAME);
 		if (!logoPath.exists()) {
 			return false;
 		}
