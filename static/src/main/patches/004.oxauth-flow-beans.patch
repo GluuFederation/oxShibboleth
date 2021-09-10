@@ -1,0 +1,30 @@
+diff -aurN shibboleth-idp.orig/flows/authn/oxAuth/oxauth-authn-beans.xml shibboleth-idp/flows/authn/oxAuth/oxauth-authn-beans.xml
+--- shibboleth-idp.orig/flows/authn/oxAuth/oxauth-authn-beans.xml	2021-09-09 09:48:36.973000000 +0100
++++ shibboleth-idp/flows/authn/oxAuth/oxauth-authn-beans.xml	2021-09-09 23:00:32.556243045 +0100
+@@ -20,21 +20,19 @@
+        <bean class="net.shibboleth.idp.profile.impl.ProfileActionBeanPostProcessor" />
+        
+        <!-- Default strategy function to obtain the external path. -->
+-       <bean id="shibboleth.authn.oxAuth.externalAuthnPathStrategy" parent="shibboleth.Functions.Constant"
++       <bean id="shibboleth.authn.External.externalAuthnPathStrategy" parent="shibboleth.Functions.Constant"
+              c:target-ref="shibboleth.authn.oxAuth.externalAuthnPath" />
+              
+-       
+-       <import resource="%{idp.home}/conf/authn/oxauth-authn-config.xml"/>
++       <import resource="conditional:%{idp.home}/conf/authn/oxauth-authn-config.xml" />
+        
+        <bean id="ValidateExternalAuthentication"
+              class="net.shibboleth.idp.authn.impl.ValidateExternalAuthentication" scope="prototype"
+-             p:matchExpression="#{getObject('shibboleth.authn.oxAuth.matchExpression')}"
+-             p:addDefaultPrincipals="#{getObject('shibboleth.authn.oxAuth.addDefaultPrincipals') ?: true}"
+-             p:classifiedMessages-ref="shibboleth.authn.oxAuth.ClassifiedMessageMap"
++             p:matchExpression="#{getObject('shibboleth.authn.oxAuth.matchExpression') ?: '%{idp.authn.oxAuth.matchExpression:}'}"
++             p:addDefaultPrincipals="#{getObject('shibboleth.authn.oxAuth.addDefaultPrincipals') ?: %{idp.authn.oxAuth.addDefaultPrincipals:true}}"
++             p:classifiedMessages="#{getObject('shibboleth.authn.oxAuth.ClassifiedMessageMap')}"
+              p:resultCachingPredicate="#{getObject('shibboleth.authn.oxAuth.resultCachingPredicate')}"
+              c:filterService-ref="shibboleth.AttributeFilterService"
+              p:metadataResolver-ref="shibboleth.MetadataResolver" />
+-             
+        
+        <bean id="PopulateSubjectCanonicalizationContext"
+              class="net.shibboleth.idp.authn.impl.PopulateSubjectCanonicalizationContext" scope="prototype"
