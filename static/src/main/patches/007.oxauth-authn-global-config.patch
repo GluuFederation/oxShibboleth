@@ -1,0 +1,75 @@
+diff -aurN shibboleth-idp.orig/conf/authn/oxauth-authn-global.xml shibboleth-idp/conf/authn/oxauth-authn-global.xml
+--- shibboleth-idp.orig/conf/authn/oxauth-authn-global.xml	1970-01-01 01:00:00.000000000 +0100
++++ shibboleth-idp/conf/authn/oxauth-authn-global.xml	2021-09-11 14:39:40.541119338 +0100
+@@ -0,0 +1,55 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<beans xmlns="http://www.springframework.org/schema/beans"
++       xmlns:context="http://www.springframework.org/schema/context"
++       xmlns:util="http://www.springframework.org/schema/util"
++       xmlns:p="http://www.springframework.org/schema/p"
++       xmlns:c="http://www.springframework.org/schema/c"
++       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
++                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
++                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
++                           
++       default-init-method="initialize"
++       default-destroy-method="destroy">
++       
++       <!--
++       oxAuth authentication flow descriptor 
++       -->
++       <bean p:id="authn/oxAuth" parent="shibboleth.AuthenticationFlow"
++            p:order="%{idp.authn.oxAuth.order:1000}"
++            p:nonBrowserSupported="%{idp.authn.oxAuth.nonBrowserSupported:false}"
++            p:passiveAuthenticationSupported="%{idp.authn.oxAuth.passiveAuthenticationSupported:false}"
++            p:forcedAuthenticationSupported="%{idp.authn.oxAuth.forcedAuthenticationSupported:false}"
++            p:proxyRestrictionsEnforced="%{idp.authn.oxAuth.proxyRestrictionsEnforced:%{idp.authn.enforceProxyRestrictions:true}}"
++            p:proxyScopingEnforced="%{idp.authn.oxAuth.proxyScopingEnforced:false}"
++            p:discoveryRequired="%{idp.authn.oxAuth.discoveryRequired:false}"
++            p:lifetime="%{idp.authn.oxAuth.lifetime:%{idp.authn.defaultLifetime:PT1H}}"
++            p:inactivityTimeout="%{idp.authn.oxAuth.inactivityTimeout:%{idp.authn.defaultTimeout:PT30M}}"
++            p:reuseCondition-ref="#{'%{idp.authn.oxAuth.reuseCondition:shibboleth.Conditions.TRUE}'.trim()}"
++            p:activationCondition-ref="#{'%{idp.authn.oxAuth.activationCondition:shibboleth.Conditions.TRUE}'.trim()}"
++            p:subjectDecorator="#{getObject('%{idp.authn.oxAuth.subjectDecorator:}'.trim())}">
++            
++            <property name="supportedPrincipalsByString">
++                <bean parent="shibboleth.CommaDelimStringArray"
++                    c:_0="#{'%{idp.authn.oxAuth.supportedPrincipals:}'.trim()}" />
++            </property>
++       </bean>
++       
++       
++       <bean id="idpConfigurationFactory"
++             class="org.gluu.idp.externalauth.openid.conf.IdpConfigurationFactory"/>
++             
++       <bean id="idpAuthClient"
++             class="org.gluu.idp.externalauth.openid.client.IdpAuthClient">
++             <constructor-arg name="configurationFactory" value="#{idpConfigurationFactory.instance()}"/>
++       </bean>
++       
++       <bean id="idpCustomScriptManager" class="org.gluu.idp.script.service.IdpCustomScriptManager">
++            <constructor-arg name="configurationFactory" value="#{idpConfigurationFactory.instance()}" />
++            <constructor-arg name="init" value="true" />
++       </bean>
++       
++       <bean id="gluuAttributeMappingService" class="org.gluu.idp.service.GluuAttributeMappingService">
++             <constructor-arg name="configurationFactory" value="#{idpConfigurationFactory.instance()}" />
++       </bean>
++</beans>
+diff -aurN shibboleth-idp.orig/conf/global.xml shibboleth-idp/conf/global.xml
+--- shibboleth-idp.orig/conf/global.xml	2021-07-27 14:07:26.000000000 +0100
++++ shibboleth-idp/conf/global.xml	2021-09-11 05:16:13.976400911 +0100
+@@ -49,4 +49,12 @@
+     </util:map>
+     -->
+     
++    <!--
++    Gluu specific imports go here.
++    Each feature/plugin can specifiy a conditional import here which contains beans 
++    which will be globally accessible. They have to be made conditional so the IDP loads
++    even if a feature/plugin/module is not enabled/accessible
++    -->
++    <import resource="conditional:${idp.home}/conf/authn/oxauth-authn-global.xml"/>
++    
+ </beans>
