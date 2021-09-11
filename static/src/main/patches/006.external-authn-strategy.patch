@@ -1,0 +1,12 @@
+diff -aurN shibboleth-idp.orig/flows/authn/oxAuth/oxauth-authn-beans.xml shibboleth-idp/flows/authn/oxAuth/oxauth-authn-beans.xml
+--- shibboleth-idp.orig/flows/authn/oxAuth/oxauth-authn-beans.xml	2021-09-11 03:03:48.961000000 +0100
++++ shibboleth-idp/flows/authn/oxAuth/oxauth-authn-beans.xml	2021-09-11 03:24:13.233869662 +0100
+@@ -21,7 +21,7 @@
+        
+        <!-- Default strategy function to obtain the external path. -->
+        <bean id="shibboleth.authn.oxAuth.externalAuthnPathStrategy" parent="shibboleth.Functions.Constant"
+-             c:target-ref="shibboleth.authn.oxAuth.externalAuthnPath" />
++             c:target="#{getObject('shibboleth.authn.oxAuth.externalAuthnPath') ?: '%{idp.authn.oxAuth.externalAuthnPath:contextRelative:Authn/oxAuth}'.trim()" />
+              
+        <import resource="conditional:%{idp.home}/conf/authn/oxauth-authn-config.xml" />
+        
