@@ -1,0 +1,84 @@
+diff -aurN shibboleth-idp.orig/conf/authn/authn.properties shibboleth-idp/conf/authn/authn.properties
+--- shibboleth-idp.orig/conf/authn/authn.properties	2021-07-27 14:07:26.000000000 +0100
++++ shibboleth-idp/conf/authn/authn.properties	2021-09-10 11:57:24.016029373 +0100
+@@ -211,3 +211,18 @@
+     saml2/urn:oasis:names:tc:SAML:2.0:ac:classes:Password, \
+     saml1/urn:oasis:names:tc:SAML:1.0:am:password
+ # Most actual setup via mfa-authn-config.xml
++
++
++#### oxAuth ####
++
++idp.authn.oxAuth.order = 1000
++#idp.authn.oxAuth.nonBrowserSupported = false
++#idp.authn.oxAuth.matchExpression = 
++# Unset if you plan to return full Java Subject from external source
++idp.authn.oxAuth.addDefaultPrincipals = true
++idp.authn.oxAuth.supportedPrincipals = \
++    saml2/urn:oasis:names:tc:SAML:2.0:ac:classes:InternetProtocol, \
++    saml2/urn:oasis:names:tc:SAML:2.0:ac:classes:Password, \
++    saml2/urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport
++
++#### end oxAuth ####
+diff -aurN shibboleth-idp.orig/conf/authn/oxauth-authn-config.xml shibboleth-idp/conf/authn/oxauth-authn-config.xml
+--- shibboleth-idp.orig/conf/authn/oxauth-authn-config.xml	1970-01-01 01:00:00.000000000 +0100
++++ shibboleth-idp/conf/authn/oxauth-authn-config.xml	2021-09-11 02:49:39.887472556 +0100
+@@ -0,0 +1,58 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<beans xmlns="http://www.springframework.org/schema/beans"
++       xmlns:context="http://www.springframework.org/schema/context"
++       xmlns:util="http://www.springframework.org/schema/util"
++       xmlns:p="http://www.springframework.org/schema/p"
++       xmlns:c="http://www.springframework.org/schema/c"
++       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
++                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
++                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
++                           
++       default-init-method="initialize"
++       default-destroy-method="destroy">
++
++       
++       <!-- Most settings are controlled with authn.properties -->
++    
++       <!--
++       The idp.authn.oxAuth.externalAuthnPath property controls the default location to use.
++       For advanced cases, define a bean called "shibboleth.authn.oxAuth.externalAuthnPathStrategy"
++       of type Function<ProfileRequestContext,String> that returns the path to use.
++       -->
++    
++       <!--
++       Define entries here to map error messages returned by external modules and classify them as particular
++       kinds of errors for use in your templates and as events in flows.
++
++       Keys are events to signal, values are error codes.
++
++       The examples here just allow external signaling of the exact type of condition to record.
++    
++       If you want to "fall-through" to other login flows, include a mapping to "ReselectFlow".
++       -->
++       <util:map id="shibboleth.authn.oxAuth.ClassifiedMessageMap">
++            <entry key="AuthenticationException">
++                <list>
++                    <value>AuthenticationException</value>
++                </list>
++            </entry>
++            <entry key="InvalidAuthenticationContext">
++                <list>
++                    <value>InvalidAuthenticationContext</value>
++                </list>
++            </entry>
++            <entry key="NoPassive">
++                <list>
++                    <value>NoPassive</value>
++                </list>
++            </entry>
++            <entry key="NoCredentials">
++                <list>
++                    <value>InvalidToken</value>
++                </list>
++            </entry>
++       </util:map>
++    
++</beans>
++
