@@ -1,0 +1,72 @@
+diff -aurN shibboleth-idp.orig/conf/global.xml shibboleth-idp/conf/global.xml
+--- shibboleth-idp.orig/conf/global.xml	2021-09-13 14:40:44.436000000 +0100
++++ shibboleth-idp/conf/global.xml	2021-09-13 16:40:39.330760541 +0100
+@@ -57,5 +57,6 @@
+     -->
+     <import resource="conditional:${idp.home}/conf/authn/oxauth-authn-global.xml"/>
+     <import resource="conditional:${idp.home}/conf/gluu-storage.xml"/>
++    <import resource="conditional:${idp.home}/conf/gluu-release-attributes.xml"/>
+     
+ </beans>
+diff -aurN shibboleth-idp.orig/conf/gluu-release-attributes.xml shibboleth-idp/conf/gluu-release-attributes.xml
+--- shibboleth-idp.orig/conf/gluu-release-attributes.xml	1970-01-01 01:00:00.000000000 +0100
++++ shibboleth-idp/conf/gluu-release-attributes.xml	2021-09-13 16:56:53.715529628 +0100
+@@ -0,0 +1,16 @@
++?xml version="1.0" encoding="UTF-8"?>
++<beans xmlns="http://www.springframework.org/schema/beans"
++       xmlns:context="http://www.springframework.org/schema/context"
++       xmlns:util="http://www.springframework.org/schema/util"
++       xmlns:p="http://www.springframework.org/schema/p"
++       xmlns:c="http://www.springframework.org/schema/c"
++       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
++                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
++                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
++                           
++       default-init-method="initialize"
++       default-destroy-method="destroy">
++       
++       <bean p:id="intercept/gluu-release-attributes-post-processor" parent="shibboleth.consent.AttributeReleaseFlow" />
++</beans>
+diff -aurN shibboleth-idp.orig/flows/intercept/gluu-release-attributes-post-processor/gluu-release-attributes-post-processor-beans.xml shibboleth-idp/flows/intercept/gluu-release-attributes-post-processor/gluu-release-attributes-post-processor-beans.xml
+--- shibboleth-idp.orig/flows/intercept/gluu-release-attributes-post-processor/gluu-release-attributes-post-processor-beans.xml	1970-01-01 01:00:00.000000000 +0100
++++ shibboleth-idp/flows/intercept/gluu-release-attributes-post-processor/gluu-release-attributes-post-processor-beans.xml	2021-09-13 16:07:09.014606477 +0100
+@@ -0,0 +1,18 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
++	xmlns:util="http://www.springframework.org/schema/util" xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
++	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
++                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
++                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
++
++	default-init-method="initialize" default-destroy-method="destroy">
++
++	<bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer" p:placeholderPrefix="%{" p:placeholderSuffix="}" />
++
++	<bean class="net.shibboleth.idp.profile.impl.ProfileActionBeanPostProcessor" />
++	<bean class="net.shibboleth.ext.spring.config.IdentifiableBeanPostProcessor" />
++
++	<bean id="GluuReleaseAttributesPostProcessor" class="org.gluu.idp.consent.processor.GluuReleaseAttributesPostProcessor" />
++
++</beans>
+diff -aurN shibboleth-idp.orig/flows/intercept/gluu-release-attributes-post-processor/gluu-release-attributes-post-processor-flow.xml shibboleth-idp/flows/intercept/gluu-release-attributes-post-processor/gluu-release-attributes-post-processor-flow.xml
+--- shibboleth-idp.orig/flows/intercept/gluu-release-attributes-post-processor/gluu-release-attributes-post-processor-flow.xml	1970-01-01 01:00:00.000000000 +0100
++++ shibboleth-idp/flows/intercept/gluu-release-attributes-post-processor/gluu-release-attributes-post-processor-flow.xml	2021-09-13 16:07:17.442743919 +0100
+@@ -0,0 +1,16 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<flow xmlns="http://www.springframework.org/schema/webflow"
++        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++        xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow.xsd"
++        parent="intercept.abstract">
++
++	<action-state id="GluuReleaseAttributesPostProcessorState">
++		<evaluate expression="GluuReleaseAttributesPostProcessor" />
++		<evaluate expression="'proceed'" />
++		<transition on="proceed" to="proceed" />
++	</action-state>
++
++	<bean-import resource="gluu-release-attributes-post-processor-beans.xml" />
++
++</flow>
