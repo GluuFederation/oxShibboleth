@@ -27,7 +27,7 @@ diff -aurN shibboleth-idp.orig/flows/authn/oxAuth/oxauth-authn-flow.xml shibbole
 +      </view-state>
 +      
 +      
-+      <action-state>
++      <action-state id="ValidateExternalAuthentication">
 +         <evaluate expression="ValidateExternalAuthentication"/>
 +         <evaluate expression="PopulateSubjectCanonicalizationContext"/>
 +         <evaluate expression="'proceed'"/>
