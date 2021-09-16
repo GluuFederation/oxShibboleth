@@ -6,13 +6,13 @@ diff -aurN shibboleth-idp.orig/flows/authn/oxAuth/oxauth-authn-flow.xml shibbole
 +<flow xmlns="http://www.springframework.org/schema/webflow"
 +      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 +      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow.xsd"
-+      parent="authn.master">
++      parent="authn.abstract">
 +      
 +      <!-- This is a login flow for external authentication handled outside the webflow engine. -->
 +      <view-state 
 +      	    id="ExternalTransfer"
 +            view="externalRedirect:#{T(net.shibboleth.idp.authn.ExternalAuthentication).
-+                  getExternalRedirect( flowRequestContext.getActiveFlow().
++                  getExternalRedirect( flowRequestContext.getActiveFlow().getApplicationContext().
 +                  getBean('shibboleth.authn.oxAuth.externalAuthnPathStrategy').apply(opensamlProfileRequestContext),
 +                  flowExecutionContext.getKey().toString() )}">
 +                        
