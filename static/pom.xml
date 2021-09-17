@@ -44,20 +44,57 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>net.shibboleth.idp</groupId>
+									<artifactId>idp-conf-impl</artifactId>
+									<version>${shibboleth.version}</version>
+									<type>jar</type>
+									<overWrite>true</overWrite>
+									<outputDirectory>${project.build.directory}/idp-conf-impl-${shibboleth.version}</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+            </plugin>
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-patch-plugin</artifactId>
 				<version>1.1.1</version>
-				<configuration>
-					<targetDirectory>${project.build.directory}/classes/shibboleth-identity-provider-${shibboleth.version}</targetDirectory>
-				</configuration>
 				<executions>
 					<execution>
 						<id>gluu-patch</id>
 						<phase>process-resources</phase>
 						<configuration>
+							<targetDirectory>${project.build.directory}/classes/shibboleth-identity-provider-${shibboleth.version}</targetDirectory>
 							<patchDirectory>src/main/patches</patchDirectory>
 							<naturalOrderProcessing>true</naturalOrderProcessing>
 							<optimizations>false</optimizations>
 							<strip>1</strip>
+						</configuration>
+						<goals>
+							<goal>apply</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>gluu-patch-system</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<targetDirectory>${project.build.directory}/idp-conf-impl-${shibboleth.version}</targetDirectory>
+							<patchDirectory>src/main/patches.system</patchDirectory>
+							<naturalOrderProcessing>true</naturalOrderProcessing>
+							<optimizations>false</optimizations>
+							<strip>0</strip>
 						</configuration>
 						<goals>
 							<goal>apply</goal>
