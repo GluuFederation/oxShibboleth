@@ -1,18 +1,36 @@
-diff -aurN shibboleth-idp.orig/conf/intercept/profile-intercept.xml shibboleth-idp/conf/intercept/profile-intercept.xml
---- shibboleth-idp.orig/conf/intercept/profile-intercept.xml	2021-08-16 16:34:52.722000000 +0100
-+++ shibboleth-idp/conf/intercept/profile-intercept.xml	2021-08-17 08:04:56.823777069 +0100
-@@ -37,6 +37,8 @@
-                 <bean id="intercept/external" parent="shibboleth.InterceptFlow" />
- 
-                 <bean id="intercept/gluu-release-attributes-post-processor" parent="shibboleth.consent.AttributeReleaseFlow" />
-+                
-+                <bean id="intercept/gluu-populate-context" parent="shibboleth.InterceptFlow" />
-             </list>
-         </property>
-     </bean>
+diff -aurN shibboleth-idp.orig/conf/global.xml shibboleth-idp/conf/global.xml
+--- shibboleth-idp.orig/conf/global.xml	2021-09-16 16:47:41.633000000 +0100
++++ shibboleth-idp/conf/global.xml	2021-09-16 16:57:08.164729304 +0100
+@@ -58,5 +58,6 @@
+     <import resource="conditional:${idp.home}/conf/authn/oxauth-authn-global.xml"/>
+     <import resource="conditional:${idp.home}/conf/gluu-storage.xml"/>
+     <import resource="conditional:${idp.home}/conf/gluu-release-attributes.xml"/>
++    <import resource="conditional:${idp.home}/conf/gluu-populate-context.xml"/>
+     
+ </beans>
+diff -aurN shibboleth-idp.orig/conf/gluu-populate-context.xml shibboleth-idp/conf/gluu-populate-context.xml
+--- shibboleth-idp.orig/conf/gluu-populate-context.xml	1970-01-01 01:00:00.000000000 +0100
++++ shibboleth-idp/conf/gluu-populate-context.xml	2021-09-16 16:59:56.893893891 +0100
+@@ -0,0 +1,16 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<beans xmlns="http://www.springframework.org/schema/beans"
++       xmlns:context="http://www.springframework.org/schema/context"
++       xmlns:util="http://www.springframework.org/schema/util"
++       xmlns:p="http://www.springframework.org/schema/p"
++       xmlns:c="http://www.springframework.org/schema/c"
++       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
++                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
++                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
++                           
++       default-init-method="initialize"
++       default-destroy-method="destroy">
++       
++       <bean p:id="intercept/gluu-populate-context" parent="shibboleth.InterceptFlow" />
++</beans>
 diff -aurN shibboleth-idp.orig/flows/intercept/gluu-populate-context/gluu-populate-context-beans.xml shibboleth-idp/flows/intercept/gluu-populate-context/gluu-populate-context-beans.xml
 --- shibboleth-idp.orig/flows/intercept/gluu-populate-context/gluu-populate-context-beans.xml	1970-01-01 01:00:00.000000000 +0100
-+++ shibboleth-idp/flows/intercept/gluu-populate-context/gluu-populate-context-beans.xml	2021-08-17 07:49:24.702291699 +0100
++++ shibboleth-idp/flows/intercept/gluu-populate-context/gluu-populate-context-beans.xml	2021-09-16 17:06:00.079843306 +0100
 @@ -0,0 +1,19 @@
 +<?xml version="1.0" encoding="UTF-8"?>
 +<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
@@ -35,7 +53,7 @@ diff -aurN shibboleth-idp.orig/flows/intercept/gluu-populate-context/gluu-popula
 +</beans>
 diff -aurN shibboleth-idp.orig/flows/intercept/gluu-populate-context/gluu-populate-context-flow.xml shibboleth-idp/flows/intercept/gluu-populate-context/gluu-populate-context-flow.xml
 --- shibboleth-idp.orig/flows/intercept/gluu-populate-context/gluu-populate-context-flow.xml	1970-01-01 01:00:00.000000000 +0100
-+++ shibboleth-idp/flows/intercept/gluu-populate-context/gluu-populate-context-flow.xml	2021-08-17 07:50:01.622118963 +0100
++++ shibboleth-idp/flows/intercept/gluu-populate-context/gluu-populate-context-flow.xml	2021-09-16 17:06:14.666791608 +0100
 @@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="UTF-8"?>
 +<flow xmlns="http://www.springframework.org/schema/webflow"
