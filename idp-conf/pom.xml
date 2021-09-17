@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.gluu</groupId>
-	<artifactId>oxShibbolethStatic</artifactId>
-	<name>OX Shibboleth IDP static resources</name>
+	<artifactId>idp-conf-gluu-impl</artifactId>
+	<name>Gluu idp-conf-impl</name>
 	<url>http://ox.gluu.org</url>
 	<packaging>jar</packaging>
 	<version>4.3.0-SNAPSHOT</version>
@@ -22,42 +22,46 @@
 				<artifactId>maven-install-plugin</artifactId>
 				<version>2.4</version>
 			</plugin>
-
 			<plugin>
-				<groupId>com.googlecode.maven-download-plugin</groupId>
-				<artifactId>download-maven-plugin</artifactId>
-				<version>1.2.1</version>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>download-dist</id>
-						<phase>generate-sources</phase>
+						<id>unpack</id>
+						<phase>generate-resources</phase>
 						<goals>
-							<goal>wget</goal>
+							<goal>unpack</goal>
 						</goals>
 						<configuration>
-							<url>http://shibboleth.net/downloads/identity-provider/${shibboleth.version}/shibboleth-identity-provider-${shibboleth.version}.tar.gz</url>
-							<unpack>true</unpack>
-							<outputDirectory>${project.build.directory}/classes</outputDirectory>
-							<sha256>${shibboleth.dist.sha256}</sha256>
+							<artifactItems>
+								<artifactItem>
+									<groupId>net.shibboleth.idp</groupId>
+									<artifactId>idp-conf-impl</artifactId>
+									<version>${shibboleth.version}</version>
+									<type>jar</type>
+									<overWrite>true</overWrite>
+									<outputDirectory>${project.build.directory}/classes</outputDirectory>
+								</artifactItem>
+							</artifactItems>
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
+	            </plugin>
 
-            <plugin>
+	            <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-patch-plugin</artifactId>
 				<version>1.1.1</version>
 				<executions>
 					<execution>
-						<id>gluu-patch</id>
+						<id>gluu-patch-system</id>
 						<phase>process-resources</phase>
 						<configuration>
-							<targetDirectory>${project.build.directory}/classes/shibboleth-identity-provider-${shibboleth.version}</targetDirectory>
+							<targetDirectory>${project.build.directory}/classes</targetDirectory>
 							<patchDirectory>src/main/patches</patchDirectory>
 							<naturalOrderProcessing>true</naturalOrderProcessing>
 							<optimizations>false</optimizations>
-							<strip>1</strip>
+							<strip>0</strip>
 						</configuration>
 						<goals>
 							<goal>apply</goal>
@@ -76,18 +80,9 @@
 						<phase>process-resources</phase>
 						<configuration>
 							<target>
-								<property name="shib.basedir" value="${project.build.directory}/classes/shibboleth-identity-provider-${shibboleth.version}"/>
-								<property name="shib.dest.basedir" value="${project.build.directory}/classes/shibboleth-idp"/>
-								<!-- Delete not required webapp folder -->
-								<delete dir="${shib.basedir}/webapp"/>
+								<property name="build.basedir" value="${project.build.directory}/classes"/>
 								<!-- Delete .orig files in all folders -->
-								<delete dir="${shib.basedir}" includes="**/*.orig"/>
-								<!-- Delete destination shibboleth-idp folder -->
-								<delete dir="${shib.dest.basedir}"/>
-								<!-- Move to shibboleth-idp folder -->
-								<move todir="${shib.dest.basedir}">
-									<fileset dir="${shib.basedir}"/>
-								</move>
+								<delete dir="${build.basedir}" includes="**/*.orig"/>
 							</target>
 						</configuration>
 						<goals>
@@ -96,7 +91,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
 </project>

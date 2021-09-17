@@ -187,6 +187,7 @@
                                                 WEB-INF/lib/log4j-api-2.11.2.jar,
                                                 WEB-INF/lib/log4j-core-2.11.2.jar,
                                                 WEB-INF/lib/commons-logging-1.2.jar,
+                                                WEB-INF/lib/idp-conf-impl-${shibboleth.version}.jar,
                                         </packagingExcludes>
 				</configuration>
 				<executions>
@@ -367,6 +368,13 @@
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-joda</artifactId>
 			<version>2.10.1</version>
+		</dependency>
+
+		<!-- Gluu IDP conf impl -->
+		<dependency>
+			<groupId>org.gluu</groupId>
+			<artifactId>idp-conf-gluu-impl</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 </project>
