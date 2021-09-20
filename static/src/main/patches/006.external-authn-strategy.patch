@@ -6,7 +6,7 @@ diff -aurN shibboleth-idp.orig/flows/authn/oxAuth/oxauth-authn-beans.xml shibbol
         <!-- Default strategy function to obtain the external path. -->
         <bean id="shibboleth.authn.oxAuth.externalAuthnPathStrategy" parent="shibboleth.Functions.Constant"
 -             c:target-ref="shibboleth.authn.oxAuth.externalAuthnPath" />
-+             c:target="#{getObject('shibboleth.authn.oxAuth.externalAuthnPath') ?: '%{idp.authn.oxAuth.externalAuthnPath:contextRelative:Authn/oxAuth}'.trim()" />
++             c:target="#{getObject('shibboleth.authn.oxAuth.externalAuthnPath') ?: '%{idp.authn.oxAuth.externalAuthnPath:contextRelative:Authn/oxAuth}'.trim()}" />
               
         <import resource="conditional:%{idp.home}/conf/authn/oxauth-authn-config.xml" />
         
