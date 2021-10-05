@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>org.gluu</groupId>
 		<artifactId>oxShibboleth</artifactId>
-		<version>5.0.0-SNAPSHOT</version>
+		<version>4.3.0.Final</version>
 	</parent>
 	<prerequisites>
 		<maven>2.3</maven>
@@ -17,7 +17,7 @@
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<oxcore.version>5.0.0-SNAPSHOT</oxcore.version>
+		<oxcore.version>4.3.0.Final</oxcore.version>
 		<jackson.version>1.9.1f1</jackson.version>
 		<jaxrs.version>3.0.12.Final</jaxrs.version>
 		<resteasy.version>3.0.12.Final</resteasy.version>
@@ -80,7 +80,7 @@
 							<url>http://shibboleth.net/downloads/identity-provider/${shibboleth.version}/shibboleth-identity-provider-${shibboleth.version}.tar.gz</url>
 							<unpack>true</unpack>
 							<outputDirectory>${project.build.directory}</outputDirectory>
-							<md5>${shibboleth.dist.md5}</md5>
+							<sha256>${shibboleth.dist.sha256}</sha256>
 						</configuration>
 					</execution>
 				</executions>
@@ -187,6 +187,7 @@
                                                 WEB-INF/lib/log4j-api-2.11.2.jar,
                                                 WEB-INF/lib/log4j-core-2.11.2.jar,
                                                 WEB-INF/lib/commons-logging-1.2.jar,
+                                                WEB-INF/lib/idp-conf-impl-${shibboleth.version}.jar,
                                         </packagingExcludes>
 				</configuration>
 				<executions>
@@ -254,12 +255,17 @@
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
 		</dependency>
+		<dependency>
+			<groupId>org.gluu</groupId>
+			<artifactId>oxLogoServlet</artifactId>
+			<version>4.3.0.Final</version>
+		</dependency>
 		<!--END: Couchbase JDBC section -->
 		<!--START: OX OpenId Authentication -->
 		<dependency>
 			<groupId>org.gluu</groupId>
 			<artifactId>shib-oxauth-authn3</artifactId>
-			<version>5.0.0-SNAPSHOT</version>
+			<version>4.3.0.Final</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.logging.log4j</groupId>
@@ -313,17 +319,27 @@
 		</dependency>
 		<dependency>
 			<groupId>org.gluu</groupId>
-			<artifactId>oxcore-persistence-ldap</artifactId>
+			<artifactId>gluu-orm-ldap</artifactId>
 			<version>${oxcore.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.gluu</groupId>
-			<artifactId>oxcore-persistence-couchbase</artifactId>
+			<artifactId>gluu-orm-couchbase</artifactId>
 			<version>${oxcore.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.gluu</groupId>
-			<artifactId>oxcore-persistence-hybrid</artifactId>
+			<artifactId>gluu-orm-spanner</artifactId>
+			<version>${oxcore.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.gluu</groupId>
+			<artifactId>gluu-orm-sql</artifactId>
+			<version>${oxcore.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.gluu</groupId>
+			<artifactId>gluu-orm-hybrid</artifactId>
 			<version>${oxcore.version}</version>
 		</dependency>
 		<!-- Logging -->
@@ -352,6 +368,13 @@
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-joda</artifactId>
 			<version>2.10.1</version>
+		</dependency>
+
+		<!-- Gluu IDP conf impl -->
+		<dependency>
+			<groupId>org.gluu</groupId>
+			<artifactId>idp-conf-gluu-impl</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 </project>

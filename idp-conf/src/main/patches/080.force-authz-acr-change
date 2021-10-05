@@ -1,0 +1,25 @@
+--- net/shibboleth/idp/flows/authn/authn-beans.xml.orig	2021-07-27 09:06:54.265000000 +0300
++++ net/shibboleth/idp/flows/authn/authn-beans.xml	2021-09-17 19:05:09.656285100 +0300
+@@ -50,7 +50,10 @@
+ 
+     <bean id="FilterFlowsByForcedAuthn"
+         class="net.shibboleth.idp.authn.impl.FilterFlowsByForcedAuthn" scope="prototype" />
+-    
++
++    <bean id="FilterFlowsByAcrChangedAuthn"
++        class="org.gluu.idp.externalauth.FilterFlowsByAcrChangedAuthn" scope="prototype" />
++
+     <bean id="FilterFlowsByNonBrowserSupport"
+         class="net.shibboleth.idp.authn.impl.FilterFlowsByNonBrowserSupport" scope="prototype" />
+ 
+--- net/shibboleth/idp/flows/authn/authn-flow.xml.orig	2021-07-27 09:06:54.265000000 +0300
++++ net/shibboleth/idp/flows/authn/authn-flow.xml	2021-09-17 19:04:40.724512400 +0300
+@@ -36,6 +36,7 @@
+     <action-state id="FilterFlows">
+         <evaluate expression="InitializeRequestedPrincipalContext" />
+         <evaluate expression="FilterFlowsByForcedAuthn" />
++        <evaluate expression="FilterFlowsByAcrChangedAuthn" />
+         <evaluate expression="FilterFlowsByNonBrowserSupport" />
+         <evaluate expression="'proceed'" />
+ 
+ 

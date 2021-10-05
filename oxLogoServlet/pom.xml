@@ -4,31 +4,31 @@
 	<parent>
 		<groupId>org.gluu</groupId>
 		<artifactId>oxShibboleth</artifactId>
-		<version>5.0.0-SNAPSHOT</version>
+		<version>4.3.0.Final</version>
 	</parent>
 	<artifactId>oxLogoServlet</artifactId>
 	<name>oxLogoServlet</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<oxcore.version>5.0.0-SNAPSHOT</oxcore.version>
-		<oxauth.version>5.0.0-SNAPSHOT</oxauth.version>
-		<oxtrust.version>5.0.0-SNAPSHOT</oxtrust.version>
+		<oxcore.version>4.3.0.Final</oxcore.version>
+		<oxauth.version>4.3.0.Final</oxauth.version>
+		<oxtrust.version>4.3.0.Final</oxtrust.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.gluu</groupId>
-			<artifactId>oxcore-persistence-ldap</artifactId>
+			<artifactId>gluu-orm-ldap</artifactId>
 			<version>${oxcore.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.gluu</groupId>
-			<artifactId>oxcore-persistence-couchbase</artifactId>
+			<artifactId>gluu-orm-couchbase</artifactId>
 			<version>${oxcore.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.gluu</groupId>
-			<artifactId>oxcore-persistence-hybrid</artifactId>
+			<artifactId>gluu-orm-hybrid</artifactId>
 			<version>${oxcore.version}</version>
 		</dependency>
 		<dependency>
@@ -41,6 +41,7 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>

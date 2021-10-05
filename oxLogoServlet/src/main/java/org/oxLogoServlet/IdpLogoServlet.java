@@ -22,26 +22,26 @@ public class IdpLogoServlet extends HttpServlet {
 	private Logger logger;
 
 	private static final long serialVersionUID = 5445488800130871634L;
+	private static final String DEFAULT_LOGO_FILENAME = "logo.png";
+	public static final String BASE_IDP_LOGO_PATH = "/opt/gluu/jetty/idp/custom/static/logo/";
 
 	private static final Logger log = LoggerFactory.getLogger(IdpLogoServlet.class);
-
-	public static final String BASE_IDP_LOGO_PATH = "/opt/gluu/jetty/idp/custom/static/logo/";
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		logger = LoggerFactory.getLogger(IdpLogoServlet.class);
 		response.setContentType("image/jpg");
 		response.setDateHeader("Expires", new Date().getTime() + 1000L * 1800);
-		boolean hasSucceed = readCustomLogo(response, null);
+		boolean hasSucceed = readCustomLogo(response);
 		if (!hasSucceed) {
 			readDefaultLogo(response);
 		}
 	}
 
 	private boolean readDefaultLogo(HttpServletResponse response) {
-		String defaultLogoFileName = "logo.png";
+
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		InputStream in = classLoader.getResourceAsStream(defaultLogoFileName);
+		InputStream in = classLoader.getResourceAsStream(DEFAULT_LOGO_FILENAME);
 		OutputStream out = null;
 		try {
 			out = response.getOutputStream();
@@ -68,15 +68,13 @@ public class IdpLogoServlet extends HttpServlet {
 		}
 	}
 
-	private boolean readCustomLogo(HttpServletResponse response, Object organization) {
-		if (organization == null) {
-			return false;
-		}
+	private boolean readCustomLogo(HttpServletResponse response) {
+
 		File directory = new File(BASE_IDP_LOGO_PATH);
 		if (!directory.exists()) {
 			directory.mkdir();
 		}
-		File logoPath = new File(BASE_IDP_LOGO_PATH + "");
+		File logoPath = new File(BASE_IDP_LOGO_PATH + DEFAULT_LOGO_FILENAME);
 		if (!logoPath.exists()) {
 			return false;
 		}
