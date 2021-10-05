@@ -1,0 +1,882 @@
+diff -aurN  shibboleth-idp.orig/conf/services.xml shibboleth-idp/conf/services.xml
+--- shibboleth-idp.orig/conf/services.xml       2020-09-23 03:58:52.333210754 +0000
++++ shibboleth-idp/conf/services.xml    2020-09-23 02:57:31.726575473 +0000
+@@ -34,7 +34,7 @@
+     <util:list id ="shibboleth.AttributeRegistryResources">
+         <value>%{idp.home}/conf/attribute-registry.xml</value>
+         <value>%{idp.home}/system/conf/attribute-registry-system.xml</value>
+-        <value>%{idp.home}/conf/attributes/default-rules.xml</value>
++        <!--value>%{idp.home}/conf/attributes/default-rules.xml</value-->
+         <value>%{idp.home}/conf/attribute-resolver.xml</value>
+     </util:list>
+
+diff -aurN shibboleth-idp.orig/conf/attribute-filter.xml shibboleth-idp/conf/attribute-filter.xml
+--- shibboleth-idp.orig/conf/attribute-filter.xml	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/conf/attribute-filter.xml	2020-06-24 13:10:06.904000000 +0300
+@@ -78,7 +78,7 @@
+ 
+     <!-- Release an additional attribute to an SP. -->
+     <AttributeFilterPolicy id="example1">
+-        <PolicyRequirementRule xsi:type="Requester" value="https://sp.example.org" />
++        <PolicyRequirementRule xsi:type="Requester" value="https://ce.gluu.info" />
+ 
+         <AttributeRule attributeID="uid" permitAny="true" />
+     </AttributeFilterPolicy>
+@@ -86,8 +86,8 @@
+     <!-- Release eduPersonScopedAffiliation to two specific SPs. -->
+     <AttributeFilterPolicy id="example2">
+         <PolicyRequirementRule xsi:type="OR">
+-            <Rule xsi:type="Requester" value="https://sp.example.org" />
+-            <Rule xsi:type="Requester" value="https://another.example.org/shibboleth" />
++            <Rule xsi:type="Requester" value="https://sp.gluu.info" />
++            <Rule xsi:type="Requester" value="https://anothersp.gluu.info/shibboleth" />
+         </PolicyRequirementRule>
+ 
+         <AttributeRule attributeID="eduPersonScopedAffiliation" permitAny="true" />
+diff -aurN shibboleth-idp.orig/conf/attribute-resolver-full.xml shibboleth-idp/conf/attribute-resolver-full.xml
+--- shibboleth-idp.orig/conf/attribute-resolver-full.xml	1970-01-01 03:00:00.000000000 +0300
++++ shibboleth-idp/conf/attribute-resolver-full.xml	2020-06-24 13:10:06.907000000 +0300
+@@ -0,0 +1,285 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!--
++    This file is an EXAMPLE configuration file containing lots of commented
++    example attributes, encoders, and a couple of example data connectors.
++     
++    Not all attribute definitions or data connectors are demonstrated, but
++    a variety of LDAP attributes, some common to Shibboleth deployments and
++    many not, are included.
++    
++    Deployers should refer to the Identity Provider 3 documentation
++    
++    https://wiki.shibboleth.net/confluence/display/IDP30/AttributeResolverConfiguration
++     
++    for a complete list of components and their options.
++-->
++<AttributeResolver
++        xmlns="urn:mace:shibboleth:2.0:resolver"
++        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++        xsi:schemaLocation="urn:mace:shibboleth:2.0:resolver http://shibboleth.net/schema/idp/shibboleth-attribute-resolver.xsd">
++
++    <!-- ========================================== -->
++    <!--      Attribute Definitions                 -->
++    <!-- ========================================== -->
++
++    <!-- Schema: Core schema attributes-->
++<!--
++
++    <AttributeDefinition xsi:type="Simple" id="uid">
++        <InputDataConnector ref="myLDAP" attributeNames="uid"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:0.9.2342.19200300.100.1.1" friendlyName="uid" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="mail">
++        <InputDataConnector ref="myLDAP" attributeNames="mail"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:0.9.2342.19200300.100.1.3" friendlyName="mail" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="homePhone">
++        <InputDataConnector ref="myLDAP" attributeNames="homePhone"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:0.9.2342.19200300.100.1.20" friendlyName="homePhone" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="homePostalAddress">
++        <InputDataConnector ref="myLDAP" attributeNames="homePostalAddress"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:0.9.2342.19200300.100.1.39" friendlyName="homePostalAddress" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="mobileNumber">
++        <InputDataConnector ref="myLDAP" attributeNames="mobile"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:0.9.2342.19200300.100.1.41" friendlyName="mobile" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="pagerNumber">
++        <InputDataConnector ref="myLDAP" attributeNames="pager"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:0.9.2342.19200300.100.1.42" friendlyName="pager" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="surname">
++        <InputDataConnector ref="myLDAP" attributeNames="sn"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:2.5.4.4" friendlyName="sn" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="locality">
++        <InputDataConnector ref="myLDAP" attributeNames="l"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:2.5.4.7" friendlyName="l" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="stateProvince">
++        <InputDataConnector ref="myLDAP" attributeNames="st"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:2.5.4.8" friendlyName="st" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="street">
++        <InputDataConnector ref="myLDAP" attributeNames="street"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:2.5.4.9" friendlyName="street" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="organizationName">
++        <InputDataConnector ref="myLDAP" attributeNames="o"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:2.5.4.10" friendlyName="o" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="organizationalUnit">
++        <InputDataConnector ref="myLDAP" attributeNames="ou"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:2.5.4.11" friendlyName="ou" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="title">
++        <InputDataConnector ref="myLDAP" attributeNames="title"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:2.5.4.12" friendlyName="title" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="postalAddress">
++        <InputDataConnector ref="myLDAP" attributeNames="postalAddress"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:2.5.4.16" friendlyName="postalAddress" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="postalCode">
++        <InputDataConnector ref="myLDAP" attributeNames="postalCode"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:2.5.4.17" friendlyName="postalCode" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="postOfficeBox">
++        <InputDataConnector ref="myLDAP" attributeNames="postOfficeBox"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:2.5.4.18" friendlyName="postOfficeBox" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="telephoneNumber">
++        <InputDataConnector ref="myLDAP" attributeNames="telephoneNumber"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:2.5.4.20" friendlyName="telephoneNumber" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="givenName">
++        <InputDataConnector ref="myLDAP" attributeNames="givenName"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:2.5.4.42" friendlyName="givenName" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="initials">
++        <InputDataConnector ref="myLDAP" attributeNames="initials"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:2.5.4.43" friendlyName="initials" encodeType="false" />
++    </AttributeDefinition>
++-->
++
++    <!-- Schema: inetOrgPerson attributes-->
++<!--
++    <AttributeDefinition xsi:type="Simple" id="departmentNumber">
++        <InputDataConnector ref="myLDAP" attributeNames="departmentNumber"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:2.16.840.1.113730.3.1.2" friendlyName="departmentNumber" encodeType="false" />
++    </AttributeDefinition>
++    
++    <AttributeDefinition xsi:type="Simple" id="displayName">
++        <InputDataConnector ref="myLDAP" attributeNames="displayName"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:2.16.840.1.113730.3.1.241" friendlyName="displayName" encodeType="false" />
++    </AttributeDefinition> 
++
++    <AttributeDefinition xsi:type="Simple" id="employeeNumber">
++        <InputDataConnector ref="myLDAP" attributeNames="employeeNumber"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:2.16.840.1.113730.3.1.3" friendlyName="employeeNumber" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="employeeType">
++        <InputDataConnector ref="myLDAP" attributeNames="employeeType"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:2.16.840.1.113730.3.1.4" friendlyName="employeeType" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="jpegPhoto">
++        <InputDataConnector ref="myLDAP" attributeNames="jpegPhoto"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:0.9.2342.19200300.100.1.60" friendlyName="jpegPhoto" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="preferredLanguage">
++        <InputDataConnector ref="myLDAP" attributeNames="preferredLanguage"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:2.16.840.1.113730.3.1.39" friendlyName="preferredLanguage" encodeType="false" />
++    </AttributeDefinition>
++-->
++    <!-- Schema: eduPerson attributes -->
++<!-- 
++    <AttributeDefinition xsi:type="Simple" id="eduPersonAffiliation">
++        <InputDataConnector ref="myLDAP" attributeNames="eduPersonAffiliation" />
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.1" friendlyName="eduPersonAffiliation" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="eduPersonEntitlement">
++        <InputDataConnector ref="myLDAP" attributeNames="eduPersonEntitlement"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.7" friendlyName="eduPersonEntitlement" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="eduPersonNickname">
++        <InputDataConnector ref="myLDAP" attributeNames="eduPersonNickname"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.2" friendlyName="eduPersonNickname" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Simple" id="eduPersonPrimaryAffiliation">
++        <InputDataConnector ref="myLDAP" attributeNames="eduPersonPrimaryAffiliation"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.5" friendlyName="eduPersonPrimaryAffiliation" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Prescoped" id="eduPersonPrincipalName">
++        <InputDataConnector ref="myLDAP" attributeNames="eduPersonPrincipalName"/>
++        <AttributeEncoder xsi:type="SAML2ScopedString" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.6" friendlyName="eduPersonPrincipalName" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Prescoped" id="eduPersonPrincipalNamePrior">
++        <InputDataConnector ref="myLDAP" attributeNames="eduPersonPrincipalNamePrior"/>
++        <AttributeEncoder xsi:type="SAML2ScopedString" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.12" friendlyName="eduPersonPrincipalNamePrior" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Scoped" id="eduPersonScopedAffiliation" scope="%{idp.scope}">
++        <InputDataConnector ref="myLDAP" attributeNames="eduPersonAffiliation"/>
++        <AttributeEncoder xsi:type="SAML2ScopedString" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.9" friendlyName="eduPersonScopedAffiliation" encodeType="false" />
++    </AttributeDefinition>
++    
++    <AttributeDefinition xsi:type="Simple" id="eduPersonAssurance">
++        <InputDataConnector ref="myLDAP" attributeNames="eduPersonAssurance"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.11" friendlyName="eduPersonAssurance" encodeType="false" />
++    </AttributeDefinition>
++-->
++
++    <!-- Semi-deprecated eduPersonUniqueId, should be phased out in favor of SAML subject-id replacement below. -->
++<!-- 
++    <AttributeDefinition xsi:type="Scoped" id="eduPersonUniqueId" scope="%{idp.scope}">
++        <InputDataConnector ref="myLDAP" attributeNames="%{idp.persistentId.sourceAttribute}"/>
++        <AttributeEncoder xsi:type="SAML2ScopedString" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.13" friendlyName="eduPersonUniqueId" encodeType="false" />
++    </AttributeDefinition>
++-->
++
++    <!-- Schema: SAML Subject ID Attributes -->
++<!--
++    <AttributeDefinition xsi:type="Scoped" id="samlSubjectID" scope="%{idp.scope}">
++        <InputDataConnector ref="myLDAP" attributeNames="%{idp.persistentId.sourceAttribute}"/>
++        <AttributeEncoder xsi:type="SAML2ScopedString" name="urn:oasis:names:tc:SAML:attribute:subject-id" friendlyName="subject-id" encodeType="false" />
++    </AttributeDefinition>
++
++    <AttributeDefinition xsi:type="Scoped" id="samlPairwiseID" scope="%{idp.scope}">
++        <InputDataConnector ref="computed" attributeNames="computedId"/>
++        <AttributeEncoder xsi:type="SAML2ScopedString" name="urn:oasis:names:tc:SAML:attribute:pairwise-id" friendlyName="pairwise-id" encodeType="false" />
++    </AttributeDefinition>
++-->
++
++    <!-- ========================================== -->
++    <!--      Data Connectors                       -->
++    <!-- ========================================== -->
++
++    <!-- Example Static Connector -->
++
++    <!-- Example Relational Database Connector -->
++<!--
++    <DataConnector id="mySIS" xsi:type="RelationalDatabase">
++        <ApplicationManagedConnection jdbcDriver="oracle.jdbc.driver.OracleDriver"
++                                         jdbcURL="jdbc:oracle:thin:@db.example.org:1521:SomeDB" 
++                                         jdbcUserName="myid" 
++                                         jdbcPassword="mypassword" />
++        <QueryTemplate>
++            <![CDATA[
++                SELECT * FROM student WHERE gzbtpid = '$resolutionContext.principal'
++            ]]>
++        </QueryTemplate>
++
++        <Column columnName="gzbtpid" attributeID="uid" />
++        <Column columnName="fqlft" attributeID="gpa" />
++    </DataConnector>
++-->
++
++    <!-- Example LDAP Connector -->
++<!--
++    <DataConnector id="myLDAP" xsi:type="LDAPDirectory"
++        ldapURL="%{idp.attribute.resolver.LDAP.ldapURL}"
++        baseDN="%{idp.attribute.resolver.LDAP.baseDN}" 
++        principal="%{idp.attribute.resolver.LDAP.bindDN}"
++        principalCredential="%{idp.attribute.resolver.LDAP.bindDNCredential}"
++        useStartTLS="%{idp.attribute.resolver.LDAP.useStartTLS:true}"
++        connectTimeout="%{idp.attribute.resolver.LDAP.connectTimeout}"
++		trustFile="%{idp.attribute.resolver.LDAP.trustCertificates}"
++        responseTimeout="%{idp.attribute.resolver.LDAP.responseTimeout}">
++        <FilterTemplate>
++            <![CDATA[
++                %{idp.attribute.resolver.LDAP.searchFilter}
++            ]]>
++        </FilterTemplate>
++	    <ConnectionPool
++            minPoolSize="%{idp.pool.LDAP.minSize:3}"
++            maxPoolSize="%{idp.pool.LDAP.maxSize:10}"
++            blockWaitTime="%{idp.pool.LDAP.blockWaitTime:PT3S}"
++            validatePeriodically="%{idp.pool.LDAP.validatePeriodically:true}"
++            validateTimerPeriod="%{idp.pool.LDAP.validatePeriod:PT5M}"
++            expirationTime="%{idp.pool.LDAP.idleTime:PT10M}"
++            failFastInitialize="%{idp.pool.LDAP.failFastInitialize:false}" />
++    </DataConnector>
++-->
++
++    <!-- DataConector for pairwise-id (example depends on saml-nameid.properties). -->
++
++<!-- 
++    <DataConnector id="computed" xsi:type="ComputedId"
++	    generatedAttributeID="computedId"
++	    salt="%{idp.persistentId.salt}"
++	    algorithm="%{idp.persistentId.algorithm:SHA}"
++        encoding="%{idp.persistentId.encoding:BASE32}">
++	    
++        <InputDataConnector ref="myLDAP" attributeNames="%{idp.persistentId.sourceAttribute}" />
++        
++	</DataConnector>
++-->
++
++</AttributeResolver>
+diff -aurN shibboleth-idp.orig/conf/attribute-resolver-ldap.xml shibboleth-idp/conf/attribute-resolver-ldap.xml
+--- shibboleth-idp.orig/conf/attribute-resolver-ldap.xml	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/conf/attribute-resolver-ldap.xml	2020-06-24 13:10:06.909000000 +0300
+@@ -33,6 +33,27 @@
+ 
+     <AttributeDefinition xsi:type="Scoped" id="eduPersonScopedAffiliation" scope="%{idp.scope}">
+         <InputDataConnector ref="myLDAP" attributeNames="eduPersonAffiliation"/>
++        <AttributeEncoder xsi:type="SAML2ScopedString" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.6" friendlyName="eduPersonPrincipalName" encodeType="false" />
++    </AttributeDefinition>
++
++    <!--
++    The uid is the closest thing to a "standard" LDAP attribute
++    representing a local username, but you should generally *never*
++    expose uid to federated services, as it is rarely globally unique.
++    -->
++    <AttributeDefinition id="uid" xsi:type="Simple" >
++        <InputDataConnector ref="myLDAP" attributeNames="uid"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:0.9.2342.19200300.100.1.1" friendlyName="uid" encodeType="false" />
++    </AttributeDefinition>
++
++    <!--
++    In the rest of the world, the email address is the standard identifier,
++    despite the problems with that practice. Consider making the EPPN value
++    the same as your official email addresses whenever possible.
++    -->
++    <AttributeDefinition id="mail" xsi:type="Simple" >
++        <InputDataConnector ref="myLDAP" attributeNames="mail"/>
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:0.9.2342.19200300.100.1.3" friendlyName="mail" encodeType="false" />
+     </AttributeDefinition>
+ -->
+ 
+diff -aurN shibboleth-idp.orig/conf/attribute-resolver.xml shibboleth-idp/conf/attribute-resolver.xml
+--- shibboleth-idp.orig/conf/attribute-resolver.xml	2020-06-02 18:56:08.000000000 +0300
++++ shibboleth-idp/conf/attribute-resolver.xml	2020-06-24 13:10:06.911000000 +0300
+@@ -32,6 +32,7 @@
+     -->
+     <AttributeDefinition id="eduPersonPrincipalName" xsi:type="Scoped" scope="%{idp.scope}">
+         <InputAttributeDefinition ref="uid" />
++        <AttributeEncoder xsi:type="SAML2ScopedString" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.6" friendlyName="eduPersonPrincipalName" encodeType="false" />
+     </AttributeDefinition>
+ 
+     <!--
+@@ -39,7 +40,9 @@
+     representing a local username, but you should generally *never*
+     expose uid to federated services, as it is rarely globally unique.
+     -->
+-    <AttributeDefinition id="uid" xsi:type="PrincipalName" />
++    <AttributeDefinition id="uid" xsi:type="PrincipalName">
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:0.9.2342.19200300.100.1.1" friendlyName="uid" encodeType="false" />
++    </AttributeDefinition>
+ 
+     <!--
+     In the rest of the world, the email address is the standard identifier,
+@@ -48,6 +51,7 @@
+     -->
+     <AttributeDefinition id="mail" xsi:type="Template">
+         <InputAttributeDefinition ref="uid" />
++        <AttributeEncoder xsi:type="SAML2String" name="urn:oid:0.9.2342.19200300.100.1.3" friendlyName="mail" encodeType="false" />
+         <Template>
+           <![CDATA[
+                ${uid}@example.org
+@@ -60,6 +64,7 @@
+     -->
+     <AttributeDefinition id="eduPersonScopedAffiliation" xsi:type="Scoped" scope="%{idp.scope}">
+         <InputDataConnector ref="staticAttributes" attributeNames="affiliation" />
++        <AttributeEncoder xsi:type="SAML2ScopedString" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.9" friendlyName="eduPersonScopedAffiliation" encodeType="false" />
+     </AttributeDefinition>
+ 
+ 
+diff -aurN shibboleth-idp.orig/conf/authn/general-authn.xml shibboleth-idp/conf/authn/general-authn.xml
+--- shibboleth-idp.orig/conf/authn/general-authn.xml	2020-06-02 18:56:08.000000000 +0300
++++ shibboleth-idp/conf/authn/general-authn.xml	2020-06-24 13:10:06.914000000 +0300
+@@ -25,6 +25,7 @@
+     expressions for password-based authentication over a secure channel, so anything more exotic requires
+     customization, as the examples below for IP address and SPNEGO authentication illustrate.
+     -->
++    <import resource="oxauth-supported-principals.xml"/>
+ 
+     <util:list id="shibboleth.AvailableAuthenticationFlows">
+         
+@@ -45,8 +46,6 @@
+                 <list>
+                     <bean parent="shibboleth.SAML2AuthnContextClassRef"
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:Kerberos" />
+-                    <bean parent="shibboleth.SAML1AuthenticationMethod"
+-                        c:method="urn:ietf:rfc:1510" />
+                 </list>
+             </property>
+         </bean>
+@@ -61,8 +60,6 @@
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:X509" />
+                     <bean parent="shibboleth.SAML2AuthnContextClassRef"
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:TLSClient" />
+-                    <bean parent="shibboleth.SAML1AuthenticationMethod"
+-                        c:method="urn:ietf:rfc:2246" />
+                 </list>
+             </property>
+         </bean>
+@@ -74,8 +71,6 @@
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:X509" />
+                     <bean parent="shibboleth.SAML2AuthnContextClassRef"
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:TLSClient" />
+-                    <bean parent="shibboleth.SAML1AuthenticationMethod"
+-                        c:method="urn:ietf:rfc:2246" />
+                 </list>
+             </property>
+         </bean>
+@@ -97,8 +92,6 @@
+                 <list>
+                     <bean parent="shibboleth.SAML2AuthnContextClassRef"
+                         c:classRef="http://example.org/ac/classes/mfa" />
+-                    <bean parent="shibboleth.SAML1AuthenticationMethod"
+-                        c:method="http://example.org/ac/classes/mfa" />
+                 </list>
+             </property>
+         </bean>
+@@ -120,8 +113,6 @@
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport" />
+                     <bean parent="shibboleth.SAML2AuthnContextClassRef"
+                         c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:Password" />
+-                    <bean parent="shibboleth.SAML1AuthenticationMethod"
+-                        c:method="urn:oasis:names:tc:SAML:1.0:am:password" />
+                 </list>
+             </property>
+         </bean>
+@@ -149,6 +140,7 @@
+ 
+         <bean id="authn/RemoteUserInternal" parent="shibboleth.AuthenticationFlow" />
+ 
++        <ref bean="authn/oxAuth"/>
+     </util:list>
+ 
+     <!--
+diff -aurN shibboleth-idp.orig/conf/authn/oxauth-authn-config.xml shibboleth-idp/conf/authn/oxauth-authn-config.xml
+--- shibboleth-idp.orig/conf/authn/oxauth-authn-config.xml	1970-01-01 03:00:00.000000000 +0300
++++ shibboleth-idp/conf/authn/oxauth-authn-config.xml	2020-06-24 13:10:06.916000000 +0300
+@@ -0,0 +1,70 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<beans xmlns="http://www.springframework.org/schema/beans"
++       xmlns:context="http://www.springframework.org/schema/context"
++       xmlns:util="http://www.springframework.org/schema/util"
++       xmlns:p="http://www.springframework.org/schema/p"
++       xmlns:c="http://www.springframework.org/schema/c"
++       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
++                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
++                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
++                           
++       default-init-method="initialize"
++       default-destroy-method="destroy">
++
++    <!-- Servlet context-relative path to wherever your implementation lives. -->
++    <bean id="shibboleth.authn.oxAuth.externalAuthnPath" class="java.lang.String"
++          c:_0="contextRelative:Authn/oxAuth" />
++
++    <!--
++    Default is to always use the path in the bean above. If you want to determine it
++    dynamically, define a bean called "shibboleth.authn.External.externalAuthnPathStrategy"
++    of type Function<ProfileRequestContext,String> that returns the path to use.
++    -->
++
++    <!--
++    Add authentication flow descriptor's supportedPrincipals collection to the resulting Subject?
++    You would normally only unset this if you plan to return a fully decorated Java Subject from your
++    external authentication source.
++    -->
++    <util:constant id="shibboleth.authn.External.addDefaultPrincipals" static-field="java.lang.Boolean.TRUE" />
++
++    <!--
++    <bean id="shibboleth.authn.External.matchExpression" class="java.util.regex.Pattern" factory-method="compile"
++        c:_0="^(.+)@example\.edu]$" />
++    -->
++
++    <!--
++    Define entries here to map error messages returned by external modules and classify them as particular
++    kinds of errors for use in your templates and as events in flows.
++
++    Keys are events to signal, values are error codes.
++
++    The examples here just allow external signaling of the exact type of condition to record.
++    
++    If you want to "fall-through" to other login flows, include a mapping to "ReselectFlow".
++    -->
++    <util:map id="shibboleth.authn.oxAuth.ClassifiedMessageMap">
++        <entry key="AuthenticationException">
++            <list>
++                <value>AuthenticationException</value>
++            </list>
++        </entry>
++        <entry key="InvalidAuthenticationContext">
++            <list>
++                <value>InvalidAuthenticationContext</value>
++            </list>
++        </entry>
++        <entry key="NoPassive">
++            <list>
++                <value>NoPassive</value>
++            </list>
++        </entry>
++        <entry key="NoCredentials">
++            <list>
++                <value>InvalidToken</value>
++            </list>
++        </entry>
++    </util:map>
++    
++</beans>
+diff -aurN shibboleth-idp.orig/conf/authn/oxauth-supported-principals.xml shibboleth-idp/conf/authn/oxauth-supported-principals.xml
+--- shibboleth-idp.orig/conf/authn/oxauth-supported-principals.xml	1970-01-01 03:00:00.000000000 +0300
++++ shibboleth-idp/conf/authn/oxauth-supported-principals.xml	2020-06-24 13:10:06.918000000 +0300
+@@ -0,0 +1,28 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<beans xmlns="http://www.springframework.org/schema/beans"
++       xmlns:context="http://www.springframework.org/schema/context"
++       xmlns:util="http://www.springframework.org/schema/util"
++       xmlns:p="http://www.springframework.org/schema/p"
++       xmlns:c="http://www.springframework.org/schema/c"
++       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
++                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
++                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
++       default-init-method="initialize"
++       default-destroy-method="destroy">
++
++          <bean id="authn/oxAuth" parent="shibboleth.AuthenticationFlow"
++                p:forcedAuthenticationSupported="true"
++                p:nonBrowserSupported="false" >
++            <property name="supportedPrincipals">
++                <list>
++                    <bean parent="shibboleth.SAML2AuthnContextClassRef"
++                        c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:InternetProtocol" />
++                    <bean parent="shibboleth.SAML2AuthnContextClassRef"
++                        c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport" />
++                    <bean parent="shibboleth.SAML2AuthnContextClassRef"
++                        c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:Password" />
++                </list>
++            </property>
++          </bean>
++</beans>
+diff -aurN shibboleth-idp.orig/conf/authn/password-authn-config.xml shibboleth-idp/conf/authn/password-authn-config.xml
+--- shibboleth-idp.orig/conf/authn/password-authn-config.xml	2020-06-02 18:56:08.000000000 +0300
++++ shibboleth-idp/conf/authn/password-authn-config.xml	2020-06-24 13:10:06.920000000 +0300
+@@ -16,9 +16,10 @@
+     You can optionally comment out anything you don't need, but make sure not to
+     reference the corresponding validator in the list below if you do remove any.
+     -->
+-    <import resource="jaas-authn-config.xml" />
+-    <import resource="krb5-authn-config.xml" />
+-    <import resource="ldap-authn-config.xml" />
++    <!-- Choose an import based on the back-end you want to use. -->
++    <!-- <import resource="jaas-authn-config.xml" /> -->
++    <!-- <import resource="krb5-authn-config.xml" /> -->
++    <!-- <import resource="ldap-authn-config.xml" /> -->
+     
+     <!-- Ordered list of CredentialValidators to apply to a request. -->
+     <util:list id="shibboleth.authn.Password.Validators">
+@@ -130,8 +131,6 @@
+             c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport" />
+         <bean parent="shibboleth.SAML2AuthnContextClassRef"
+             c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:Password" />
+-        <bean parent="shibboleth.SAML1AuthenticationMethod"
+-            c:method="urn:oasis:names:tc:SAML:1.0:am:password" />
+     </util:list>
+     -->
+     
+diff -aurN shibboleth-idp.orig/conf/authn/remoteuser-authn-config.xml shibboleth-idp/conf/authn/remoteuser-authn-config.xml
+--- shibboleth-idp.orig/conf/authn/remoteuser-authn-config.xml	2020-06-02 18:56:08.000000000 +0300
++++ shibboleth-idp/conf/authn/remoteuser-authn-config.xml	2020-06-24 13:10:06.922000000 +0300
+@@ -16,6 +16,9 @@
+     <bean id="shibboleth.authn.RemoteUser.externalAuthnPath" class="java.lang.String"
+         c:_0="contextRelative:Authn/RemoteUser" />
+     
++    <!-- Populate RP UI info from metadata? -->
++    <util:constant id="shibboleth.authn.RemoteUser.populateUIInfo" static-field="java.lang.Boolean.FALSE" />
++    
+     <!--
+     Default is to always use the path in the bean above. If you want to determine it
+     dynamically, define a bean called "shibboleth.authn.RemoteUser.externalAuthnPathStrategy"
+diff -aurN shibboleth-idp.orig/conf/c14n/subject-c14n.xml shibboleth-idp/conf/c14n/subject-c14n.xml
+--- shibboleth-idp.orig/conf/c14n/subject-c14n.xml	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/conf/c14n/subject-c14n.xml	2020-06-24 13:10:06.924000000 +0300
+@@ -102,8 +102,6 @@
+         <!-- The next four are for handling transient IDs (in-storage and stateless variants). -->
+         <ref bean="c14n/SAML2Transient" />
+         <ref bean="c14n/SAML2CryptoTransient" />
+-        <ref bean="c14n/SAML1Transient" /> 
+-        <ref bean="c14n/SAML1CryptoTransient" /> 
+         
+         <!-- Handle a SAML 2 persistent ID, provided a stored strategy is in use. -->
+         <!-- <ref bean="c14n/SAML2Persistent" /> -->
+@@ -113,7 +111,6 @@
+         having *no* circumstances for which they apply (see shibboleth.TransformNamePredicate below).
+         -->
+         <ref bean="c14n/SAML2Transform" />
+-        <ref bean="c14n/SAML1Transform" />
+     </util:list>
+     
+     <!-- What SAML NameID formats do you want to support direct transformations for? -->
+@@ -132,7 +129,7 @@
+     <bean id="shibboleth.NameTransformPredicate" parent="shibboleth.Conditions.RelyingPartyId">
+         <constructor-arg name="candidates">
+             <list>
+-                <!-- <value>https://sp.example.org</value> -->
++                <!-- <value>https://sp.gluu.info</value> -->
+             </list>
+         </constructor-arg>
+     </bean>
+diff -aurN shibboleth-idp.orig/conf/global.xml shibboleth-idp/conf/global.xml
+--- shibboleth-idp.orig/conf/global.xml	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/conf/global.xml	2020-06-24 13:12:51.884653400 +0300
+@@ -48,5 +48,18 @@
+         <entry key="foo" value="bar"/>
+     </util:map>
+     -->
++
++     <bean id="idpConfigurationFactory"
++          class="org.gluu.idp.externalauth.openid.conf.IdpConfigurationFactory" />
++
++     <bean id="idpAuthClient"
++          class="org.gluu.idp.externalauth.openid.client.IdpAuthClient">
++        <constructor-arg name="configurationFactory" value="#{idpConfigurationFactory.instance()}" />
++    </bean>
++
++     <bean id="shibboleth.GluuStorageService"
++          class="org.gluu.idp.storage.GluuStorageService" p:cleanupInterval="%{idp.storage.cleanupInterval:PT10M}" p:contextExpiration="%{idp.storage.contextExpiration:PT24H}">
++        <constructor-arg name="configurationFactory" value="#{idpConfigurationFactory.instance()}" />
++    </bean>
+     
+ </beans>
+diff -aurN shibboleth-idp.orig/conf/intercept/consent-intercept-config.xml shibboleth-idp/conf/intercept/consent-intercept-config.xml
+--- shibboleth-idp.orig/conf/intercept/consent-intercept-config.xml	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/conf/intercept/consent-intercept-config.xml	2020-06-24 13:10:06.928000000 +0300
+@@ -29,7 +29,7 @@
+             <bean class="com.google.common.base.Functions" factory-method="forMap" c:defaultValue="terms-of-use">
+                 <constructor-arg name="map">
+                     <map>
+-                        <entry key="https://sp.example.org/shibboleth" value="example-terms" />
++                        <entry key="https://sp.gluu.info/shibboleth" value="example-terms" />
+                     </map>
+                 </constructor-arg>
+             </bean>
+@@ -90,7 +90,7 @@
+ 
+     <!--
+     For attribute-release consent, the default entry is :
+-     'YYYYMMDDTHHMMSSZ|https://sp.example.org|AttributeReleaseConsent|jdoe|email,eduPersonAffiliation|rHo...rrw=,rHo...rrw=|false,false'
++     'YYYYMMDDTHHMMSSZ|https://sp.gluu.info|AttributeReleaseConsent|jdoe|email,eduPersonAffiliation|rHo...rrw=,rHo...rrw=|false,false'
+     -->
+     <util:map id="shibboleth.consent.attribute-release.AuditFormattingMap">
+         <entry key="Shibboleth-Consent-Audit" value="%T|%SP|%e|%u|%CCI|%CCV|%CCA" />
+diff -aurN shibboleth-idp.orig/conf/intercept/context-check-intercept-config.xml shibboleth-idp/conf/intercept/context-check-intercept-config.xml
+--- shibboleth-idp.orig/conf/intercept/context-check-intercept-config.xml	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/conf/intercept/context-check-intercept-config.xml	2020-06-24 13:10:06.930000000 +0300
+@@ -22,7 +22,7 @@
+     <bean id="shibboleth.context-check.Condition" parent="shibboleth.Conditions.AND">
+         <constructor-arg>
+             <list>
+-                <bean parent="shibboleth.Conditions.RelyingPartyId" c:candidates="#{{'https://sp.example.org'}}" />
++                <bean parent="shibboleth.Conditions.RelyingPartyId" c:candidates="#{{'https://sp.gluu.info'}}" />
+                 <bean class="net.shibboleth.idp.profile.logic.SimpleAttributePredicate"
+                         p:useUnfilteredAttributes="true">
+                     <property name="attributeValueMap">
+diff -aurN shibboleth-idp.orig/flows/authn/oxAuth/oxauth-authn-beans.xml shibboleth-idp/flows/authn/oxAuth/oxauth-authn-beans.xml
+--- shibboleth-idp.orig/flows/authn/oxAuth/oxauth-authn-beans.xml	1970-01-01 03:00:00.000000000 +0300
++++ shibboleth-idp/flows/authn/oxAuth/oxauth-authn-beans.xml	2020-06-24 13:10:06.933000000 +0300
+@@ -0,0 +1,39 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<beans xmlns="http://www.springframework.org/schema/beans"
++       xmlns:context="http://www.springframework.org/schema/context"
++       xmlns:util="http://www.springframework.org/schema/util"
++       xmlns:p="http://www.springframework.org/schema/p"
++       xmlns:c="http://www.springframework.org/schema/c"
++       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
++                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
++                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
++
++       default-init-method="initialize"
++       default-destroy-method="destroy">
++    
++    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer"
++          p:placeholderPrefix="%{" p:placeholderSuffix="}" />
++
++    <bean class="net.shibboleth.ext.spring.config.IdentifiableBeanPostProcessor" />
++    <bean class="net.shibboleth.idp.profile.impl.ProfileActionBeanPostProcessor" />
++
++    <!-- Default strategy function to obtain the external path. -->
++    <bean id="shibboleth.authn.oxAuth.externalAuthnPathStrategy"
++          class="com.google.common.base.Functions" factory-method="constant"
++          c:_0-ref="shibboleth.authn.oxAuth.externalAuthnPath" />
++
++    <import resource="../../../conf/authn/oxauth-authn-config.xml" />
++
++    <bean id="ValidateExternalAuthentication"
++          class="net.shibboleth.idp.authn.impl.ValidateExternalAuthentication" scope="prototype"
++          p:matchExpression="#{getObject('shibboleth.authn.oxAuth.matchExpression')}"
++          p:addDefaultPrincipals="#{getObject('shibboleth.authn.oxAuth.addDefaultPrincipals') ?: true}"
++          p:classifiedMessages-ref="shibboleth.authn.oxAuth.ClassifiedMessageMap"
++          p:resultCachingPredicate="#{getObject('shibboleth.authn.oxAuth.resultCachingPredicate')}" />
++
++    <bean id="PopulateSubjectCanonicalizationContext"
++          class="net.shibboleth.idp.authn.impl.PopulateSubjectCanonicalizationContext" scope="prototype"
++          p:availableFlows-ref="shibboleth.PostLoginSubjectCanonicalizationFlows" />
++
++</beans>
+diff -aurN shibboleth-idp.orig/flows/authn/oxAuth/oxauth-authn-flow.xml shibboleth-idp/flows/authn/oxAuth/oxauth-authn-flow.xml
+--- shibboleth-idp.orig/flows/authn/oxAuth/oxauth-authn-flow.xml	1970-01-01 03:00:00.000000000 +0300
++++ shibboleth-idp/flows/authn/oxAuth/oxauth-authn-flow.xml	2020-06-24 13:10:06.935000000 +0300
+@@ -0,0 +1,34 @@
++<flow xmlns="http://www.springframework.org/schema/webflow"
++      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow.xsd"
++      parent="authn.abstract">
++
++    <!-- This is a login flow for external authentication handled outside the webflow engine. -->
++
++    <view-state id="ExternalTransfer" view="externalRedirect:#{T(net.shibboleth.idp.authn.ExternalAuthentication).getExternalRedirect(flowRequestContext.getActiveFlow().getApplicationContext().getBean('shibboleth.authn.oxAuth.externalAuthnPathStrategy').apply(opensamlProfileRequestContext), flowExecutionContext.getKey().toString())}">
++        <on-render>
++            <evaluate expression="opensamlProfileRequestContext.getSubcontext(T(net.shibboleth.idp.authn.context.AuthenticationContext)).addSubcontext(new net.shibboleth.idp.authn.context.ExternalAuthenticationContext(new net.shibboleth.idp.authn.impl.ExternalAuthenticationImpl(calledAsExtendedFlow?:false)), true).setFlowExecutionUrl(flowExecutionUrl + '&amp;_eventId_proceed=1')" />
++        </on-render>
++        <transition to="ValidateExternalAuthentication" />
++    </view-state>
++
++    <action-state id="ValidateExternalAuthentication">
++        <evaluate expression="ValidateExternalAuthentication" />
++        <evaluate expression="PopulateSubjectCanonicalizationContext" />
++        <evaluate expression="'proceed'" />
++
++        <transition on="proceed" to="CallSubjectCanonicalization" />
++    </action-state>
++
++    <!-- This runs a c14n step on the result of the authentication. -->
++    <subflow-state id="CallSubjectCanonicalization" subflow="c14n">
++        <input name="calledAsSubflow" value="true" />
++        <transition on="proceed" to="proceed" />
++
++        <!-- This shouldn't generally happen, but if c14n fails, it's allowable to fall through. -->
++        <transition on="SubjectCanonicalizationError" to="ReselectFlow" />
++    </subflow-state>
++
++    <bean-import resource="oxauth-authn-beans.xml" />
++
++</flow>
+diff -aurN shibboleth-idp.orig/system/conf/mvc-beans.xml shibboleth-idp/system/conf/mvc-beans.xml
+--- shibboleth-idp.orig/system/conf/mvc-beans.xml	2020-06-02 18:55:58.000000000 +0300
++++ shibboleth-idp/system/conf/mvc-beans.xml	2020-06-24 13:10:06.937000000 +0300
+@@ -92,7 +92,14 @@
+     </bean>
+ 
+     <bean class="net.shibboleth.ext.spring.velocity.VelocityConfigurer">
+-        <property name="resourceLoaderPath" value="#{'%{idp.views:%{idp.home}/views}'.trim()},%{idp.home}/system/views" />
++        <property name="resourceLoaderPath" value="/opt/gluu/jetty/idp/custom/pages,#{'%{idp.views:%{idp.home}/views}'.trim()},%{idp.home}/system/views" />
++        <property name="velocityProperties">
++            <props>
++                <prop key="runtime.log.logsystem.class">net.shibboleth.utilities.java.support.velocity.SLF4JLogChute</prop>
++                <prop key="input.encoding">UTF-8</prop>
++                <prop key="output.encoding">UTF-8</prop>
++            </props>
++        </property>
+     </bean>
+     
+     <!-- Import any user defined beans or overrides for the MVC config. -->
+diff -aurN shibboleth-idp.orig/views/duo.vm shibboleth-idp/views/duo.vm
+--- shibboleth-idp.orig/views/duo.vm	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/views/duo.vm	2020-06-24 13:10:06.939000000 +0300
+@@ -39,7 +39,7 @@
+     <div class="wrapper">
+       <div class="container">
+         <header>
+-          <img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
++          <img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
+         </header>
+ 
+         <div class="content">
+diff -aurN shibboleth-idp.orig/views/error.vm shibboleth-idp/views/error.vm
+--- shibboleth-idp.orig/views/error.vm	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/views/error.vm	2020-06-24 13:10:06.941000000 +0300
+@@ -53,7 +53,7 @@
+     <div class="wrapper">
+     	<div class="container">
+         	<header>
+-				<img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
++				<img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
+ 				<h3>$title - $titleSuffix</h3>
+ 			</header>
+ 		
+diff -aurN shibboleth-idp.orig/views/login.vm shibboleth-idp/views/login.vm
+--- shibboleth-idp.orig/views/login.vm	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/views/login.vm	2020-06-24 13:10:06.944000000 +0300
+@@ -38,7 +38,7 @@
+     <div class="wrapper">
+       <div class="container">
+         <header>
+-          <img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
++          <img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
+         </header>
+ 
+         <div class="content">
+diff -aurN shibboleth-idp.orig/views/logout-complete.vm shibboleth-idp/views/logout-complete.vm
+--- shibboleth-idp.orig/views/logout-complete.vm	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/views/logout-complete.vm	2020-06-24 13:10:06.946000000 +0300
+@@ -29,7 +29,7 @@
+     <div class="wrapper">
+       <div class="container">
+         <header>
+-          <img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
++          <img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
+         </header>
+ 
+         <div class="content">
+diff -aurN shibboleth-idp.orig/views/logout-propagate.vm shibboleth-idp/views/logout-propagate.vm
+--- shibboleth-idp.orig/views/logout-propagate.vm	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/views/logout-propagate.vm	2020-06-24 13:10:06.948000000 +0300
+@@ -30,7 +30,7 @@
+     <div class="wrapper">
+       <div class="container">
+         <header>
+-          <img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
++          <img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
+         </header>
+ 
+         <div class="content">
+diff -aurN shibboleth-idp.orig/views/logout.vm shibboleth-idp/views/logout.vm
+--- shibboleth-idp.orig/views/logout.vm	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/views/logout.vm	2020-06-24 13:10:06.950000000 +0300
+@@ -40,7 +40,7 @@
+     <div class="wrapper">   
+       <div class="container">
+         <header>
+-          <img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
++          <img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
+         </header>
+ 
+         <div class="content">
+diff -aurN shibboleth-idp.orig/views/spnego-unavailable.vm shibboleth-idp/views/spnego-unavailable.vm
+--- shibboleth-idp.orig/views/spnego-unavailable.vm	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/views/spnego-unavailable.vm	2020-06-24 13:10:06.952000000 +0300
+@@ -25,7 +25,7 @@
+     <div class="wrapper">
+       <div class="container">
+         <header>
+-          <img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
++          <img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
+           <h3>#springMessageText("idp.title", "Web Login Sevice") - #springMessage("idp.title.suffix", "Error")</h3>
+         </header>
+                 
+diff -aurN shibboleth-idp.orig/views/user-prefs.vm shibboleth-idp/views/user-prefs.vm
+--- shibboleth-idp.orig/views/user-prefs.vm	2020-06-02 18:56:06.000000000 +0300
++++ shibboleth-idp/views/user-prefs.vm	2020-06-24 13:10:06.954000000 +0300
+@@ -24,7 +24,7 @@
+     <div class="wrapper">
+       <div class="container">
+         <header>
+-          <img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
++          <img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
+           <h3>#springMessageText("idp.title", "Web Login Service") - #springMessageText("idp.userprefs.title.suffix", "Login Preferences")</h3>
+           <p>
+           #springMessage("idp.userprefs.info")
