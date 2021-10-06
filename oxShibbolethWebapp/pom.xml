@@ -369,12 +369,6 @@
 			<artifactId>jackson-datatype-joda</artifactId>
 			<version>2.10.1</version>
 		</dependency>
-
-		<!-- Gluu IDP conf impl -->
-		<dependency>
-			<groupId>org.gluu</groupId>
-			<artifactId>idp-conf-gluu-impl</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+		
 	</dependencies>
 </project>
