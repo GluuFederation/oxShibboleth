@@ -187,7 +187,6 @@
                                                 WEB-INF/lib/log4j-api-2.11.2.jar,
                                                 WEB-INF/lib/log4j-core-2.11.2.jar,
                                                 WEB-INF/lib/commons-logging-1.2.jar,
-                                                WEB-INF/lib/idp-conf-impl-${shibboleth.version}.jar,
                                         </packagingExcludes>
 				</configuration>
 				<executions>
