@@ -25,6 +25,7 @@
 		<httpclient.version>4.3.6</httpclient.version>
 		<log4j.version>2.11.2</log4j.version>
 		<slf4j.version>1.7.26</slf4j.version>
+		<shib-oxauth-authn.version>4.3.1-SNAPSHOT</shib-oxauth-authn.version>
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
 		<buildDate>${maven.build.timestamp}</buildDate>
 	</properties>
@@ -263,8 +264,8 @@
 		<!--START: OX OpenId Authentication -->
 		<dependency>
 			<groupId>org.gluu</groupId>
-			<artifactId>shib-oxauth-authn3</artifactId>
-			<version>4.3.1-SNAPSHOT</version>
+			<artifactId>shib-oxauth-authn</artifactId>
+			<version>${shib-oxauth-authn.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.logging.log4j</groupId>
