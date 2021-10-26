@@ -53,6 +53,7 @@
 		<module>oxShibbolethWebapp</module>
 		<module>keygenerator</module>
 		<module>oxLogoServlet</module>
+		<module>shib-oxauth-authn</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
