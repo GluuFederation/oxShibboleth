@@ -15,6 +15,7 @@ build/
 .idea
 *.iml
 *.ipr
+.factorypath
 
 target/
 .settings
