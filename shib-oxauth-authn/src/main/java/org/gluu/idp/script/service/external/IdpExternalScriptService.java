@@ -82,4 +82,32 @@ public class IdpExternalScriptService extends ExternalScriptService {
         return result;
     }
 
+    public boolean executeExternalPostAuthenticationMethod(Object context, CustomScriptConfiguration customScriptConfiguration) {
+        try {
+            log.debug("Executing python 'postAuthentication' method");
+            IdpType idpType = (IdpType) customScriptConfiguration.getExternalType();
+            Map<String, SimpleCustomProperty> configurationAttributes = customScriptConfiguration.getConfigurationAttributes();
+            return idpType.postAuthentication(context, configurationAttributes);
+        } catch (Exception ex) {
+            log.error(ex.getMessage(), ex);
+            saveScriptError(customScriptConfiguration.getCustomScript(), ex);
+        }
+
+        return false;
+    }
+
+    public boolean executePostAuthenticationMethod(Object context) {
+        boolean result = true;
+        for (CustomScriptConfiguration customScriptConfiguration : this.customScriptConfigurations) {
+            if (customScriptConfiguration.getExternalType().getApiVersion() > 12) {
+                result &= executeExternalPostAuthenticationMethod(context, customScriptConfiguration);
+                if (!result) {
+                    return result;
+                }
+            }
+        }
+
+        return result;
+    }
+
 }

@@ -209,48 +209,59 @@ public class ShibOxAuthAuthServlet extends HttpServlet {
                 LOG.error("Token validation failed, returning InvalidToken");
                 request.setAttribute(ExternalAuthentication.AUTHENTICATION_ERROR_KEY, "InvalidToken");
             } else {
-        		// Return if script(s) not exists or invalid
-              
-                List<IdPAttribute> idpAttributes = new ArrayList<IdPAttribute>();
-                boolean result = false;
-                TranslateAttributesContext translateAttributesContext = buildContext(request, response, userProfile, authenticationKey,idpAttributes);
-                if(this.externalScriptService.isEnabled()) {
-
-                    result = this.externalScriptService.executeExternalTranslateAttributesMethod(translateAttributesContext);
-                }
-
-                if(!result) {
-                    LOG.debug("Using default translate attributes method");
-                    for(final OxAuthToShibTranslator translator : translators) {
-                        translator.doTranslation(translateAttributesContext);
-                    }
-                }
-
-                if(!idpAttributes.isEmpty()) {
-                    LOG.debug("Storing generated idp attributes");
-                    ProfileRequestContext prContext = ExternalAuthentication.getProfileRequestContext(authenticationKey, request);
-                    GluuScratchContext gluuScratchContext = prContext.getSubcontext(GluuScratchContext.class,true);
-                    gluuScratchContext.setIdpAttributes(idpAttributes);
-                }
-
-                LOG.debug("Created an IdP subject instance with principals for {} ", userProfile.getId());
-                final Set<Principal> userPrincipals = new HashSet<Principal>();
-                userPrincipals.add(new UsernamePrincipal(userProfile.getId()));
-                request.setAttribute(ExternalAuthentication.SUBJECT_KEY, new Subject(false, userPrincipals,Collections.emptySet(),Collections.emptySet()));
-
+            	// Get IDP contexts
                 ProfileRequestContext profileRequestContext = ExternalAuthentication.getProfileRequestContext(authenticationKey, request);
-
                 Function<ProfileRequestContext, AuthenticationContext> authenticationContextLookupStrategy = new ChildContextLookup<>(AuthenticationContext.class);
                 final AuthenticationContext authenticationContext = authenticationContextLookupStrategy.apply(profileRequestContext);
-                if (authenticationContext != null) {
-                	String usedAcr = userProfile.getUsedAcr();
-                	if (StringHelper.isEmpty(usedAcr)) {
-	                    LOG.debug("ACR method is undefined");
-                	} else {
-                		authenticationContext.getAuthenticationStateMap().put(OXAUTH_ACR_USED, usedAcr);
-	                    LOG.debug("Used ACR method: {}", userProfile);
-                	}
-                }
+
+                boolean postAuthResult = true;
+        		if (this.externalScriptService.isEnabled()) {
+        			PostAuthenticationContext postAuthenticationContext = buildContext(request, response, profileRequestContext, authenticationContext, userProfile, authenticationKey);
+        			postAuthResult =  this.externalScriptService.executePostAuthenticationMethod(postAuthenticationContext);
+            		if (!postAuthResult) {
+            			LOG.error("Post authentication scripts returns false");
+                        request.setAttribute(ExternalAuthentication.AUTHENTICATION_ERROR_KEY, "InvalidToken");
+            		}
+        		}
+
+        		if (postAuthResult) {
+	                List<IdPAttribute> idpAttributes = new ArrayList<IdPAttribute>();
+	                boolean result = false;
+	                TranslateAttributesContext translateAttributesContext = buildContext(request, response, userProfile, authenticationKey,idpAttributes);
+	                if(this.externalScriptService.isEnabled()) {
+	
+	                    result = this.externalScriptService.executeExternalTranslateAttributesMethod(translateAttributesContext);
+	                }
+	
+	                if(!result) {
+	                    LOG.debug("Using default translate attributes method");
+	                    for(final OxAuthToShibTranslator translator : translators) {
+	                        translator.doTranslation(translateAttributesContext);
+	                    }
+	                }
+	
+	                if(!idpAttributes.isEmpty()) {
+	                    LOG.debug("Storing generated idp attributes");
+	                    ProfileRequestContext prContext = ExternalAuthentication.getProfileRequestContext(authenticationKey, request);
+	                    GluuScratchContext gluuScratchContext = prContext.getSubcontext(GluuScratchContext.class,true);
+	                    gluuScratchContext.setIdpAttributes(idpAttributes);
+	                }
+	
+	                LOG.debug("Created an IdP subject instance with principals for {} ", userProfile.getId());
+	                final Set<Principal> userPrincipals = new HashSet<Principal>();
+	                userPrincipals.add(new UsernamePrincipal(userProfile.getId()));
+	                request.setAttribute(ExternalAuthentication.SUBJECT_KEY, new Subject(false, userPrincipals,Collections.emptySet(),Collections.emptySet()));
+	
+	                if (authenticationContext != null) {
+	                	String usedAcr = userProfile.getUsedAcr();
+	                	if (StringHelper.isEmpty(usedAcr)) {
+		                    LOG.debug("ACR method is undefined");
+	                	} else {
+	                		authenticationContext.getAuthenticationStateMap().put(OXAUTH_ACR_USED, usedAcr);
+		                    LOG.debug("Used ACR method: {}", usedAcr);
+	                	}
+	                }
+        		}
             }
         } catch (final Exception ex) {
             LOG.error("Token validation failed, returning InvalidToken", ex);
@@ -424,6 +435,16 @@ public class ShibOxAuthAuthServlet extends HttpServlet {
                 userProfile, authenticationKey, idpAttributes);
         translateAttributesContext.setGluuAttributeMappingService(gluuAttributeMappingService);
 		return translateAttributesContext;
+	}
+
+    private PostAuthenticationContext buildContext(HttpServletRequest request, HttpServletResponse response,
+			ProfileRequestContext profileRequestContext, AuthenticationContext authenticationContext,
+			UserProfile userProfile, String authenticationKey) {
+
+    	PostAuthenticationContext postAuthenticationContext = new PostAuthenticationContext(request, response,
+    			profileRequestContext, authenticationContext, userProfile, authenticationKey);
+
+    	return postAuthenticationContext;
 	}
 
 }

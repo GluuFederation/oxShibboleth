@@ -24,11 +24,11 @@ public class TranslateAttributesContext implements Serializable {
 
 	private static final long serialVersionUID = 1922377169827670256L;
 
-	private HttpServletRequest request;
-	private HttpServletResponse response;
-	private UserProfile userProfile;
-	private String authenticationKey;
-	private List<IdPAttribute> idpAttributes;
+	private final HttpServletRequest request;
+	private final HttpServletResponse response;
+	private final UserProfile userProfile;
+	private final String authenticationKey;
+	private final List<IdPAttribute> idpAttributes;
 	private GluuAttributeMappingService gluuAttributeMappingService;
 
 	public TranslateAttributesContext(HttpServletRequest request, HttpServletResponse response, UserProfile userProfile,
