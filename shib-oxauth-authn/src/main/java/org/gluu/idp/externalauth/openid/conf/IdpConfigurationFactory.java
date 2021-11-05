@@ -25,7 +25,7 @@ public final class IdpConfigurationFactory extends ConfigurationFactory<IdpAppCo
 
 	@Override
 	protected String getDefaultConfigurationFileName() {
-		return "oxidp.properties";
+		return "gluu.properties";
 	}
 
 	@Override
