@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>oxshibbolethIdp</artifactId>
 	<name>Gluu Shibboleth IDP</name>
-	<url>http://www.gluu.org</url>
+	<url>https://www.gluu.org</url>
 	<packaging>war</packaging>
 	<parent>
 		<groupId>org.gluu</groupId>
@@ -54,7 +54,7 @@
 		<repository>
 			<id>gluu</id>
 			<name>Gluu repository</name>
-			<url>https://ox.gluu.org/maven</url>
+			<url>https://maven.gluu.org/maven</url>
 		</repository>
 	</repositories>
 	<build>
@@ -78,7 +78,7 @@
 							<goal>wget</goal>
 						</goals>
 						<configuration>
-							<url>http://shibboleth.net/downloads/identity-provider/${shibboleth.version}/shibboleth-identity-provider-${shibboleth.version}.tar.gz</url>
+							<url>https://shibboleth.net/downloads/identity-provider/${shibboleth.version}/shibboleth-identity-provider-${shibboleth.version}.tar.gz</url>
 							<unpack>true</unpack>
 							<outputDirectory>${project.build.directory}</outputDirectory>
 							<sha256>${shibboleth.dist.sha256}</sha256>
