@@ -57,7 +57,14 @@
 	</modules>
 	<dependencyManagement>
 		<dependencies>
-			
+	            <!-- Workaround for CN -->
+	            <dependency>
+	                <groupId>io.grpc</groupId>
+	                <artifactId>grpc-bom</artifactId>
+	                <version>1.43.1</version>
+	                <scope>import</scope>
+	                <type>pom</type>
+	            </dependency>
 		</dependencies>
 	</dependencyManagement>
 	<build>
