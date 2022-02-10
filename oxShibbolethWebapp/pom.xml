@@ -385,8 +385,6 @@
 			<artifactId>aalto-xml</artifactId>
 			<version>1.2.1</version>
 		</dependency>
-<<<<<<< HEAD
-=======
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
@@ -409,6 +407,5 @@
 			<artifactId>jcommander</artifactId>
 			<version>1.82</version>
 		</dependency>
->>>>>>> 7cfb92c (chore: fix IDP build)
 	</dependencies>
 </project>
