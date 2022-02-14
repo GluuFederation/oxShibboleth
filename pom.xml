@@ -49,7 +49,6 @@
 	</scm>
 	<modules>
 		<module>static</module>
-		<module>idp-conf</module>
 		<module>oxShibbolethWebapp</module>
 		<module>keygenerator</module>
 		<module>oxLogoServlet</module>
