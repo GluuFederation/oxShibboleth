@@ -11,8 +11,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<shibboleth.version>4.1.5</shibboleth.version>
-		<shibboleth.dist.sha256>65429f547a7854b30713d86ba5901ca718eae91efb3e618ee11108be59bf8a29</shibboleth.dist.sha256>
+		<shibboleth.version>4.1.6</shibboleth.version>
+		<shibboleth.dist.sha256>3195ad045e23667b6d2591c072bf6c3cd65c81cd8e48ddf1e6c078b4115cf73a</shibboleth.dist.sha256>
 		<sonar.projectKey>GluuFederation_oxShibboleth</sonar.projectKey>
                 <sonar.moduleKey>${project.groupId}:${project.artifactId}</sonar.moduleKey>
                 <sonar.organization>gluufederation</sonar.organization>
