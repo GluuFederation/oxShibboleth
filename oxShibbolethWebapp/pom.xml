@@ -18,13 +18,13 @@
 		<maven.compiler.target>11</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<oxcore.version>4.4.0-SNAPSHOT</oxcore.version>
-		<jackson.version>1.9.1f1</jackson.version>
+		<jackson.version>2.13.0</jackson.version>
 		<jaxrs.version>3.0.12.Final</jaxrs.version>
-		<resteasy.version>3.0.12.Final</resteasy.version>
-		<httpcore.version>4.3.3</httpcore.version>
-		<httpclient.version>4.3.6</httpclient.version>
-		<log4j.version>2.16.0</log4j.version>
-		<slf4j.version>1.7.26</slf4j.version>
+		<resteasy.version>4.5.7.Final</resteasy.version>
+		<httpcore.version>4.4.14</httpcore.version>
+		<httpclient.version>4.5.13</httpclient.version>
+		<log4j.version>2.17.1</log4j.version>
+		<slf4j.version>1.7.31</slf4j.version>
 		<shib-oxauth-authn.version>4.4.0-SNAPSHOT</shib-oxauth-authn.version>
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
 		<buildDate>${maven.build.timestamp}</buildDate>
@@ -176,8 +176,8 @@
                                                 WEB-INF/lib/istack-commons-runtime-3.0.10.jar,
                                                 WEB-INF/lib/j2objc-annotations-1.1.jar,
                                                 WEB-INF/lib/jackson-annotations-2.12.2.jar,
-                                                WEB-INF/lib/jackson-core-2.12.2.jar,
-                                                WEB-INF/lib/jackson-databind-2.12.2.jar,
+												WEB-INF/lib/jackson-core-2.12.2.jar,
+												WEB-INF/lib/jackson-databind-2.12.2.jar,
                                                 WEB-INF/lib/jakarta.activation-1.2.1.jar,
 						WEB-INF/lib/jakarta.xml.bind-api-2.3.2.jar,
 						WEB-INF/lib/javassist-3.27.0-GA.jar,
@@ -367,22 +367,22 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>27.1-jre</version>
+			<version>31.0.1-jre</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.10.1</version>
+			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-joda</artifactId>
-			<version>2.10.1</version>
+			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>2.10.1</version>
+			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml</groupId>
@@ -397,7 +397,7 @@
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-client</artifactId>
-			<version>4.5.7.Final</version>
+			<version>${resteasy.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.nimbusds</groupId>
