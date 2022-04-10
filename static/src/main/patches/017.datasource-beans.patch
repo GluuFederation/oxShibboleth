@@ -1,0 +1,12 @@
+diff -aurN shibboleth-idp.orig/conf/global.xml shibboleth-idp/conf/global.xml
+--- shibboleth-idp.orig/conf/global.xml	2022-01-03 15:30:42.029000000 +0100
++++ shibboleth-idp/conf/global.xml	2022-01-03 15:50:27.447845572 +0100
+@@ -55,6 +55,8 @@
+     which will be globally accessible. They have to be made conditional so the IDP loads
+     even if a feature/plugin/module is not enabled/accessible
+     -->
++    <import resource="conditional:${idp.home}/conf/gluu-couchbase-bean.xml"/>
++    <import resource="conditional:${idp.home}/conf/gluu-rdbm-bean.xml"/>
+     <import resource="conditional:${idp.home}/conf/authn/oxauth-authn-global.xml"/>
+     <import resource="conditional:${idp.home}/conf/gluu-storage.xml"/>
+     <import resource="conditional:${idp.home}/conf/gluu-release-attributes.xml"/>
