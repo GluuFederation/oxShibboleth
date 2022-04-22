@@ -1,88 +1,88 @@
 diff -aurN shibboleth-idp.orig/views/error.vm shibboleth-idp/views/error.vm
---- shibboleth-idp.orig/views/error.vm	2021-07-27 14:07:26.000000000 +0100
-+++ shibboleth-idp/views/error.vm	2021-09-03 09:12:32.905910470 +0100
-@@ -55,7 +55,7 @@
-     <div class="wrapper">
-     	<div class="container">
-         	<header>
--				<img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
-+				<img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
- 				<h3>$title - $titleSuffix</h3>
- 			</header>
- 		
-@@ -72,4 +72,4 @@
-       	
-     </div>
-     </body>
--</html>
-\ No newline at end of file
-+</html>
+--- shibboleth-idp.orig/views/error.vm	2022-04-18 14:41:18.000000000 +0100
++++ shibboleth-idp/views/error.vm	2022-04-22 05:09:31.574522977 +0100
+@@ -57,7 +57,7 @@
+     <body>
+         <main class="main">
+             <header>
+-                <img class="main-logo" src="$request.getContextPath()#springMessageText("idp.logo", "/images/placeholder-logo.png")" alt="#springMessageText("idp.logo.alt-text", "logo")" />
++                <img class="main-logo" src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")" />
+             </header>
+             
+             <section>
 diff -aurN shibboleth-idp.orig/views/logout-complete.vm shibboleth-idp/views/logout-complete.vm
---- shibboleth-idp.orig/views/logout-complete.vm	2021-07-27 14:07:26.000000000 +0100
-+++ shibboleth-idp/views/logout-complete.vm	2021-09-03 09:13:17.046098192 +0100
+--- shibboleth-idp.orig/views/logout-complete.vm	2022-04-18 14:41:18.000000000 +0100
++++ shibboleth-idp/views/logout-complete.vm	2022-04-22 05:10:50.750381546 +0100
 @@ -29,7 +29,7 @@
-     <div class="wrapper">
-       <div class="container">
-         <header>
--          <img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
-+          <img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
-         </header>
- 
-         <div class="content">
-@@ -64,4 +64,4 @@
-     </div>
-     
+     <body>
+         <main class="main">
+             <header>
+-                <img class="main-logo" src="$request.getContextPath()#springMessageText("idp.logo", "/images/placeholder-logo.png")" alt="#springMessageText("idp.logo.alt-text", "logo")" />
++                <img class="main-logo" src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")" />
+             </header>
+             
+             <section>
+@@ -58,4 +58,4 @@
+             </div>
+         </footer>
   	</body>
 -</html>
 \ No newline at end of file
 +</html>
 diff -aurN shibboleth-idp.orig/views/logout-propagate.vm shibboleth-idp/views/logout-propagate.vm
---- shibboleth-idp.orig/views/logout-propagate.vm	2021-07-27 14:07:26.000000000 +0100
-+++ shibboleth-idp/views/logout-propagate.vm	2021-09-03 09:14:14.546343227 +0100
-@@ -30,7 +30,7 @@
-     <div class="wrapper">
-       <div class="container">
-         <header>
--          <img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
-+          <img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
-         </header>
- 
-         <div class="content">
-@@ -55,4 +55,4 @@
-     </div>
-     
+--- shibboleth-idp.orig/views/logout-propagate.vm	2022-04-18 14:41:18.000000000 +0100
++++ shibboleth-idp/views/logout-propagate.vm	2022-04-22 05:14:28.954207710 +0100
+@@ -31,7 +31,7 @@
+     <body>
+         <main class="main">
+             <header>
+-                <img class="main-logo" src="$request.getContextPath()#springMessageText("idp.logo", "/images/placeholder-logo.png")" alt="#springMessageText("idp.logo.alt-text", "logo")" />
++                <img class="main-logo" src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")" />
+             </header>
+             
+             <section>
+@@ -54,4 +54,4 @@
+             </div>
+         </footer>
   	</body>
 -</html>
 \ No newline at end of file
 +</html>
 diff -aurN shibboleth-idp.orig/views/logout.vm shibboleth-idp/views/logout.vm
---- shibboleth-idp.orig/views/logout.vm	2021-07-27 14:07:26.000000000 +0100
-+++ shibboleth-idp/views/logout.vm	2021-09-03 09:13:02.142034768 +0100
-@@ -38,7 +38,7 @@
-     <div class="wrapper">   
-       <div class="container">
-         <header>
--          <img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
-+          <img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
-         </header>
+--- shibboleth-idp.orig/views/logout.vm	2022-04-18 14:41:18.000000000 +0100
++++ shibboleth-idp/views/logout.vm	2022-04-22 05:15:21.854203524 +0100
+@@ -40,7 +40,7 @@
+    <body>
+         <main class="main">
+             <header>
+-                <img class="main-logo" src="$request.getContextPath()#springMessageText("idp.logo", "/images/placeholder-logo.png")" alt="#springMessageText("idp.logo.alt-text", "logo")" />
++                <img class="main-logo" src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")" />
+             </header>
  
-         <div class="content">
-@@ -128,4 +128,4 @@
-     </div>
-     
-   </body>
+             <section>
+@@ -117,4 +117,4 @@
+             </div>
+         </footer>
+     </body>
 -</html>
 \ No newline at end of file
 +</html>
 diff -aurN shibboleth-idp.orig/views/user-prefs.vm shibboleth-idp/views/user-prefs.vm
---- shibboleth-idp.orig/views/user-prefs.vm	2021-07-27 14:07:26.000000000 +0100
-+++ shibboleth-idp/views/user-prefs.vm	2021-09-03 09:14:49.734493433 +0100
-@@ -24,7 +24,7 @@
-     <div class="wrapper">
-       <div class="container">
-         <header>
--          <img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
-+          <img src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
-           <h3>#springMessageText("idp.title", "Web Login Service") - #springMessageText("idp.userprefs.title.suffix", "Login Preferences")</h3>
-           <p>
-           #springMessage("idp.userprefs.info")
+--- shibboleth-idp.orig/views/user-prefs.vm	2022-04-18 14:41:18.000000000 +0100
++++ shibboleth-idp/views/user-prefs.vm	2022-04-22 05:17:01.782227203 +0100
+@@ -25,7 +25,7 @@
+    <body onLoad="document.getElementById('content').style.display='block'; load('spnego')">
+         <main class="main">
+             <header>
+-                <img class="main-logo" src="$request.getContextPath()#springMessageText("idp.logo", "/images/placeholder-logo.png")" alt="#springMessageText("idp.logo.alt-text", "logo")">
++                <img class="main-logo" src="$request.getContextPath()/servlet/logo" alt="#springMessageText("idp.logo.alt-text", "logo")">
+             </header>
+             
+             
+@@ -53,4 +53,4 @@
+             </div>
+         </footer>
+     </body>
+-</html>
+\ No newline at end of file
++</html>
