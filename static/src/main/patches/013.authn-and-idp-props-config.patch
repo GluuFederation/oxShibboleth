@@ -1,18 +1,18 @@
 diff -aurN shibboleth-idp.orig/conf/authn/authn.properties shibboleth-idp/conf/authn/authn.properties
---- shibboleth-idp.orig/conf/authn/authn.properties	2021-09-16 22:18:58.142000000 +0100
-+++ shibboleth-idp/conf/authn/authn.properties	2021-09-16 22:22:21.241893926 +0100
+--- shibboleth-idp.orig/conf/authn/authn.properties	2022-04-18 14:41:18.000000000 +0100
++++ shibboleth-idp/conf/authn/authn.properties	2022-04-22 05:44:42.291925077 +0100
 @@ -2,7 +2,7 @@
  # specific methods.
  
  # Regular expression matching login flows to enable, e.g. IPAddress|Password
 -#idp.authn.flows = Password
-+idp.authn.flows = oxAuth
++#idp.authn.flows = oxAuth
  
  # Default settings for most authentication methods.
  #idp.authn.defaultLifetime = PT1H
 diff -aurN shibboleth-idp.orig/conf/idp.properties shibboleth-idp/conf/idp.properties
---- shibboleth-idp.orig/conf/idp.properties	2021-07-27 14:07:26.000000000 +0100
-+++ shibboleth-idp/conf/idp.properties	2021-09-16 22:24:36.875954206 +0100
+--- shibboleth-idp.orig/conf/idp.properties	2022-04-18 14:41:18.000000000 +0100
++++ shibboleth-idp/conf/idp.properties	2022-04-22 05:47:52.294877610 +0100
 @@ -32,7 +32,7 @@
  #idp.cookie.sameSiteCondition = shibboleth.Conditions.FALSE
  
@@ -22,20 +22,21 @@ diff -aurN shibboleth-idp.orig/conf/idp.properties shibboleth-idp/conf/idp.prope
  # Name of the HTTP parameter that stores the CSRF token.
  #idp.csrf.token.parameter = csrf_token
  
-@@ -95,7 +95,7 @@
+@@ -98,7 +98,7 @@
  
  # Configuration of client- and server-side storage plugins
  #idp.storage.cleanupInterval = PT10M
 -idp.storage.htmlLocalStorage = true
 +idp.storage.htmlLocalStorage = false
+ #idp.storage.clientSessionStorageName = shib_idp_session_ss
+ #idp.storage.clientPersistentStorageName = shib_idp_persistent_ss
  
- # Set to true to expose more detailed errors in responses to SPs
- #idp.errors.detailed = false
-@@ -113,6 +113,7 @@
+@@ -117,7 +117,7 @@
+ #idp.session.enabled = true
  
  # Set to "shibboleth.StorageService" for server-side storage of user sessions
- #idp.session.StorageService = shibboleth.ClientSessionStorageService
-+idp.session.StorageService = shibboleth.GluuStorageService
+-#idp.session.StorageService = shibboleth.ClientSessionStorageService
++#idp.session.StorageService = shibboleth.GluuStorageService
  
- # Size of session IDs
- #idp.session.idSize = 32
+ # Name of cookie used for session
+ #idp.session.cookieName = shib_idp_session
