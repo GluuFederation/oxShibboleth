@@ -6,7 +6,7 @@ diff -aurN shibboleth-idp.orig/conf/authn/authn.properties shibboleth-idp/conf/a
  
  # Regular expression matching login flows to enable, e.g. IPAddress|Password
 -#idp.authn.flows = Password
-+#idp.authn.flows = oxAuth
++idp.authn.flows = oxAuth
  
  # Default settings for most authentication methods.
  #idp.authn.defaultLifetime = PT1H
