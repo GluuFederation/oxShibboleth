@@ -37,7 +37,7 @@
 							<url>http://shibboleth.net/downloads/identity-provider/${shibboleth.version}/shibboleth-identity-provider-${shibboleth.version}.tar.gz</url>
 							<unpack>true</unpack>
 							<outputDirectory>${project.build.directory}/classes</outputDirectory>
-							<md5>${shibboleth.dist.md5}</md5>
+							<sha256>${shibboleth.dist.sha256}</sha256>
 						</configuration>
 					</execution>
 				</executions>

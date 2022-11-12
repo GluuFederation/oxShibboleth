@@ -11,8 +11,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<shibboleth.version>4.0.1</shibboleth.version>
-		<shibboleth.dist.md5>3050457219cbd484cecbb20d0699ee1b</shibboleth.dist.md5>
+		<shibboleth.version>4.2.1</shibboleth.version>
+		<shibboleth.dist.sha256>fa5e46d160f6b1bc50326c1a31627a05b5d0847b8f620d7f4c0251999b806474</shibboleth.dist.sha256>
 	</properties>
 	<repositories>
 		<repository>

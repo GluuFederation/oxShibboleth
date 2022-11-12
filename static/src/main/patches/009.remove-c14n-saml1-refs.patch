@@ -1,0 +1,20 @@
+diff -aurN shibboleth-idp.orig/conf/c14n/subject-c14n.xml shibboleth-idp/conf/c14n/subject-c14n.xml
+--- shibboleth-idp.orig/conf/c14n/subject-c14n.xml	2021-07-27 14:07:26.000000000 +0100
++++ shibboleth-idp/conf/c14n/subject-c14n.xml	2021-09-12 21:37:19.462618672 +0100
+@@ -103,8 +103,6 @@
+         <!-- The next four are for handling transient IDs (in-storage and stateless variants). -->
+         <ref bean="c14n/SAML2Transient" />
+         <ref bean="c14n/SAML2CryptoTransient" />
+-        <ref bean="c14n/SAML1Transient" /> 
+-        <ref bean="c14n/SAML1CryptoTransient" /> 
+         
+         <!-- Handle a SAML 2 persistent ID, provided a stored strategy is in use. -->
+         <!-- <ref bean="c14n/SAML2Persistent" /> -->
+@@ -114,7 +112,6 @@
+         having *no* circumstances for which they apply (see shibboleth.TransformNamePredicate below).
+         -->
+         <ref bean="c14n/SAML2Transform" />
+-        <ref bean="c14n/SAML1Transform" />
+     </util:list>
+     
+     <!-- What SAML NameID formats do you want to support direct transformations for? -->
