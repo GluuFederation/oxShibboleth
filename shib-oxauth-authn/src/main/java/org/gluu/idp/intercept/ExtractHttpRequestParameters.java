@@ -41,6 +41,10 @@ public class ExtractHttpRequestParameters extends AbstractProfileAction {
 
         LOG.debug("Begin http request extraction");
         GluuScratchContext scratchcontext = profileRequestContext.getSubcontext(GluuScratchContext.class,true);
+        if(scratchcontext == null) {
+            LOG.debug("GluuScratchContext is null. Http parameter extraction not possible");
+            return;
+        }
         Enumeration<String> paramnames = httpRequest.getParameterNames();
         for(;paramnames.hasMoreElements();) {
             String paramname = paramnames.nextElement();
