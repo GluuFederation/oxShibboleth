@@ -1,0 +1,27 @@
+diff -aurN shibboleth-idp.orig/conf/authn/authn.properties shibboleth-idp/conf/authn/authn.properties
+--- shibboleth-idp.orig/conf/authn/authn.properties	2023-04-20 21:41:48.305000000 +0100
++++ shibboleth-idp/conf/authn/authn.properties	2023-04-21 08:05:09.723233274 +0100
+@@ -172,6 +172,7 @@
+ # strongly advised that the value not be specific to Duo or any
+ # particular technology to avoid lock-in.
+ idp.authn.Duo.supportedPrincipals = \
++    saml2/https://refeds.org/profile/mfa, \
+     saml2/http://example.org/ac/classes/mfa, \
+     saml1/http://example.org/ac/classes/mfa
+ # Default Duo integration settings are defined separately
+@@ -211,6 +212,7 @@
+ # rules. The example corresponds to the example in mfa-authn-config.xml that
+ # combines IPAddress with Password.
+ idp.authn.MFA.supportedPrincipals = \
++    saml2/https://refeds.org/profile/mfa, \
+     saml2/urn:oasis:names:tc:SAML:2.0:ac:classes:InternetProtocol, \
+     saml2/urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport, \
+     saml2/urn:oasis:names:tc:SAML:2.0:ac:classes:Password, \
+@@ -227,6 +229,7 @@
+ idp.authn.oxAuth.addDefaultPrincipals = true
+ idp.authn.oxAuth.reuseCondition = shibboleth.gluu.AuthResultReuseCondition
+ idp.authn.oxAuth.supportedPrincipals = \
++    saml2/https://refeds.org/profile/mfa, \
+     saml2/urn:oasis:names:tc:SAML:2.0:ac:classes:InternetProtocol, \
+     saml2/urn:oasis:names:tc:SAML:2.0:ac:classes:Password, \
+     saml2/urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport
