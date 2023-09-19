@@ -17,8 +17,21 @@ index 5301dd763..f26e3c3e1 100644
      <modules>
          <module>../idp-core</module>
          <module>../idp-schema</module>
+diff --git a/idp-attribute-api/src/main/java/net/shibboleth/idp/attribute/IdPAttribute.java b/idp-attribute-api/src/main/java/net/shibboleth/idp/attribute/IdPAttribute.java
+index 4aa73613b..8876bf726 100644
+--- a/idp-attribute-api/src/main/java/net/shibboleth/idp/attribute/IdPAttribute.java
++++ b/idp-attribute-api/src/main/java/net/shibboleth/idp/attribute/IdPAttribute.java
+@@ -59,7 +59,7 @@ import net.shibboleth.utilities.java.support.primitive.StringSupport;
+  * they have the same ID, regardless of whether their display names, descriptions, values, or encoders are the same.
+  */
+ @NotThreadSafe
+-public class IdPAttribute implements Comparable<IdPAttribute>, Cloneable {
++public class IdPAttribute implements Comparable<IdPAttribute>, Cloneable, java.io.Serializable {
+     
+     /** Value for testing illegal name. */
+     private static final Predicate<String> SPACE_CONTAINING = Pattern.compile("\\S*").asMatchPredicate();
 diff --git a/idp-authn-api/src/main/java/net/shibboleth/idp/authn/ExternalAuthentication.java b/idp-authn-api/src/main/java/net/shibboleth/idp/authn/ExternalAuthentication.java
-index a609d239f..d8a64fe8c 100644
+index a609d239f..9d27bf279 100644
 --- a/idp-authn-api/src/main/java/net/shibboleth/idp/authn/ExternalAuthentication.java
 +++ b/idp-authn-api/src/main/java/net/shibboleth/idp/authn/ExternalAuthentication.java
 @@ -41,7 +41,7 @@ import net.shibboleth.utilities.java.support.annotation.constraint.NotEmpty;
@@ -26,7 +39,7 @@ index a609d239f..d8a64fe8c 100644
  
  /** Public interface supporting external authentication outside the webflow engine. */
 -public abstract class ExternalAuthentication {
-+public abstract class ExternalAuthentication implements java.io.IOException {
++public abstract class ExternalAuthentication implements java.io.Serializable {
  
      /** Parameter supplied to locate the SWF object needed in the servlet context. */
      @Nonnull @NotEmpty public static final String SWF_KEY = "net.shibboleth.idp.flowExecutor";
@@ -95,3 +108,20 @@ index 0877d0930..3c3382ad0 100644
      
      /** Logger. */
      @Nonnull private Logger log = LoggerFactory.getLogger(AllowedSAMLPresentersPredicate.class);
+diff --git a/idp-ui/src/main/java/net/shibboleth/idp/ui/context/RelyingPartyUIContext.java b/idp-ui/src/main/java/net/shibboleth/idp/ui/context/RelyingPartyUIContext.java
+index 20c88698e..3deb13074 100644
+--- a/idp-ui/src/main/java/net/shibboleth/idp/ui/context/RelyingPartyUIContext.java
++++ b/idp-ui/src/main/java/net/shibboleth/idp/ui/context/RelyingPartyUIContext.java
+@@ -82,10 +82,10 @@ public final class RelyingPartyUIContext extends BaseContext {
+     @Nullable private IdPUIInfo rpUIInfo;
+ 
+     /** The (statically defined) languages that this user wants to know about. */
+-    @Nullable @NonnullElements private List<LanguageRange> browserLanguages;
++    @Nullable @NonnullElements private transient List<LanguageRange> browserLanguages;
+     
+     /** The languages that this the Operator want to fall back to. */
+-    @Nonnull private List<LanguageRange> fallbackLanguages;
++    @Nonnull private transient List<LanguageRange> fallbackLanguages;
+     
+     /** A way of getting the current HTTP request, if available.
+      *  Used to define dynamically selected languages. */

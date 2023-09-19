@@ -18,7 +18,7 @@ index f1a1264d3..441f564c0 100644
          <module>../opensaml-core</module>
          <module>../opensaml-storage-api</module>
 diff --git a/opensaml-core/src/main/java/org/opensaml/core/xml/Namespace.java b/opensaml-core/src/main/java/org/opensaml/core/xml/Namespace.java
-index 2c9850562..4d6ac3d33 100644
+index 2c9850562..04a531b07 100644
 --- a/opensaml-core/src/main/java/org/opensaml/core/xml/Namespace.java
 +++ b/opensaml-core/src/main/java/org/opensaml/core/xml/Namespace.java
 @@ -25,7 +25,7 @@ import net.shibboleth.utilities.java.support.primitive.StringSupport;
@@ -26,7 +26,7 @@ index 2c9850562..4d6ac3d33 100644
  
  /** Data structure for representing XML namespace attributes. */
 -public class Namespace {
-+public class Namespace implements ava.io.Serializable {
++public class Namespace implements java.io.Serializable {
  
      /** URI of the namespace. */
      private String namespaceURI;
@@ -186,6 +186,18 @@ index a16044fb6..5022ec7b5 100644
      
      /**
       * The unique ID of the entity this credential is for.
+diff --git a/opensaml-security-api/src/main/java/org/opensaml/security/credential/CredentialContext.java b/opensaml-security-api/src/main/java/org/opensaml/security/credential/CredentialContext.java
+index e5d01e418..f7fc47410 100644
+--- a/opensaml-security-api/src/main/java/org/opensaml/security/credential/CredentialContext.java
++++ b/opensaml-security-api/src/main/java/org/opensaml/security/credential/CredentialContext.java
+@@ -21,6 +21,6 @@ package org.opensaml.security.credential;
+  * Marker interface for implementations which hold information specific to a particular context within 
+  * which a {@link CredentialResolver} resolves a {@link Credential}.
+  */
+-public interface CredentialContext {
++public interface CredentialContext extends java.io.Serializable {
+ 
+ }
 diff --git a/opensaml-security-api/src/main/java/org/opensaml/security/x509/InternalX500DNHandler.java b/opensaml-security-api/src/main/java/org/opensaml/security/x509/InternalX500DNHandler.java
 index 7bae2a3bf..65dde473f 100644
 --- a/opensaml-security-api/src/main/java/org/opensaml/security/x509/InternalX500DNHandler.java
@@ -311,7 +323,7 @@ index 5a70942c7..1127779c3 100644
      /**
       * Get the list of data encryption credentials to use, in preference order.
 diff --git a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/EncryptionParameters.java b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/EncryptionParameters.java
-index 2d5f4457b..a947ab5d9 100644
+index 2d5f4457b..eafe5772e 100644
 --- a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/EncryptionParameters.java
 +++ b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/EncryptionParameters.java
 @@ -27,7 +27,7 @@ import org.opensaml.xmlsec.keyinfo.KeyInfoGenerator;
@@ -323,6 +335,19 @@ index 2d5f4457b..a947ab5d9 100644
      
      /** The EncryptedData encryption credential. */
      private Credential dataEncryptionCredential;
+@@ -42,10 +42,10 @@ public class EncryptionParameters {
+     private String keyTransportEncryptionAlgorithmURI;
+     
+     /** The EncryptedData KeyInfoGenerator. */
+-    private KeyInfoGenerator dataKeyInfoGenerator;
++    private transient KeyInfoGenerator dataKeyInfoGenerator;
+     
+     /** The EncryptedKey KeyInfoGenerator. */
+-    private KeyInfoGenerator keyTransportKeyInfoGenerator;
++    private transient KeyInfoGenerator keyTransportKeyInfoGenerator;
+     
+     /** RSA OAEP parameters. */
+     private RSAOAEPParameters rsaOAEPParameters;
 diff --git a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/EncryptionParametersResolver.java b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/EncryptionParametersResolver.java
 index 90595b1b8..9531a3403 100644
 --- a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/EncryptionParametersResolver.java
@@ -375,7 +400,7 @@ index dd350da44..8516a5a63 100644
      /**
       * Get the list of signing credentials to use when signing, in preference order.
 diff --git a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/SignatureSigningParameters.java b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/SignatureSigningParameters.java
-index b97bf5e93..9f889c9a7 100644
+index b97bf5e93..1cbea282c 100644
 --- a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/SignatureSigningParameters.java
 +++ b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/SignatureSigningParameters.java
 @@ -26,7 +26,7 @@ import org.opensaml.xmlsec.keyinfo.KeyInfoGenerator;
@@ -387,6 +412,15 @@ index b97bf5e93..9f889c9a7 100644
      
      /** The signing credential. */
      private Credential signingCredential;
+@@ -47,7 +47,7 @@ public class SignatureSigningParameters {
+     private Integer signatureHMACOutputLength;
+     
+     /** The KeyInfo generator. */
+-    private KeyInfoGenerator keyInfoGenerator;
++    private transient KeyInfoGenerator keyInfoGenerator;
+     
+     /**
+      * Get the signing credential to use when signing.
 diff --git a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/SignatureSigningParametersResolver.java b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/SignatureSigningParametersResolver.java
 index fc4f33910..8ccd5b472 100644
 --- a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/SignatureSigningParametersResolver.java

@@ -1,46 +1,89 @@
-diff -aurN '--exclude=.git' '--exclude=guava-*jre.jar' "jetty.project-jetty-10.0.15\\jetty-server.orig/src/main/java/org/eclipse/jetty/server/session/GluuObjectOutputStream.java" "jetty.project-jetty-10.0.15\\jetty-server/src/main/java/org/eclipse/jetty/server/session/GluuObjectOutputStream.java"
---- "jetty.project-jetty-10.0.15\\jetty-server.orig/src/main/java/org/eclipse/jetty/server/session/GluuObjectOutputStream.java"	1970-01-01 03:00:00.000000000 +0300
-+++ "jetty.project-jetty-10.0.15\\jetty-server/src/main/java/org/eclipse/jetty/server/session/GluuObjectOutputStream.java"	2023-08-18 19:59:20.000000000 +0300
-@@ -0,0 +1,36 @@
-+package org.eclipse.jetty.server.session;
-+
-+import java.io.IOException;
-+import java.io.ObjectOutputStream;
-+import java.io.OutputStream;
-+import java.io.Serializable;
-+
-+public class GluuObjectOutputStream extends java.io.ObjectOutputStream {
-+	private ObjectOutputStream oos = new ObjectOutputStream(new NullOutputStream());
-+
-+	public GluuObjectOutputStream(OutputStream out) throws IOException {
-+    	super(out);
-+    	enableReplaceObject(true);
-+    }
-+
-+    @Override
-+    protected Object replaceObject(Object obj) throws IOException {
-+    	try {
-+    		oos.writeObject(obj);
-+    		return obj;
-+    	} catch (Throwable ex) {
-+    		if (obj instanceof Serializable) {
-+    			return obj;
-+    		}
-+
-+    		System.err.println("Skipping serialization of CLASS <<<" + obj.getClass() + ">>> object " + obj);
-+    	}
-+
-+    	return null;
-+    }
-+
-+    public class NullOutputStream extends OutputStream {
-+    	  @Override
-+    	  public void write(int b) throws IOException {}
-+    }
-+}
-diff -aurN '--exclude=.git' '--exclude=guava-*jre.jar' "jetty.project-jetty-10.0.15\\jetty-server.orig/src/main/java/org/eclipse/jetty/server/session/SessionData.java" "jetty.project-jetty-10.0.15\\jetty-server/src/main/java/org/eclipse/jetty/server/session/SessionData.java"
---- "jetty.project-jetty-10.0.15\\jetty-server.orig/src/main/java/org/eclipse/jetty/server/session/SessionData.java"	2023-04-11 20:24:32.000000000 +0300
-+++ "jetty.project-jetty-10.0.15\\jetty-server/src/main/java/org/eclipse/jetty/server/session/SessionData.java"	2023-08-18 20:21:10.000000000 +0300
+diff --git a/pom.xml b/pom.xml
+index df2e211adb..484b716387 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -508,43 +508,6 @@
+           </execution>
+         </executions>
+       </plugin>
+-      <plugin>
+-        <groupId>org.apache.maven.plugins</groupId>
+-        <artifactId>maven-checkstyle-plugin</artifactId>
+-        <version>${maven.checkstyle.plugin.version}</version>
+-        <configuration>
+-          <configLocation>jetty-checkstyle.xml</configLocation>
+-          <includeTestSourceDirectory>true</includeTestSourceDirectory>
+-          <violationSeverity>warning</violationSeverity>
+-          <consoleOutput>true</consoleOutput>
+-          <sourceDirectories>
+-            <!-- only scan source directory (not generated, filtered, or copied source) -->
+-            <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
+-            <sourceDirectory>${project.build.testSourceDirectory}</sourceDirectory>
+-          </sourceDirectories>
+-        </configuration>
+-        <dependencies>
+-          <dependency>
+-            <groupId>org.eclipse.jetty</groupId>
+-            <artifactId>build-resources</artifactId>
+-            <version>${project.version}</version>
+-          </dependency>
+-          <dependency>
+-            <groupId>com.puppycrawl.tools</groupId>
+-            <artifactId>checkstyle</artifactId>
+-            <version>${checkstyle.version}</version>
+-          </dependency>
+-        </dependencies>
+-        <executions>
+-          <execution>
+-            <id>checkstyle-check</id>
+-            <phase>validate</phase>
+-            <goals>
+-              <goal>check</goal>
+-            </goals>
+-          </execution>
+-        </executions>
+-      </plugin>
+     </plugins>
+ 
+     <pluginManagement>
+diff --git a/jetty-server/src/main/java/org/eclipse/jetty/server/session/JDBCSessionDataStore.java b/jetty-server/src/main/java/org/eclipse/jetty/server/session/JDBCSessionDataStore.java
+index 9e06ef130a..eab76e6b9b 100644
+--- a/jetty-server/src/main/java/org/eclipse/jetty/server/session/JDBCSessionDataStore.java
++++ b/jetty-server/src/main/java/org/eclipse/jetty/server/session/JDBCSessionDataStore.java
+@@ -23,6 +23,7 @@ import java.sql.PreparedStatement;
+ import java.sql.ResultSet;
+ import java.sql.SQLException;
+ import java.sql.Statement;
++import java.util.Base64;
+ import java.util.HashSet;
+ import java.util.Set;
+ 
+@@ -742,10 +743,11 @@ public class JDBCSessionDataStore extends AbstractSessionDataStore
+                 statement.setLong(11, data.getMaxInactiveMs());
+ 
+                 try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+-                     ObjectOutputStream oos = new ObjectOutputStream(baos))
++                     ObjectOutputStream oos = new GluuObjectOutputStream(baos))
+                 {
+                     SessionData.serializeAttributes(data, oos);
+                     byte[] bytes = baos.toByteArray();
++        			LOG.info("SessionData dump for Vhost {} in base64: {}", _context.getVhost(), Base64.getEncoder().encodeToString(bytes));
+                     ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+                     statement.setBinaryStream(12, bais, bytes.length); //attribute map as blob
+                 }
+@@ -773,7 +775,7 @@ public class JDBCSessionDataStore extends AbstractSessionDataStore
+                 statement.setLong(6, data.getMaxInactiveMs());
+ 
+                 try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+-                     ObjectOutputStream oos = new ObjectOutputStream(baos))
++                     ObjectOutputStream oos = new GluuObjectOutputStream(baos))
+                 {
+                     SessionData.serializeAttributes(data, oos);
+                     byte[] bytes = baos.toByteArray();
+diff --git a/jetty-server/src/main/java/org/eclipse/jetty/server/session/SessionData.java b/jetty-server/src/main/java/org/eclipse/jetty/server/session/SessionData.java
+index ef6e953ec7..72981ecf76 100644
+--- a/jetty-server/src/main/java/org/eclipse/jetty/server/session/SessionData.java
++++ b/jetty-server/src/main/java/org/eclipse/jetty/server/session/SessionData.java
 @@ -13,8 +13,10 @@
  
  package org.eclipse.jetty.server.session;
@@ -52,7 +95,7 @@ diff -aurN '--exclude=.git' '--exclude=guava-*jre.jar' "jetty.project-jetty-10.0
  import java.util.Collections;
  import java.util.Map;
  import java.util.Map.Entry;
-@@ -68,8 +70,12 @@
+@@ -68,8 +70,12 @@ public class SessionData implements Serializable
      public static void serializeAttributes(SessionData data, java.io.ObjectOutputStream out)
          throws IOException
      {
@@ -65,7 +108,7 @@ diff -aurN '--exclude=.git' '--exclude=guava-*jre.jar' "jetty.project-jetty-10.0
          for (Entry<String, Object> entry : data._attributes.entrySet())
          {
              out.writeUTF(entry.getKey());
-@@ -109,10 +115,31 @@
+@@ -109,10 +115,27 @@ public class SessionData implements Serializable
              if (LOG.isDebugEnabled())
                  LOG.debug("Attribute {} class={} isServerLoader={}", entry.getKey(), clazz.getName(), (!isContextLoader));
              out.writeBoolean(!isContextLoader);
@@ -75,7 +118,7 @@ diff -aurN '--exclude=.git' '--exclude=guava-*jre.jar' "jetty.project-jetty-10.0
 +            byte[] serializedDump = dumpObject(entry.getValue());
 +			LOG.info("Attribute {} with class name {}. Serialized value size is: {}, dump in base64: {}", entry.getKey(), clazz.getName(), serializedDump.length, Base64.getEncoder().encodeToString(serializedDump));
 +
-+			out.write(serializedDump);
++			out.writeObject(entry.getValue());
          }
 +		LOG.info("----------------------<<< SERIALIZE END");
      }
@@ -84,10 +127,6 @@ diff -aurN '--exclude=.git' '--exclude=guava-*jre.jar' "jetty.project-jetty-10.0
 +    	byte[] result = null;
 +    	ByteArrayOutputStream bos = new ByteArrayOutputStream();
 +    	try (java.io.ObjectOutputStream out = new GluuObjectOutputStream(bos)) {
-+    		// Skip header
-+			out.flush();
-+    		bos.reset();
-+    		
 +    		out.writeObject(value);
 +			out.flush();
 +			result = bos.toByteArray();
@@ -98,7 +137,7 @@ diff -aurN '--exclude=.git' '--exclude=guava-*jre.jar' "jetty.project-jetty-10.0
      /**
       * De-serialize the attribute map of a session.
       *
-@@ -126,6 +153,7 @@
+@@ -126,6 +149,7 @@ public class SessionData implements Serializable
      public static void deserializeAttributes(SessionData data, java.io.ObjectInputStream in)
          throws IOException, ClassNotFoundException
      {
@@ -106,12 +145,16 @@ diff -aurN '--exclude=.git' '--exclude=guava-*jre.jar' "jetty.project-jetty-10.0
          Object o = in.readObject();
          if (o instanceof Integer)
          {
-@@ -143,8 +171,13 @@
+@@ -141,10 +165,15 @@ public class SessionData implements Serializable
+             {
+                 String name = in.readUTF(); //attribute name
                  boolean isServerClassLoader = in.readBoolean(); //use server or webapp classloader to load
-                 if (LOG.isDebugEnabled())
-                     LOG.debug("Deserialize {} isServerLoader={} serverLoader={} tccl={}", name, isServerClassLoader, serverLoader, contextLoader);
+-                if (LOG.isDebugEnabled())
+-                    LOG.debug("Deserialize {} isServerLoader={} serverLoader={} tccl={}", name, isServerClassLoader, serverLoader, contextLoader);
 -                Object value = ((ClassLoadingObjectInputStream)in).readObject(isServerClassLoader ? serverLoader : contextLoader);
 -                data._attributes.put(name, value);
++                if (true)
++                    LOG.info("Deserialize {} isServerLoader={} serverLoader={} tccl={}", name, isServerClassLoader, serverLoader, contextLoader);
 +                try {
 +	                Object value = ((ClassLoadingObjectInputStream)in).readObject(isServerClassLoader ? serverLoader : contextLoader);
 +	                data._attributes.put(name, value);
@@ -122,7 +165,7 @@ diff -aurN '--exclude=.git' '--exclude=guava-*jre.jar' "jetty.project-jetty-10.0
              }
          }
          else
-@@ -155,6 +188,7 @@
+@@ -155,6 +184,7 @@ public class SessionData implements Serializable
              data._attributes = new ConcurrentHashMap<>();
              data.putAllAttributes((Map<String, Object>)o);
          }

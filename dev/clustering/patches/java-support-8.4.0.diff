@@ -123,3 +123,29 @@ index c5b0170..1ffac53 100644
  
  }
 \ No newline at end of file
+diff --git a/src/main/java/net/shibboleth/utilities/java/support/security/DataSealer.java b/src/main/java/net/shibboleth/utilities/java/support/security/DataSealer.java
+index ca63b5f..05812aa 100644
+--- a/src/main/java/net/shibboleth/utilities/java/support/security/DataSealer.java
++++ b/src/main/java/net/shibboleth/utilities/java/support/security/DataSealer.java
+@@ -81,7 +81,7 @@ public class DataSealer extends AbstractInitializableComponent {
+     @NonnullAfterInit private DataSealerKeyStrategy keyStrategy;
+ 
+     /** Source of secure random data. */
+-    @NonnullAfterInit private SecureRandom random;
++    @NonnullAfterInit private transient SecureRandom random;
+ 
+     /** Encodes encrypted bytes to string. */
+     @Nonnull private BinaryEncoder encoder;
+diff --git a/src/main/java/net/shibboleth/utilities/java/support/security/impl/RandomIdentifierGenerationStrategy.java b/src/main/java/net/shibboleth/utilities/java/support/security/impl/RandomIdentifierGenerationStrategy.java
+index 7d03503..447d3e2 100644
+--- a/src/main/java/net/shibboleth/utilities/java/support/security/impl/RandomIdentifierGenerationStrategy.java
++++ b/src/main/java/net/shibboleth/utilities/java/support/security/impl/RandomIdentifierGenerationStrategy.java
+@@ -38,7 +38,7 @@ import org.apache.commons.codec.binary.StringUtils;
+ public class RandomIdentifierGenerationStrategy implements IdentifierGenerationStrategy {
+ 
+     /** Random number generator. */
+-    private final Random random;
++    private final transient Random random;
+ 
+     /** Number of random bytes in the identifier. */
+     private final int sizeOfIdentifier;
