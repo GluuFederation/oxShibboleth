@@ -1,0 +1,30 @@
+diff --git a/.gitignore b/.gitignore
+index e58848137..290549eee 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -18,3 +18,6 @@
+ .project
+ .classpath
+ .settings
++**/target/
++**/bin/
++.class
+diff --git a/opensaml-parent/pom.xml b/opensaml-parent/pom.xml
+index f1a1264d3..441f564c0 100644
+--- a/opensaml-parent/pom.xml
++++ b/opensaml-parent/pom.xml
+@@ -26,6 +26,14 @@
+     -->
+     <packaging>pom</packaging>
+ 
++    <repositories>
++        <repository>
++            <id>shib</id>
++            <name>Shib</name>
++            <url>https://build.shibboleth.net/nexus/content/repositories/releases/</url>
++        </repository>
++    </repositories>
++
+     <modules>
+         <module>../opensaml-core</module>
+         <module>../opensaml-storage-api</module>
