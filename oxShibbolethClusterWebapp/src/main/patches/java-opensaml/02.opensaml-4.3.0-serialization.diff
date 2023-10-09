@@ -1,0 +1,512 @@
+diff --git a/opensaml-core/src/main/java/org/opensaml/core/xml/Namespace.java b/opensaml-core/src/main/java/org/opensaml/core/xml/Namespace.java
+index 2c9850562..b200fa355 100644
+--- a/opensaml-core/src/main/java/org/opensaml/core/xml/Namespace.java
++++ b/opensaml-core/src/main/java/org/opensaml/core/xml/Namespace.java
+@@ -25,7 +25,9 @@ import net.shibboleth.utilities.java.support.primitive.StringSupport;
+ import net.shibboleth.utilities.java.support.xml.XMLConstants;
+ 
+ /** Data structure for representing XML namespace attributes. */
+-public class Namespace {
++public class Namespace implements java.io.Serializable {
++
++	private static final long serialVersionUID = 5216991529958545215L;
+ 
+     /** URI of the namespace. */
+     private String namespaceURI;
+diff --git a/opensaml-core/src/main/java/org/opensaml/core/xml/XMLObject.java b/opensaml-core/src/main/java/org/opensaml/core/xml/XMLObject.java
+index bf9af8d54..a1f3bacd9 100644
+--- a/opensaml-core/src/main/java/org/opensaml/core/xml/XMLObject.java
++++ b/opensaml-core/src/main/java/org/opensaml/core/xml/XMLObject.java
+@@ -34,7 +34,7 @@ import org.w3c.dom.Element;
+  * A object that represents an XML element, usually of a specific schema type, that has been unmarshalled into this Java
+  * object.
+  */
+-public interface XMLObject {
++public interface XMLObject extends java.io.Serializable {
+ 
+     /**
+      * Detaches the XMLObject from its parent. This will release the parent's cached DOM (if it has one) and set this
+diff --git a/opensaml-core/src/main/java/org/opensaml/core/xml/schema/XSBooleanValue.java b/opensaml-core/src/main/java/org/opensaml/core/xml/schema/XSBooleanValue.java
+index 6b53a916e..45a922798 100644
+--- a/opensaml-core/src/main/java/org/opensaml/core/xml/schema/XSBooleanValue.java
++++ b/opensaml-core/src/main/java/org/opensaml/core/xml/schema/XSBooleanValue.java
+@@ -25,7 +25,9 @@ import net.shibboleth.utilities.java.support.primitive.StringSupport;
+  * A class representing a boolean attribute. This class tracks the usage of the literals {true, false, 1, 0} to ensure
+  * proper roundtripping when unmarshalling/marshalling.
+  */
+-public class XSBooleanValue {
++public class XSBooleanValue implements java.io.Serializable {
++
++	private static final long serialVersionUID = -3393187613103152755L;
+ 
+     /** Whether to use the numeric representation of the lexical one. */
+     private boolean numeric;
+diff --git a/opensaml-core/src/main/java/org/opensaml/core/xml/util/AttributeMap.java b/opensaml-core/src/main/java/org/opensaml/core/xml/util/AttributeMap.java
+index 3cba34288..7cc67c48e 100644
+--- a/opensaml-core/src/main/java/org/opensaml/core/xml/util/AttributeMap.java
++++ b/opensaml-core/src/main/java/org/opensaml/core/xml/util/AttributeMap.java
+@@ -46,8 +46,10 @@ import com.google.common.base.Strings;
+  * attributes change.
+  */
+ @NotThreadSafe
+-public class AttributeMap implements Map<QName, String> {
++public class AttributeMap implements Map<QName, String>, java.io.Serializable {
+     
++	private static final long serialVersionUID = -3942575004580210880L;
++
+     /** Logger. */
+     private final Logger log = LoggerFactory.getLogger(AttributeMap.class);
+ 
+diff --git a/opensaml-core/src/main/java/org/opensaml/core/xml/util/IDIndex.java b/opensaml-core/src/main/java/org/opensaml/core/xml/util/IDIndex.java
+index 3822c60c7..9e3e5cd10 100644
+--- a/opensaml-core/src/main/java/org/opensaml/core/xml/util/IDIndex.java
++++ b/opensaml-core/src/main/java/org/opensaml/core/xml/util/IDIndex.java
+@@ -36,8 +36,10 @@ import org.opensaml.core.xml.XMLObject;
+  * {@link org.opensaml.core.xml.XMLObject}.
+  */
+ @NotThreadSafe
+-public class IDIndex {
++public class IDIndex implements java.io.Serializable {
+     
++	private static final long serialVersionUID = 4630618500540027053L;
++
+     /** The XMLObject which owns this ID index. */
+     @Nonnull private final XMLObject owner;
+     
+diff --git a/opensaml-core/src/main/java/org/opensaml/core/xml/util/XMLObjectChildrenList.java b/opensaml-core/src/main/java/org/opensaml/core/xml/util/XMLObjectChildrenList.java
+index f03b880f1..4dc524f24 100644
+--- a/opensaml-core/src/main/java/org/opensaml/core/xml/util/XMLObjectChildrenList.java
++++ b/opensaml-core/src/main/java/org/opensaml/core/xml/util/XMLObjectChildrenList.java
+@@ -39,7 +39,9 @@ import com.google.common.collect.Collections2;
+  * 
+  * @param <ElementType> type of elements added to the list
+  */
+-public class XMLObjectChildrenList<ElementType extends XMLObject> extends AbstractList<ElementType> {
++public class XMLObjectChildrenList<ElementType extends XMLObject> extends AbstractList<ElementType> implements java.io.Serializable {
++
++	private static final long serialVersionUID = -775872086541671272L;
+ 
+     /** Parent to the elements in this list. */
+     private final XMLObject parent;
+diff --git a/opensaml-messaging-api/src/main/java/org/opensaml/messaging/context/BaseContext.java b/opensaml-messaging-api/src/main/java/org/opensaml/messaging/context/BaseContext.java
+index f4c14e55f..b9b30f1e5 100644
+--- a/opensaml-messaging-api/src/main/java/org/opensaml/messaging/context/BaseContext.java
++++ b/opensaml-messaging-api/src/main/java/org/opensaml/messaging/context/BaseContext.java
+@@ -57,7 +57,9 @@ import org.slf4j.LoggerFactory;
+  * to this convention, auto-creation will fail.
+  * </p>
+  */
+-public abstract class BaseContext implements Iterable<BaseContext> {
++public abstract class BaseContext implements Iterable<BaseContext>, java.io.Serializable {
++
++	private static final long serialVersionUID = -923886885752400994L;
+ 
+     /** Logger. */
+     @Nonnull private final Logger log = LoggerFactory.getLogger(BaseContext.class);
+diff --git a/opensaml-messaging-api/src/main/java/org/opensaml/messaging/context/navigate/ContextDataLookupFunction.java b/opensaml-messaging-api/src/main/java/org/opensaml/messaging/context/navigate/ContextDataLookupFunction.java
+index 899c512c8..d3955baac 100644
+--- a/opensaml-messaging-api/src/main/java/org/opensaml/messaging/context/navigate/ContextDataLookupFunction.java
++++ b/opensaml-messaging-api/src/main/java/org/opensaml/messaging/context/navigate/ContextDataLookupFunction.java
+@@ -27,6 +27,6 @@ import org.opensaml.messaging.context.BaseContext;
+  * @param <F> type of the context from which data will be extracted
+  * @param <T> type of data returned by the function
+  */
+-public interface ContextDataLookupFunction<F extends BaseContext, T> extends Function<F, T> {
++public interface ContextDataLookupFunction<F extends BaseContext, T> extends Function<F, T>, java.io.Serializable {
+ 
+ }
+\ No newline at end of file
+diff --git a/opensaml-saml-api/src/main/java/org/opensaml/saml/common/SAMLVersion.java b/opensaml-saml-api/src/main/java/org/opensaml/saml/common/SAMLVersion.java
+index dce7c92ff..9a9dc9980 100644
+--- a/opensaml-saml-api/src/main/java/org/opensaml/saml/common/SAMLVersion.java
++++ b/opensaml-saml-api/src/main/java/org/opensaml/saml/common/SAMLVersion.java
+@@ -24,7 +24,9 @@ import net.shibboleth.utilities.java.support.annotation.constraint.NotEmpty;
+ /**
+  * A type safe SAML version enumeration.
+  */
+-public final class SAMLVersion {
++public final class SAMLVersion implements java.io.Serializable {
++
++	private static final long serialVersionUID = 6858757872158658008L;
+ 
+     /** SAML version 1.0. */
+     @Nonnull public static final SAMLVersion VERSION_10 = new SAMLVersion(1, 0);
+diff --git a/opensaml-saml-api/src/main/java/org/opensaml/saml/saml2/metadata/EntityDescriptor.java b/opensaml-saml-api/src/main/java/org/opensaml/saml/saml2/metadata/EntityDescriptor.java
+index 209234119..c0d3b4714 100644
+--- a/opensaml-saml-api/src/main/java/org/opensaml/saml/saml2/metadata/EntityDescriptor.java
++++ b/opensaml-saml-api/src/main/java/org/opensaml/saml/saml2/metadata/EntityDescriptor.java
+@@ -31,7 +31,7 @@ import org.opensaml.saml.saml2.common.TimeBoundSAMLObject;
+  * SAML 2.0 Metadata EntityDescriptor.
+  */
+ public interface EntityDescriptor extends SignableSAMLObject, TimeBoundSAMLObject, CacheableSAMLObject,
+-        AttributeExtensibleXMLObject {
++        AttributeExtensibleXMLObject, java.io.Serializable {
+ 
+     /** Element name, no namespace. */
+     public static final String DEFAULT_ELEMENT_LOCAL_NAME = "EntityDescriptor";
+diff --git a/opensaml-saml-impl/src/main/java/org/opensaml/saml/security/impl/SAMLMDCredentialContext.java b/opensaml-saml-impl/src/main/java/org/opensaml/saml/security/impl/SAMLMDCredentialContext.java
+index fc4c1192f..b6a24ede1 100644
+--- a/opensaml-saml-impl/src/main/java/org/opensaml/saml/security/impl/SAMLMDCredentialContext.java
++++ b/opensaml-saml-impl/src/main/java/org/opensaml/saml/security/impl/SAMLMDCredentialContext.java
+@@ -30,6 +30,8 @@ import org.opensaml.security.credential.CredentialContext;
+  */
+ public class SAMLMDCredentialContext implements CredentialContext {
+ 
++	private static final long serialVersionUID = 1003728915881228889L;
++
+     /** Key descriptor which contained the KeyInfo used. */
+     private KeyDescriptor keyDescriptor;
+ 
+@@ -39,6 +41,13 @@ public class SAMLMDCredentialContext implements CredentialContext {
+     /** Encryption methods associated with the credential. */
+     private List<EncryptionMethod> encMethods;
+ 
++
++    /**
++     * Constructor for serialization
++     */
++    public SAMLMDCredentialContext() {
++    }
++
+     /**
+      * Constructor.
+      * 
+diff --git a/opensaml-security-api/src/main/java/org/opensaml/security/credential/Credential.java b/opensaml-security-api/src/main/java/org/opensaml/security/credential/Credential.java
+index a16044fb6..5022ec7b5 100644
+--- a/opensaml-security-api/src/main/java/org/opensaml/security/credential/Credential.java
++++ b/opensaml-security-api/src/main/java/org/opensaml/security/credential/Credential.java
+@@ -31,7 +31,7 @@ import javax.crypto.SecretKey;
+  * With asymmetric key-based credentials, local entity credentials will usually contain both a public 
+  * and private key while peer credentials will normally contain only a public key. 
+  */
+-public interface Credential {
++public interface Credential extends java.io.Serializable {
+     
+     /**
+      * The unique ID of the entity this credential is for.
+diff --git a/opensaml-security-api/src/main/java/org/opensaml/security/credential/CredentialContext.java b/opensaml-security-api/src/main/java/org/opensaml/security/credential/CredentialContext.java
+index e5d01e418..f7fc47410 100644
+--- a/opensaml-security-api/src/main/java/org/opensaml/security/credential/CredentialContext.java
++++ b/opensaml-security-api/src/main/java/org/opensaml/security/credential/CredentialContext.java
+@@ -21,6 +21,6 @@ package org.opensaml.security.credential;
+  * Marker interface for implementations which hold information specific to a particular context within 
+  * which a {@link CredentialResolver} resolves a {@link Credential}.
+  */
+-public interface CredentialContext {
++public interface CredentialContext extends java.io.Serializable {
+ 
+ }
+diff --git a/opensaml-security-api/src/main/java/org/opensaml/security/x509/BasicX509Credential.java b/opensaml-security-api/src/main/java/org/opensaml/security/x509/BasicX509Credential.java
+index 6f18a7cc7..5d1f311f8 100644
+--- a/opensaml-security-api/src/main/java/org/opensaml/security/x509/BasicX509Credential.java
++++ b/opensaml-security-api/src/main/java/org/opensaml/security/x509/BasicX509Credential.java
+@@ -28,6 +28,7 @@ import javax.annotation.Nonnull;
+ import javax.annotation.Nullable;
+ import javax.crypto.SecretKey;
+ 
++import org.cryptacular.adapter.WrappedRSAPrivateCrtKey;
+ import org.opensaml.security.credential.BasicCredential;
+ import org.opensaml.security.credential.Credential;
+ 
+@@ -41,6 +42,8 @@ import net.shibboleth.utilities.java.support.logic.Constraint;
+  */
+ public class BasicX509Credential extends BasicCredential implements X509Credential {
+ 
++	private static final long serialVersionUID = -3905061962310654576L;
++
+     /** Entity certificate. */
+     private X509Certificate entityCert;
+ 
+@@ -72,7 +75,12 @@ public class BasicX509Credential extends BasicCredential implements X509Credenti
+             @ParameterName(name="privateKey") @Nonnull final PrivateKey privateKey) {
+         super();
+         setEntityCertificate(entityCertificate);
+-        setPrivateKey(privateKey);
++        
++        if (privateKey instanceof WrappedRSAPrivateCrtKey) {
++        	setPrivateKey(new SerializabledWrappedRSAPrivateCrtKey((WrappedRSAPrivateCrtKey) privateKey));
++        } else {
++        	setPrivateKey(privateKey);
++        }
+     }
+ 
+     /** {@inheritDoc} */
+diff --git a/opensaml-security-api/src/main/java/org/opensaml/security/x509/SerializabledWrappedRSAPrivateCrtKey.java b/opensaml-security-api/src/main/java/org/opensaml/security/x509/SerializabledWrappedRSAPrivateCrtKey.java
+new file mode 100644
+index 000000000..9b0bca217
+--- /dev/null
++++ b/opensaml-security-api/src/main/java/org/opensaml/security/x509/SerializabledWrappedRSAPrivateCrtKey.java
+@@ -0,0 +1,96 @@
++package org.opensaml.security.x509;
++
++import java.math.BigInteger;
++import java.security.interfaces.RSAPrivateCrtKey;
++
++import org.cryptacular.adapter.WrappedRSAPrivateCrtKey;
++
++public class SerializabledWrappedRSAPrivateCrtKey implements RSAPrivateCrtKey, java.io.Serializable {
++
++	private static final long serialVersionUID = -8125283856182084676L;
++
++	private BigInteger privateExponent;
++	private BigInteger publicExponent;
++	private BigInteger primeP;
++	private BigInteger primeQ;
++	private BigInteger primeExponentP;
++	private BigInteger primeExponentQ;
++	private BigInteger crtCoefficient;
++	private String algorithm;
++	private String format;
++	private byte[] encoded;
++	private BigInteger modulus;
++
++	public SerializabledWrappedRSAPrivateCrtKey() {
++	}
++
++	public SerializabledWrappedRSAPrivateCrtKey(WrappedRSAPrivateCrtKey privateKey) {
++		privateExponent = privateKey.getPrivateExponent();
++		publicExponent = privateKey.getPublicExponent();
++		primeP = privateKey.getPrimeP();
++		primeQ = privateKey.getPrimeQ();
++		primeExponentP = privateKey.getPrimeExponentP();
++		primeExponentQ = privateKey.getPrimeExponentQ();
++		crtCoefficient = privateKey.getCrtCoefficient();
++		algorithm = privateKey.getAlgorithm();
++		format = privateKey.getFormat();
++		encoded = privateKey.getEncoded();
++		modulus = privateKey.getModulus();
++	}
++
++	@Override
++	public BigInteger getPrivateExponent() {
++		return privateExponent;
++	}
++
++	@Override
++	public BigInteger getPublicExponent() {
++		return publicExponent;
++	}
++
++	@Override
++	public BigInteger getPrimeP() {
++		return primeP;
++	}
++
++	@Override
++	public BigInteger getPrimeQ() {
++		return primeQ;
++	}
++
++	@Override
++	public BigInteger getPrimeExponentP() {
++		return primeExponentP;
++	}
++
++	@Override
++	public BigInteger getPrimeExponentQ() {
++		return primeExponentQ;
++	}
++
++	@Override
++	public BigInteger getCrtCoefficient() {
++		return crtCoefficient;
++	}
++
++	@Override
++	public String getAlgorithm() {
++		return algorithm;
++	}
++
++	@Override
++	public String getFormat() {
++		return format;
++	}
++
++	@Override
++	public byte[] getEncoded() {
++		return encoded;
++	}
++
++	@Override
++	public BigInteger getModulus() {
++		return modulus;
++	}
++
++}
+diff --git a/opensaml-security-api/src/main/java/org/opensaml/security/x509/X500DNHandler.java b/opensaml-security-api/src/main/java/org/opensaml/security/x509/X500DNHandler.java
+index 3772174e0..aee303327 100644
+--- a/opensaml-security-api/src/main/java/org/opensaml/security/x509/X500DNHandler.java
++++ b/opensaml-security-api/src/main/java/org/opensaml/security/x509/X500DNHandler.java
+@@ -24,7 +24,7 @@ import javax.security.auth.x500.X500Principal;
+  * Interface for implementations which handle parsing and serialization of X.500 names
+  * represented by {@link X500Principal}.
+  */
+-public interface X500DNHandler {
++public interface X500DNHandler extends java.io.Serializable {
+     
+     /** Specifies the string format specified in RFC 1779. */
+     public static final String FORMAT_RFC1779 = X500Principal.RFC1779;
+diff --git a/opensaml-security-api/src/main/java/org/opensaml/security/x509/tls/CertificateNameOptions.java b/opensaml-security-api/src/main/java/org/opensaml/security/x509/tls/CertificateNameOptions.java
+index ede1043f4..73ba5c4ff 100644
+--- a/opensaml-security-api/src/main/java/org/opensaml/security/x509/tls/CertificateNameOptions.java
++++ b/opensaml-security-api/src/main/java/org/opensaml/security/x509/tls/CertificateNameOptions.java
+@@ -34,7 +34,9 @@ import org.opensaml.security.x509.X500DNHandler;
+ /**
+  * Options for deriving message context issuer names from an client TLS X.509 certificate.
+  */
+-public class CertificateNameOptions implements Cloneable {
++public class CertificateNameOptions implements Cloneable, java.io.Serializable {
++
++	private static final long serialVersionUID = -6441867881206194692L;
+ 
+     /** Evaluate the certificate subject DN as a derived issuer entity ID. */
+     private boolean evaluateSubjectDN;
+diff --git a/opensaml-security-api/src/main/java/org/opensaml/security/x509/tls/ClientTLSValidationParameters.java b/opensaml-security-api/src/main/java/org/opensaml/security/x509/tls/ClientTLSValidationParameters.java
+index 630828ae4..f60535c4e 100644
+--- a/opensaml-security-api/src/main/java/org/opensaml/security/x509/tls/ClientTLSValidationParameters.java
++++ b/opensaml-security-api/src/main/java/org/opensaml/security/x509/tls/ClientTLSValidationParameters.java
+@@ -25,8 +25,10 @@ import org.opensaml.security.x509.X509Credential;
+ /**
+  * Parameters used in validating a client TLS {@link X509Credential}.
+  */
+-public class ClientTLSValidationParameters {
+-    
++public class ClientTLSValidationParameters implements java.io.Serializable {
++
++	private static final long serialVersionUID = -5520407330870274967L;
++
+     /** A {@link TrustEngine} instance used to validate a client TLS {@link X509Credential}. **/
+     @Nullable private TrustEngine<? super X509Credential> x509TrustEngine;
+     
+diff --git a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/AlgorithmPolicyConfiguration.java b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/AlgorithmPolicyConfiguration.java
+index 421eb8968..6f3935e85 100644
+--- a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/AlgorithmPolicyConfiguration.java
++++ b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/AlgorithmPolicyConfiguration.java
+@@ -28,7 +28,7 @@ import net.shibboleth.utilities.java.support.annotation.constraint.Unmodifiable;
+ /**
+  * Algorithm URI include/exclude policy configuration.
+  */
+-public interface AlgorithmPolicyConfiguration {
++public interface AlgorithmPolicyConfiguration extends java.io.Serializable {
+     
+     /** Rule precedence values. */
+     public enum Precedence {
+diff --git a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/AlgorithmPolicyParameters.java b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/AlgorithmPolicyParameters.java
+index 481e8a88f..ea2744365 100644
+--- a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/AlgorithmPolicyParameters.java
++++ b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/AlgorithmPolicyParameters.java
+@@ -32,8 +32,10 @@ import net.shibboleth.utilities.java.support.primitive.StringSupport;
+ /**
+  * The algorithm policy parameters.
+  */
+-public class AlgorithmPolicyParameters {
+-    
++public class AlgorithmPolicyParameters implements java.io.Serializable {
++
++	private static final long serialVersionUID = 5524423222147963150L;
++
+     /** Included algorithm URIs. */
+     @Nonnull @NonnullElements private Collection<String> includedAlgorithmURIs;
+     
+diff --git a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/EncryptionParameters.java b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/EncryptionParameters.java
+index 2d5f4457b..9ff86a0fe 100644
+--- a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/EncryptionParameters.java
++++ b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/EncryptionParameters.java
+@@ -27,8 +27,10 @@ import org.opensaml.xmlsec.keyinfo.KeyInfoGenerator;
+ /**
+  * The effective parameters to use when generating encrypted XML.
+  */
+-public class EncryptionParameters {
+-    
++public class EncryptionParameters implements java.io.Serializable {
++
++	private static final long serialVersionUID = 2182363290619942659L;
++
+     /** The EncryptedData encryption credential. */
+     private Credential dataEncryptionCredential;
+     
+diff --git a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/SignatureSigningParameters.java b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/SignatureSigningParameters.java
+index b97bf5e93..7e2b7c40d 100644
+--- a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/SignatureSigningParameters.java
++++ b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/SignatureSigningParameters.java
+@@ -26,8 +26,10 @@ import org.opensaml.xmlsec.keyinfo.KeyInfoGenerator;
+ /**
+  * The effective parameters to use when generating an XML signature.
+  */
+-public class SignatureSigningParameters {
+-    
++public class SignatureSigningParameters implements java.io.Serializable {
++
++	private static final long serialVersionUID = 4732267755399787321L;
++
+     /** The signing credential. */
+     private Credential signingCredential;
+     
+diff --git a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/SignatureValidationParameters.java b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/SignatureValidationParameters.java
+index 40f79efd0..53e7b4a46 100644
+--- a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/SignatureValidationParameters.java
++++ b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/SignatureValidationParameters.java
+@@ -26,7 +26,9 @@ import org.opensaml.xmlsec.signature.support.SignatureTrustEngine;
+  */
+ @SuppressWarnings("removal")
+ public class SignatureValidationParameters extends WhitelistBlacklistParameters {
+-    
++
++	private static final long serialVersionUID = -7648151540855758222L;
++
+     /** The signature trust engine to use. */
+     @Nullable private SignatureTrustEngine signatureTrustEngine;
+     
+diff --git a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/WhitelistBlacklistConfiguration.java b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/WhitelistBlacklistConfiguration.java
+index 4bf1acbd5..6bc26cc14 100644
+--- a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/WhitelistBlacklistConfiguration.java
++++ b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/WhitelistBlacklistConfiguration.java
+@@ -33,7 +33,7 @@ import net.shibboleth.utilities.java.support.annotation.constraint.Unmodifiable;
+  * @deprecated
+  */
+ @Deprecated(forRemoval=true, since="4.1.0")
+-public interface WhitelistBlacklistConfiguration extends AlgorithmPolicyConfiguration {
++public interface WhitelistBlacklistConfiguration extends AlgorithmPolicyConfiguration, java.io.Serializable {
+ 
+     /** Whitelist/blacklist precedence values. */
+     public enum Precedence {
+diff --git a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/WhitelistBlacklistParameters.java b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/WhitelistBlacklistParameters.java
+index de19330a9..1750e90d1 100644
+--- a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/WhitelistBlacklistParameters.java
++++ b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/WhitelistBlacklistParameters.java
+@@ -36,8 +36,10 @@ import net.shibboleth.utilities.java.support.primitive.DeprecationSupport.Object
+  * @deprecated
+  */
+ @Deprecated(forRemoval=true, since="4.1.0")
+-public class WhitelistBlacklistParameters extends AlgorithmPolicyParameters {
+-    
++public class WhitelistBlacklistParameters extends AlgorithmPolicyParameters implements java.io.Serializable {
++
++	private static final long serialVersionUID = -820354995938395165L;
++
+     /**
+      * Get the list of whitelisted algorithm URI's.
+      * 
+diff --git a/opensaml-xmlsec-impl/src/main/java/org/opensaml/xmlsec/keyinfo/impl/KeyInfoCredentialContext.java b/opensaml-xmlsec-impl/src/main/java/org/opensaml/xmlsec/keyinfo/impl/KeyInfoCredentialContext.java
+index 111d8b238..c4a47216d 100644
+--- a/opensaml-xmlsec-impl/src/main/java/org/opensaml/xmlsec/keyinfo/impl/KeyInfoCredentialContext.java
++++ b/opensaml-xmlsec-impl/src/main/java/org/opensaml/xmlsec/keyinfo/impl/KeyInfoCredentialContext.java
+@@ -28,9 +28,16 @@ import net.shibboleth.utilities.java.support.annotation.ParameterName;
+  * Context for credentials resolved from a {@link KeyInfo} element.
+  */
+ public class KeyInfoCredentialContext implements CredentialContext {
+-    
++
++	private static final long serialVersionUID = -1124601018682775973L;
++
+     /** The KeyInfo context. */
+-    private final KeyInfo keyInfo;
++    private KeyInfo keyInfo;
++    
++    /**
++     * Constructor for serialization
++     */
++    public KeyInfoCredentialContext() {}
+     
+     /**
+      * Constructor.

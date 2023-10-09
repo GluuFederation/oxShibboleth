@@ -1,0 +1,192 @@
+diff --git a/idp-attribute-api/src/main/java/net/shibboleth/idp/attribute/IdPAttribute.java b/idp-attribute-api/src/main/java/net/shibboleth/idp/attribute/IdPAttribute.java
+index 4aa73613b..a62a99177 100644
+--- a/idp-attribute-api/src/main/java/net/shibboleth/idp/attribute/IdPAttribute.java
++++ b/idp-attribute-api/src/main/java/net/shibboleth/idp/attribute/IdPAttribute.java
+@@ -59,8 +59,10 @@ import net.shibboleth.utilities.java.support.primitive.StringSupport;
+  * they have the same ID, regardless of whether their display names, descriptions, values, or encoders are the same.
+  */
+ @NotThreadSafe
+-public class IdPAttribute implements Comparable<IdPAttribute>, Cloneable {
+-    
++public class IdPAttribute implements Comparable<IdPAttribute>, Cloneable, java.io.Serializable {
++
++	private static final long serialVersionUID = -2393755887958149921L;
++
+     /** Value for testing illegal name. */
+     private static final Predicate<String> SPACE_CONTAINING = Pattern.compile("\\S*").asMatchPredicate();
+ 
+diff --git a/idp-attribute-api/src/main/java/net/shibboleth/idp/attribute/IdPAttributeValue.java b/idp-attribute-api/src/main/java/net/shibboleth/idp/attribute/IdPAttributeValue.java
+index 31eef6431..e9eae1c27 100644
+--- a/idp-attribute-api/src/main/java/net/shibboleth/idp/attribute/IdPAttributeValue.java
++++ b/idp-attribute-api/src/main/java/net/shibboleth/idp/attribute/IdPAttributeValue.java
+@@ -34,7 +34,7 @@ import net.shibboleth.utilities.java.support.annotation.constraint.NotEmpty;
+  * only the head part of the value for getValue().
+  * </p>
+  */
+-public interface IdPAttributeValue extends Comparable<IdPAttributeValue> {
++public interface IdPAttributeValue extends Comparable<IdPAttributeValue>, java.io.Serializable {
+ 
+     /**
+      * Get the native representation of the value of this attribute.
+diff --git a/idp-authn-api/src/main/java/net/shibboleth/idp/authn/ExternalAuthentication.java b/idp-authn-api/src/main/java/net/shibboleth/idp/authn/ExternalAuthentication.java
+index a609d239f..b459703f7 100644
+--- a/idp-authn-api/src/main/java/net/shibboleth/idp/authn/ExternalAuthentication.java
++++ b/idp-authn-api/src/main/java/net/shibboleth/idp/authn/ExternalAuthentication.java
+@@ -41,7 +41,9 @@ import net.shibboleth.utilities.java.support.annotation.constraint.NotEmpty;
+ import net.shibboleth.utilities.java.support.logic.Constraint;
+ 
+ /** Public interface supporting external authentication outside the webflow engine. */
+-public abstract class ExternalAuthentication {
++public abstract class ExternalAuthentication implements java.io.Serializable {
++
++	private static final long serialVersionUID = 3722472785635696222L;
+ 
+     /** Parameter supplied to locate the SWF object needed in the servlet context. */
+     @Nonnull @NotEmpty public static final String SWF_KEY = "net.shibboleth.idp.flowExecutor";
+diff --git a/idp-authn-api/src/main/java/net/shibboleth/idp/authn/principal/CloneablePrincipal.java b/idp-authn-api/src/main/java/net/shibboleth/idp/authn/principal/CloneablePrincipal.java
+index 044a34217..9966ecc42 100644
+--- a/idp-authn-api/src/main/java/net/shibboleth/idp/authn/principal/CloneablePrincipal.java
++++ b/idp-authn-api/src/main/java/net/shibboleth/idp/authn/principal/CloneablePrincipal.java
+@@ -20,7 +20,7 @@ package net.shibboleth.idp.authn.principal;
+ import java.security.Principal;
+ 
+ /** Principal that can be cloned without knowledge of the underlying type. */
+-public interface CloneablePrincipal extends Principal, Cloneable {
++public interface CloneablePrincipal extends Principal, Cloneable, java.io.Serializable {
+ 
+     /**
+      * Creates and returns a copy of this object.
+diff --git a/idp-authn-api/src/main/java/net/shibboleth/idp/authn/principal/PasswordPrincipal.java b/idp-authn-api/src/main/java/net/shibboleth/idp/authn/principal/PasswordPrincipal.java
+index 609178a9d..4123dffcd 100644
+--- a/idp-authn-api/src/main/java/net/shibboleth/idp/authn/principal/PasswordPrincipal.java
++++ b/idp-authn-api/src/main/java/net/shibboleth/idp/authn/principal/PasswordPrincipal.java
+@@ -28,9 +28,16 @@ import com.google.common.base.MoreObjects;
+ /** Principal that wraps a password. */
+ public class PasswordPrincipal implements CloneablePrincipal {
+ 
++	private static final long serialVersionUID = -853061441656182091L;
++
+     /** The password. */
+     @Nonnull @NotEmpty private String password;
+ 
++    /**
++     * Constructor for serialization
++     */
++    public PasswordPrincipal() {}
++
+     /**
+      * Constructor.
+      * 
+diff --git a/idp-authn-api/src/main/java/net/shibboleth/idp/authn/principal/UsernamePrincipal.java b/idp-authn-api/src/main/java/net/shibboleth/idp/authn/principal/UsernamePrincipal.java
+index 5fc0745b3..a6fd33a34 100644
+--- a/idp-authn-api/src/main/java/net/shibboleth/idp/authn/principal/UsernamePrincipal.java
++++ b/idp-authn-api/src/main/java/net/shibboleth/idp/authn/principal/UsernamePrincipal.java
+@@ -29,9 +29,16 @@ import com.google.common.base.MoreObjects;
+ /** Principal based on a username. */
+ public class UsernamePrincipal implements CloneablePrincipal {
+ 
++	private static final long serialVersionUID = -1397029928480680828L;
++
+     /** The username. */
+     @Nonnull @NotEmpty private String username;
+ 
++    /**
++     * Constructor for serialization
++     */
++    public UsernamePrincipal() {}
++
+     /**
+      * Constructor.
+      * 
+diff --git a/idp-saml-api/src/main/java/net/shibboleth/idp/saml/metadata/IdPUIInfo.java b/idp-saml-api/src/main/java/net/shibboleth/idp/saml/metadata/IdPUIInfo.java
+index 7f0a2e52d..c80ef4c7b 100644
+--- a/idp-saml-api/src/main/java/net/shibboleth/idp/saml/metadata/IdPUIInfo.java
++++ b/idp-saml-api/src/main/java/net/shibboleth/idp/saml/metadata/IdPUIInfo.java
+@@ -41,31 +41,33 @@ import net.shibboleth.utilities.java.support.collection.CollectionSupport;
+ 
+ /**
+  * Class to contain a processed form of the {@link UIInfo} suitable for display purposes. */
+-public class IdPUIInfo {
+-    
++public class IdPUIInfo implements java.io.Serializable {
++
++	private static final long serialVersionUID = -22765398791644720L;
++
+     /** logger. */
+     private static final Logger LOG = LoggerFactory.getLogger(IdPUIInfo.class);
+     
+     /** The Display Names as a map from locale to actual value.*/ 
+-    @Nonnull @Unmodifiable private final Map<Locale, String> displayNames;
++    @Nonnull @Unmodifiable private Map<Locale, String> displayNames;
+     
+     /** The Keywords as a map from locale to lists of actual values.*/ 
+-    @Nonnull @Unmodifiable private final Map<Locale, List<String>> keywordList;
++    @Nonnull @Unmodifiable private Map<Locale, List<String>> keywordList;
+     
+     /** The Descriptions as a map from locale to actual value.*/ 
+-    @Nonnull @Unmodifiable private final Map<Locale, String> descriptions;
++    @Nonnull @Unmodifiable private Map<Locale, String> descriptions;
+     
+     /** The Logos as a map from locale to actual value.*/ 
+-    @Nonnull @Unmodifiable private final Map<Locale, List<Logo>> localeLogos;
++    @Nonnull @Unmodifiable private Map<Locale, List<Logo>> localeLogos;
+ 
+     /** The non Locale bearing Logos .*/ 
+-    @Nonnull @Unmodifiable private final List<Logo> nonLocaleLogos;
++    @Nonnull @Unmodifiable private List<Logo> nonLocaleLogos;
+ 
+     /** The Information URLs as a map from locale to actual value.*/ 
+-    @Nonnull @Unmodifiable private final Map<Locale, String> informationURLs;
++    @Nonnull @Unmodifiable private Map<Locale, String> informationURLs;
+     
+     /** The Privacy Statement URLs as a map from locale to actual value.*/ 
+-    @Nonnull @Unmodifiable private final Map<Locale, String> privacyStatementURLs; 
++    @Nonnull @Unmodifiable private Map<Locale, String> privacyStatementURLs; 
+  
+     /** Warning check against a non localized keyword. */
+     private final Predicate<Keywords> nullLanguageKeyword = new Predicate<>() {
+@@ -79,6 +81,11 @@ public class IdPUIInfo {
+         }
+     };
+ 
++    /**
++     * Constructor for serialization
++     */
++    public IdPUIInfo() {}
++
+     /**
+      * Constructor.
+      *
+diff --git a/idp-saml-api/src/main/java/net/shibboleth/idp/saml/saml2/profile/config/navigate/ProxyAwareDefaultAuthenticationMethodsLookupFunction.java b/idp-saml-api/src/main/java/net/shibboleth/idp/saml/saml2/profile/config/navigate/ProxyAwareDefaultAuthenticationMethodsLookupFunction.java
+index fe89b3f82..47b60d258 100644
+--- a/idp-saml-api/src/main/java/net/shibboleth/idp/saml/saml2/profile/config/navigate/ProxyAwareDefaultAuthenticationMethodsLookupFunction.java
++++ b/idp-saml-api/src/main/java/net/shibboleth/idp/saml/saml2/profile/config/navigate/ProxyAwareDefaultAuthenticationMethodsLookupFunction.java
+@@ -51,8 +51,10 @@ import net.shibboleth.utilities.java.support.annotation.constraint.NonnullElemen
+  * @since 4.0.0
+  */
+ public class ProxyAwareDefaultAuthenticationMethodsLookupFunction
+-        implements Function<ProfileRequestContext,Collection<AuthnContextClassRefPrincipal>> {
++        implements Function<ProfileRequestContext,Collection<AuthnContextClassRefPrincipal>>, java.io.Serializable {
+     
++	private static final long serialVersionUID = 1362070719205342719L;
++
+     /** Mappings to transform proxied Principals. */
+     @Nonnull @NonnullElements private Map<Principal,Collection<Principal>> principalMappings;
+     
+diff --git a/idp-ui/src/main/java/net/shibboleth/idp/ui/context/RelyingPartyUIContext.java b/idp-ui/src/main/java/net/shibboleth/idp/ui/context/RelyingPartyUIContext.java
+index 20c88698e..3deb13074 100644
+--- a/idp-ui/src/main/java/net/shibboleth/idp/ui/context/RelyingPartyUIContext.java
++++ b/idp-ui/src/main/java/net/shibboleth/idp/ui/context/RelyingPartyUIContext.java
+@@ -82,10 +82,10 @@ public final class RelyingPartyUIContext extends BaseContext {
+     @Nullable private IdPUIInfo rpUIInfo;
+ 
+     /** The (statically defined) languages that this user wants to know about. */
+-    @Nullable @NonnullElements private List<LanguageRange> browserLanguages;
++    @Nullable @NonnullElements private transient List<LanguageRange> browserLanguages;
+     
+     /** The languages that this the Operator want to fall back to. */
+-    @Nonnull private List<LanguageRange> fallbackLanguages;
++    @Nonnull private transient List<LanguageRange> fallbackLanguages;
+     
+     /** A way of getting the current HTTP request, if available.
+      *  Used to define dynamically selected languages. */
