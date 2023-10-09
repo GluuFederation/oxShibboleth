@@ -53,7 +53,6 @@
 	</scm>
 	<modules>
 		<module>static</module>
-		<module>idp-custom</module>
 		<module>idp-conf</module>
 		<module>oxShibbolethWebapp</module>
 		<module>oxShibbolethClusterWebapp</module>
