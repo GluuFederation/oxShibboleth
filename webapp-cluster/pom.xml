@@ -16,7 +16,9 @@
 
 	<build>
 		<defaultGoal>package</defaultGoal>
+
 		<finalName>${project.artifactId}-${project.version}</finalName>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -34,9 +36,10 @@
 						<phase>process-sources</phase>
 						<configuration>
 							<target>
-								<property name="dest.dir" value="${project.build.directory}/rebuild" />
-								<delete dir="${dest.dir}"/>
-								<mkdir dir="${dest.dir}"/>
+								<property name="dest.dir"
+									value="${project.build.directory}/rebuild" />
+								<delete dir="${dest.dir}" />
+								<mkdir dir="${dest.dir}" />
 							</target>
 						</configuration>
 						<goals>
@@ -49,15 +52,18 @@
 						<phase>process-sources</phase>
 						<configuration>
 							<target>
-								<property name="dest.dir" value="${project.build.directory}/rebuild" />
+								<property name="dest.dir"
+									value="${project.build.directory}/rebuild" />
 
 								<exec executable="git" dir="${dest.dir}">
 									<arg value="clone" />
-									<arg value="https://git.shibboleth.net/git/java-support" />
+									<arg
+										value="https://git.shibboleth.net/git/java-support" />
 								</exec>
-								<exec executable="git" dir="${dest.dir}/java-support">
+								<exec executable="git"
+									dir="${dest.dir}/java-support">
 									<arg value="checkout" />
-									<arg value="8.4.0" />
+									<arg value="${java-support.version}" />
 								</exec>
 							</target>
 						</configuration>
@@ -71,15 +77,18 @@
 						<phase>process-sources</phase>
 						<configuration>
 							<target>
-								<property name="dest.dir" value="${project.build.directory}/rebuild" />
+								<property name="dest.dir"
+									value="${project.build.directory}/rebuild" />
 
 								<exec executable="git" dir="${dest.dir}">
 									<arg value="clone" />
-									<arg value="https://git.shibboleth.net/git/java-opensaml" />
+									<arg
+										value="https://git.shibboleth.net/git/java-opensaml" />
 								</exec>
-								<exec executable="git" dir="${dest.dir}/java-opensaml">
+								<exec executable="git"
+									dir="${dest.dir}/java-opensaml">
 									<arg value="checkout" />
-									<arg value="4.3.0" />
+									<arg value="${opensaml.version}" />
 								</exec>
 							</target>
 						</configuration>
@@ -93,15 +102,18 @@
 						<phase>process-sources</phase>
 						<configuration>
 							<target>
-								<property name="dest.dir" value="${project.build.directory}/rebuild" />
+								<property name="dest.dir"
+									value="${project.build.directory}/rebuild" />
 
 								<exec executable="git" dir="${dest.dir}">
 									<arg value="clone" />
-									<arg value="https://git.shibboleth.net/git/java-identity-provider" />
+									<arg
+										value="https://git.shibboleth.net/git/java-identity-provider" />
 								</exec>
-								<exec executable="git" dir="${dest.dir}/java-identity-provider">
+								<exec executable="git"
+									dir="${dest.dir}/java-identity-provider">
 									<arg value="checkout" />
-									<arg value="4.3.1" />
+									<arg value="${shibboleth.version}" />
 								</exec>
 							</target>
 						</configuration>
@@ -118,7 +130,7 @@
 				<version>3.6.0</version>
 				<executions>
 					<execution>
-						<id>unpack</id>
+						<id>unpack-war</id>
 						<phase>process-sources</phase>
 						<goals>
 							<goal>unpack</goal>
@@ -131,7 +143,27 @@
 									<version>${project.version}</version>
 									<type>war</type>
 									<overWrite>true</overWrite>
-									<outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
+									<outputDirectory>
+										${project.build.directory}/${project.build.finalName}</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+					<execution>
+						<id>download-gluu-spring-webflow</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.gluu</groupId>
+									<artifactId>spring-webflow</artifactId>
+									<version>${project.version}</version>
+									<type>jar</type>
+									<overWrite>true</overWrite>
+									<outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/lib</outputDirectory>
 								</artifactItem>
 							</artifactItems>
 						</configuration>
@@ -148,7 +180,8 @@
 						<id>patch-java-support</id>
 						<phase>generate-resources</phase>
 						<configuration>
-							<targetDirectory>${project.build.directory}/rebuild/java-support</targetDirectory>
+							<targetDirectory>
+								${project.build.directory}/rebuild/java-support</targetDirectory>
 							<patchDirectory>src/main/patches/java-support</patchDirectory>
 							<naturalOrderProcessing>true</naturalOrderProcessing>
 							<optimizations>false</optimizations>
@@ -163,7 +196,8 @@
 						<id>patch-java-opensaml</id>
 						<phase>generate-resources</phase>
 						<configuration>
-							<targetDirectory>${project.build.directory}/rebuild/java-opensaml</targetDirectory>
+							<targetDirectory>
+								${project.build.directory}/rebuild/java-opensaml</targetDirectory>
 							<patchDirectory>src/main/patches/java-opensaml</patchDirectory>
 							<naturalOrderProcessing>true</naturalOrderProcessing>
 							<optimizations>false</optimizations>
@@ -178,8 +212,10 @@
 						<id>patch-identity-provider</id>
 						<phase>generate-resources</phase>
 						<configuration>
-							<targetDirectory>${project.build.directory}/rebuild/java-identity-provider</targetDirectory>
-							<patchDirectory>src/main/patches/java-identity-provider</patchDirectory>
+							<targetDirectory>
+								${project.build.directory}/rebuild/java-identity-provider</targetDirectory>
+							<patchDirectory>
+								src/main/patches/java-identity-provider</patchDirectory>
 							<naturalOrderProcessing>true</naturalOrderProcessing>
 							<optimizations>false</optimizations>
 							<strip>1</strip>
@@ -427,13 +463,17 @@
 				<executions>
 					<execution>
 						<id>copy-java-support-libs</id>
-						<phase>process-resources</phase>
+						<phase>compile</phase>
 						<configuration>
 							<target>
-								<property name="src.dir" value="${project.build.directory}/rebuild/java-support" />
-								<property name="war.lib.dir" value="${project.build.directory}/${project.build.finalName}/WEB-INF/lib" />
+								<property name="src.dir"
+									value="${project.build.directory}/rebuild/java-support" />
+								<property name="war.lib.dir"
+									value="${project.build.directory}/${project.build.finalName}/WEB-INF/lib" />
 
-								<copy file="${src.dir}/target/java-support-8.4.0.jar" todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/target/java-support-${java-support.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
 							</target>
 						</configuration>
 						<goals>
@@ -443,19 +483,35 @@
 
 					<execution>
 						<id>copy-java-opensaml-libs</id>
-						<phase>process-resources</phase>
+						<phase>compile</phase>
 						<configuration>
 							<target>
-								<property name="src.dir" value="${project.build.directory}/rebuild/java-opensaml" />
-								<property name="war.lib.dir" value="${project.build.directory}/${project.build.finalName}/WEB-INF/lib" />
+								<property name="src.dir"
+									value="${project.build.directory}/rebuild/java-opensaml" />
+								<property name="war.lib.dir"
+									value="${project.build.directory}/${project.build.finalName}/WEB-INF/lib" />
 
-								<copy file="${src.dir}/opensaml-core/target/opensaml-core-4.3.0.jar" todir="${war.lib.dir}" overwrite="true" />
-								<copy file="${src.dir}/opensaml-messaging-api/target/opensaml-messaging-api-4.3.0.jar" todir="${war.lib.dir}" overwrite="true" />
-								<copy file="${src.dir}/opensaml-saml-api/target/opensaml-saml-api-4.3.0.jar" todir="${war.lib.dir}" overwrite="true" />
-								<copy file="${src.dir}/opensaml-saml-impl/target/opensaml-saml-impl-4.3.0.jar" todir="${war.lib.dir}" overwrite="true" />
-								<copy file="${src.dir}/opensaml-security-api/target/opensaml-security-api-4.3.0.jar" todir="${war.lib.dir}" overwrite="true" />
-								<copy file="${src.dir}/opensaml-xmlsec-api/target/opensaml-xmlsec-api-4.3.0.jar" todir="${war.lib.dir}" overwrite="true" />
-								<copy file="${src.dir}/opensaml-xmlsec-impl/target/opensaml-xmlsec-impl-4.3.0.jar" todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/opensaml-core/target/opensaml-core-${opensaml.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/opensaml-messaging-api/target/opensaml-messaging-api-${opensaml.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/opensaml-saml-api/target/opensaml-saml-api-${opensaml.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/opensaml-saml-impl/target/opensaml-saml-impl-${opensaml.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/opensaml-security-api/target/opensaml-security-api-${opensaml.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/opensaml-xmlsec-api/target/opensaml-xmlsec-api-${opensaml.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/opensaml-xmlsec-impl/target/opensaml-xmlsec-impl-${opensaml.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
 							</target>
 						</configuration>
 						<goals>
@@ -465,16 +521,26 @@
 
 					<execution>
 						<id>copy-java-identity-provider-libs</id>
-						<phase>process-resources</phase>
+						<phase>compile</phase>
 						<configuration>
 							<target>
-								<property name="src.dir" value="${project.build.directory}/rebuild/java-identity-provider" />
-								<property name="war.lib.dir" value="${project.build.directory}/${project.build.finalName}/WEB-INF/lib" />
+								<property name="src.dir"
+									value="${project.build.directory}/rebuild/java-identity-provider" />
+								<property name="war.lib.dir"
+									value="${project.build.directory}/${project.build.finalName}/WEB-INF/lib" />
 
-								<copy file="${src.dir}/idp-attribute-api/target/idp-attribute-api-4.3.1.jar" todir="${war.lib.dir}" overwrite="true" />
-								<copy file="${src.dir}/idp-authn-api/target/idp-authn-api-4.3.1.jar" todir="${war.lib.dir}" overwrite="true" />
-								<copy file="${src.dir}/idp-saml-api/target/idp-saml-api-4.3.1.jar" todir="${war.lib.dir}" overwrite="true" />
-								<copy file="${src.dir}/idp-ui/target/idp-ui-4.3.1.jar" todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/idp-attribute-api/target/idp-attribute-api-${shibboleth.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/idp-authn-api/target/idp-authn-api-${shibboleth.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/idp-saml-api/target/idp-saml-api-${shibboleth.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/idp-ui/target/idp-ui-${shibboleth.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
 							</target>
 						</configuration>
 						<goals>
@@ -501,8 +567,12 @@
 						</manifestEntries>
 					</archive>
 					<packagingIncludes>
-                                                **
-                                        </packagingIncludes>
+						**
+					</packagingIncludes>
+					<packagingExcludes>
+                                                WEB-INF/classes,
+                                                WEB-INF/lib/spring-webflow-${spring-webflow.version}.jar
+					</packagingExcludes>
 				</configuration>
 				<executions>
 					<execution>
@@ -519,7 +589,8 @@
 							<goal>war</goal>
 						</goals>
 						<configuration>
-							<warSourceDirectory>${project.build.directory}/${project.build.finalName}</warSourceDirectory>
+							<warSourceDirectory>
+								${project.build.directory}/${project.build.finalName}</warSourceDirectory>
 						</configuration>
 					</execution>
 				</executions>

@@ -14,8 +14,6 @@
 		<maven>2.3</maven>
 	</prerequisites>
 	<properties>
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<oxcore.version>4.5.3-SNAPSHOT</oxcore.version>
 		<jackson.version>2.13.0</jackson.version>
