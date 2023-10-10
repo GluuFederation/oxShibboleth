@@ -177,8 +177,6 @@ class FlowSessionImpl implements FlowSession, Externalizable {
 	 * @see FlowExecutionImplStateRestorer
 	 */
 	void setFlow(Flow flow) {
-		System.out.println("!!!! FLOW: " + flow);
-
 		Assert.notNull(flow, "The flow is required");
 		this.flow = flow;
 	}
