@@ -543,10 +543,10 @@
 									file="${src.dir}/opensaml-security-api/target/opensaml-security-api-${opensaml.version}.jar"
 									todir="${war.lib.dir}" overwrite="true" />
 								<copy
-									file="${src.dir}/opensaml-security-api/target/opensaml-storage-api-${opensaml.version}.jar"
+									file="${src.dir}/opensaml-storage-api/target/opensaml-storage-api-${opensaml.version}.jar"
 									todir="${war.lib.dir}" overwrite="true" />
 								<copy
-									file="${src.dir}/opensaml-security-api/target/opensaml-storage-impl-${opensaml.version}.jar"
+									file="${src.dir}/opensaml-storage-impl/target/opensaml-storage-impl-${opensaml.version}.jar"
 									todir="${war.lib.dir}" overwrite="true" />
 								<copy
 									file="${src.dir}/opensaml-xmlsec-api/target/opensaml-xmlsec-api-${opensaml.version}.jar"
