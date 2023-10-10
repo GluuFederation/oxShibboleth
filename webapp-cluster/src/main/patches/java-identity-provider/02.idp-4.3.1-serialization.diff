@@ -57,10 +57,10 @@ index 044a34217..9966ecc42 100644
      /**
       * Creates and returns a copy of this object.
 diff --git a/idp-authn-api/src/main/java/net/shibboleth/idp/authn/principal/PasswordPrincipal.java b/idp-authn-api/src/main/java/net/shibboleth/idp/authn/principal/PasswordPrincipal.java
-index 609178a9d..4123dffcd 100644
+index 609178a9d..36f068ff4 100644
 --- a/idp-authn-api/src/main/java/net/shibboleth/idp/authn/principal/PasswordPrincipal.java
 +++ b/idp-authn-api/src/main/java/net/shibboleth/idp/authn/principal/PasswordPrincipal.java
-@@ -28,9 +28,16 @@ import com.google.common.base.MoreObjects;
+@@ -28,14 +28,16 @@ import com.google.common.base.MoreObjects;
  /** Principal that wraps a password. */
  public class PasswordPrincipal implements CloneablePrincipal {
  
@@ -69,14 +69,17 @@ index 609178a9d..4123dffcd 100644
      /** The password. */
      @Nonnull @NotEmpty private String password;
  
-+    /**
+     /**
+-     * Constructor.
+-     * 
+-     * @param pw the password
 +     * Constructor for serialization
-+     */
+      */
 +    public PasswordPrincipal() {}
 +
-     /**
-      * Constructor.
-      * 
+     public PasswordPrincipal(@Nonnull @NotEmpty @ParameterName(name="pw") final String pw) {
+         password = Constraint.isNotEmpty(pw, "Password cannot be null or empty");
+     }
 diff --git a/idp-authn-api/src/main/java/net/shibboleth/idp/authn/principal/UsernamePrincipal.java b/idp-authn-api/src/main/java/net/shibboleth/idp/authn/principal/UsernamePrincipal.java
 index 5fc0745b3..a6fd33a34 100644
 --- a/idp-authn-api/src/main/java/net/shibboleth/idp/authn/principal/UsernamePrincipal.java

@@ -378,6 +378,34 @@ index 630828ae4..f60535c4e 100644
      /** A {@link TrustEngine} instance used to validate a client TLS {@link X509Credential}. **/
      @Nullable private TrustEngine<? super X509Credential> x509TrustEngine;
      
+diff --git a/opensaml-storage-api/src/main/java/org/opensaml/storage/StorageRecord.java b/opensaml-storage-api/src/main/java/org/opensaml/storage/StorageRecord.java
+index a12e9bb92..8ccb4e2be 100644
+--- a/opensaml-storage-api/src/main/java/org/opensaml/storage/StorageRecord.java
++++ b/opensaml-storage-api/src/main/java/org/opensaml/storage/StorageRecord.java
+@@ -32,7 +32,9 @@ import net.shibboleth.utilities.java.support.logic.Constraint;
+  * @param <Type> the object type represented by the record
+  */
+ @NotThreadSafe
+-public class StorageRecord<Type> {
++public class StorageRecord<Type> implements java.io.Serializable  {
++
++	private static final long serialVersionUID = 6914480830387208643L;
+ 
+     /** Version field. */
+     private long version;
+diff --git a/opensaml-storage-impl/src/main/java/org/opensaml/storage/impl/client/ClientStorageServiceStore.java b/opensaml-storage-impl/src/main/java/org/opensaml/storage/impl/client/ClientStorageServiceStore.java
+index 6494519cb..47fa60b6e 100644
+--- a/opensaml-storage-impl/src/main/java/org/opensaml/storage/impl/client/ClientStorageServiceStore.java
++++ b/opensaml-storage-impl/src/main/java/org/opensaml/storage/impl/client/ClientStorageServiceStore.java
+@@ -35,7 +35,7 @@ import net.shibboleth.utilities.java.support.annotation.constraint.NotEmpty;
+  * 
+  * @since 4.1.0
+  */
+-public interface ClientStorageServiceStore {
++public interface ClientStorageServiceStore extends java.io.Serializable {
+ 
+     /**
+      * Get the data source.
 diff --git a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/AlgorithmPolicyConfiguration.java b/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/AlgorithmPolicyConfiguration.java
 index 421eb8968..6f3935e85 100644
 --- a/opensaml-xmlsec-api/src/main/java/org/opensaml/xmlsec/AlgorithmPolicyConfiguration.java
