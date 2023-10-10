@@ -93,7 +93,6 @@ class FlowSessionImpl implements FlowSession, Externalizable {
 		Assert.notNull(flow, "The flow is required");
 		this.flow = flow;
 		this.parent = parent;
-		System.out.println("!!!! FLOW: " + flow);
 	}
 
 	// implementing FlowSession
