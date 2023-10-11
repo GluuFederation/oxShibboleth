@@ -20,7 +20,7 @@
 		<oxcore.version>4.6.0-SNAPSHOT</oxcore.version>
 		<jackson.version>2.13.0</jackson.version>
 		<jaxrs.version>3.0.12.Final</jaxrs.version>
-		<resteasy.version>4.5.12.Final</resteasy.version>
+		<resteasy.version>4.6.0.Final</resteasy.version>
 		<httpcore.version>4.4.14</httpcore.version>
 		<httpclient.version>4.5.13</httpclient.version>
 		<log4j.version>2.17.1</log4j.version>
