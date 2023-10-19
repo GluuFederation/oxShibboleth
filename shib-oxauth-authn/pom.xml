@@ -14,8 +14,8 @@
    <properties>
      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
      <oxcore.version>4.5.3-SNAPSHOT</oxcore.version>
-     <oxauth.version>4.5.2.Final</oxauth.version>
-     <oxtrust.version>4.5.2.Final</oxtrust.version>
+     <oxauth.version>4.5.3-SNAPSHOT</oxauth.version>
+     <oxtrust.version>4.5.3-SNAPSHOT</oxtrust.version>
      <javax.servlet.version>3.0.1</javax.servlet.version>
      <commons-lang.version>2.5</commons-lang.version>
    </properties>
