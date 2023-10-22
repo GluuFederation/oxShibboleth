@@ -76,6 +76,10 @@ public class OxAuthReuseResultByAcr implements Predicate<ProfileRequestContext> 
 
     private final List<String> determineAcrs(ProfileRequestContext profileRequestContext, AuthenticationContext authnContext) {
 
+        if(profileRequestContext == null || profileRequestContext.getInboundMessageContext() == null) {
+            return null;
+        }
+        
         AuthnRequest authnRequest = (AuthnRequest) profileRequestContext.getInboundMessageContext().getMessage();
         if(authnRequest == null) {
             return null;
