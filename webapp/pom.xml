@@ -186,16 +186,16 @@
                                                 WEB-INF/lib/joda-time-2.9.9.jar,
                                                 WEB-INF/lib/joda-time-2.10.8.jar,
                                                 WEB-INF/lib/jboss-logging-3.3.2.Final.jar,
-												WEB-INF/lib/log4j-1.2-api-2.11.2.jar,
+
+						WEB-INF/lib/log4j-1.2-api-2.11.2.jar,
                                                 WEB-INF/lib/log4j-api-2.11.2.jar,
                                                 WEB-INF/lib/log4j-core-2.11.2.jar,
                                                 WEB-INF/lib/logback-classic-1.2.3.jar,
                                                 WEB-INF/lib/logback-core-1.2.3.jar,
                                                 WEB-INF/lib/slf4j-api-1.7.36.jar,
-												WEB-INF/lib/slf4j-simple-1.7.36.jar,
-												WEB-INF/lib/log4j-over-slf4j-1.7.32.jar,
-												WEB-INF/lib/spring-web-5.0.9.RELEASE.jar,
-                                                WEB-INF/lib/spring-webmvc-5.0.9.RELEASE.jar,
+						WEB-INF/lib/slf4j-simple-1.7.36.jar,
+
+						WEB-INF/lib/log4j-over-slf4j-1.7.32.jar,
                                                 WEB-INF/lib/slf4j-simple-1.7.26.jar,
                                                 WEB-INF/lib/stax-ex-1.8.jar,
                                                 WEB-INF/lib/txw2-2.3.1.jar,
@@ -214,7 +214,12 @@
 						WEB-INF/lib/spring-orm-5.3.25.jar,
 						WEB-INF/lib/spring-tx-5.3.25.jar,
 						WEB-INF/lib/spring-web-5.3.25.jar,
-						WEB-INF/lib/spring-webmvc-5.3.25.jar
+						WEB-INF/lib/spring-webmvc-5.3.25.jar,
+
+						WEB-INF/lib/bcpkix-jdk18on-1.72.jar,
+						WEB-INF/lib/bcprov-jdk18on-1.72.jar,
+						WEB-INF/lib/bcutil-jdk18on-1.72.jar,
+						WEB-INF/lib/xmlsec-2.3.2.jar
                                         </packagingExcludes>
 				</configuration>
 				<executions>
@@ -481,6 +486,30 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>5.3.30</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk18on</artifactId>
+			<version>1.76</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcpkix-jdk18on</artifactId>
+			<version>1.76</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcutil-jdk18on</artifactId>
+			<version>1.76</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.apache.santuario</groupId>
+		    <artifactId>xmlsec</artifactId>
+		    <version>2.3.4</version>
 		</dependency>
 	</dependencies>
 </project>
