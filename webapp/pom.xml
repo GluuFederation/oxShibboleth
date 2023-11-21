@@ -511,5 +511,12 @@
 		    <artifactId>xmlsec</artifactId>
 		    <version>2.3.4</version>
 		</dependency>
+
+		<!-- Fix IDP 4.3.1 -->
+		<dependency>
+			<groupId>com.beust</groupId>
+			<artifactId>jcommander</artifactId>
+			<version>1.82</version>
+		</dependency>
 	</dependencies>
 </project>
