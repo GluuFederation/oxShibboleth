@@ -425,11 +425,6 @@
 			<artifactId>resteasy-client</artifactId>
 			<version>${resteasy.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.nimbusds</groupId>
-			<artifactId>nimbus-jose-jwt</artifactId>
-			<version>9.15.2</version>
-		</dependency>
 
 		<!-- Spring -->
 		<dependency>
