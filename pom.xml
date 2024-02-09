@@ -11,8 +11,13 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<shibboleth.version>4.2.1</shibboleth.version>
-		<shibboleth.dist.sha256>fa5e46d160f6b1bc50326c1a31627a05b5d0847b8f620d7f4c0251999b806474</shibboleth.dist.sha256>
+
+		<shibboleth.version>4.3.1</shibboleth.version>
+		<opensaml.version>4.3.0</opensaml.version>
+		<java-support.version>8.4.0</java-support.version>
+		<spring-webflow.version>2.5.1.RELEASE</spring-webflow.version>
+
+		<shibboleth.dist.sha256>e71e0a948499a0c383d03e35e4bab3779881b72d0ceb5a03dbb776c04230c613</shibboleth.dist.sha256>
 		<sonar.projectKey>GluuFederation_oxShibboleth</sonar.projectKey>
                 <sonar.moduleKey>${project.groupId}:${project.artifactId}</sonar.moduleKey>
                 <sonar.organization>gluufederation</sonar.organization>
@@ -54,7 +59,9 @@
 	<modules>
 		<module>static</module>
 		<module>idp-conf</module>
-		<module>oxShibbolethWebapp</module>
+		<module>spring-flow</module>
+		<module>webapp</module>
+		<module>webapp-cluster</module>
 		<module>keygenerator</module>
 		<module>oxLogoServlet</module>
 		<module>shib-oxauth-authn</module>
@@ -91,8 +98,8 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>2.3.2</version>
 					<configuration>
-						<source>1.6</source>
-						<target>1.6</target>
+						<source>1.8</source>
+						<target>1.8</target>
 						<encoding>UTF-8</encoding>
 					</configuration>
 				</plugin>
@@ -114,7 +121,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
-					<version>2.4</version>
+					<version>3.3.0</version>
 					<executions>
 						<execution>
 							<goals>
@@ -163,6 +170,11 @@
 							</goals>
 						</execution>
 					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>3.6.1</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

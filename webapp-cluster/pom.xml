@@ -1,0 +1,659 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>oxshibbolethIdpCluster</artifactId>
+	<name>Gluu Shibboleth Cluster IDP</name>
+	<packaging>war</packaging>
+
+	<parent>
+		<groupId>org.gluu</groupId>
+		<artifactId>oxShibboleth</artifactId>
+		<version>4.5.3.Final</version>
+	</parent>
+
+	<build>
+		<defaultGoal>package</defaultGoal>
+
+		<finalName>${project.artifactId}-${project.version}</finalName>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.4</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>cleanup-sources</id>
+						<phase>process-sources</phase>
+						<configuration>
+							<target>
+								<property name="dest.dir"
+									value="${project.build.directory}/rebuild" />
+								<delete dir="${dest.dir}" />
+								<mkdir dir="${dest.dir}" />
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>clone-java-support</id>
+						<phase>process-sources</phase>
+						<configuration>
+							<target>
+								<property name="dest.dir"
+									value="${project.build.directory}/rebuild" />
+
+								<exec executable="git" dir="${dest.dir}">
+									<arg value="clone" />
+									<arg
+										value="https://git.shibboleth.net/git/java-support" />
+								</exec>
+								<exec executable="git"
+									dir="${dest.dir}/java-support">
+									<arg value="checkout" />
+									<arg value="${java-support.version}" />
+								</exec>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>clone-java-opensaml</id>
+						<phase>process-sources</phase>
+						<configuration>
+							<target>
+								<property name="dest.dir"
+									value="${project.build.directory}/rebuild" />
+
+								<exec executable="git" dir="${dest.dir}">
+									<arg value="clone" />
+									<arg
+										value="https://git.shibboleth.net/git/java-opensaml" />
+								</exec>
+								<exec executable="git"
+									dir="${dest.dir}/java-opensaml">
+									<arg value="checkout" />
+									<arg value="${opensaml.version}" />
+								</exec>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>clone-java-identity-provider</id>
+						<phase>process-sources</phase>
+						<configuration>
+							<target>
+								<property name="dest.dir"
+									value="${project.build.directory}/rebuild" />
+
+								<exec executable="git" dir="${dest.dir}">
+									<arg value="clone" />
+									<arg
+										value="https://git.shibboleth.net/git/java-identity-provider" />
+								</exec>
+								<exec executable="git"
+									dir="${dest.dir}/java-identity-provider">
+									<arg value="checkout" />
+									<arg value="${shibboleth.version}" />
+								</exec>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.6.0</version>
+				<executions>
+					<execution>
+						<id>unpack-war</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.gluu</groupId>
+									<artifactId>oxshibbolethIdp</artifactId>
+									<version>${project.version}</version>
+									<type>war</type>
+									<overWrite>true</overWrite>
+									<outputDirectory>
+										${project.build.directory}/${project.build.finalName}</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+					<execution>
+						<id>download-gluu-spring-webflow</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.gluu</groupId>
+									<artifactId>spring-webflow</artifactId>
+									<version>${project.version}</version>
+									<type>jar</type>
+									<overWrite>true</overWrite>
+									<outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/lib</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-patch-plugin</artifactId>
+				<version>1.1.1</version>
+				<executions>
+					<execution>
+						<id>patch-java-support</id>
+						<phase>generate-resources</phase>
+						<configuration>
+							<targetDirectory>
+								${project.build.directory}/rebuild/java-support</targetDirectory>
+							<patchDirectory>src/main/patches/java-support</patchDirectory>
+							<naturalOrderProcessing>true</naturalOrderProcessing>
+							<optimizations>false</optimizations>
+							<strip>1</strip>
+						</configuration>
+						<goals>
+							<goal>apply</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>patch-java-opensaml</id>
+						<phase>generate-resources</phase>
+						<configuration>
+							<targetDirectory>
+								${project.build.directory}/rebuild/java-opensaml</targetDirectory>
+							<patchDirectory>src/main/patches/java-opensaml</patchDirectory>
+							<naturalOrderProcessing>true</naturalOrderProcessing>
+							<optimizations>false</optimizations>
+							<strip>1</strip>
+						</configuration>
+						<goals>
+							<goal>apply</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>patch-identity-provider</id>
+						<phase>generate-resources</phase>
+						<configuration>
+							<targetDirectory>
+								${project.build.directory}/rebuild/java-identity-provider</targetDirectory>
+							<patchDirectory>
+								src/main/patches/java-identity-provider</patchDirectory>
+							<naturalOrderProcessing>true</naturalOrderProcessing>
+							<optimizations>false</optimizations>
+							<strip>1</strip>
+						</configuration>
+						<goals>
+							<goal>apply</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<!-- Build java-support libs -->
+					<execution>
+						<id>build-java-supportr</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>mvn</executable>
+							<workingDirectory>
+								${project.build.directory}/rebuild/java-support</workingDirectory>
+							<arguments>
+								<argument>-Dmaven.test.skip=true</argument>
+								<argument>-Dfile.encoding=UTF8</argument>
+								<argument>clean</argument>
+								<argument>package</argument>
+							</arguments>
+						</configuration>
+					</execution>
+
+					<!-- Build java-opensaml libs -->
+					<execution>
+						<id>build-opensaml-core</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>mvn</executable>
+							<workingDirectory>
+								${project.build.directory}/rebuild/java-opensaml/opensaml-core</workingDirectory>
+							<arguments>
+								<argument>-Dmaven.test.skip=true</argument>
+								<argument>-Dfile.encoding=UTF8</argument>
+								<argument>clean</argument>
+								<argument>package</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>build-opensaml-messaging-api</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>mvn</executable>
+							<workingDirectory>
+								${project.build.directory}/rebuild/java-opensaml/opensaml-messaging-api</workingDirectory>
+							<arguments>
+								<argument>-Dmaven.test.skip=true</argument>
+								<argument>-Dfile.encoding=UTF8</argument>
+								<argument>clean</argument>
+								<argument>package</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>build-opensaml-saml-api</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>mvn</executable>
+							<workingDirectory>
+								${project.build.directory}/rebuild/java-opensaml/opensaml-saml-api</workingDirectory>
+							<arguments>
+								<argument>-Dmaven.test.skip=true</argument>
+								<argument>-Dfile.encoding=UTF8</argument>
+								<argument>clean</argument>
+								<argument>package</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>build-opensaml-saml-impl</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>mvn</executable>
+							<workingDirectory>
+								${project.build.directory}/rebuild/java-opensaml/opensaml-saml-impl</workingDirectory>
+							<arguments>
+								<argument>-Dmaven.test.skip=true</argument>
+								<argument>-Dfile.encoding=UTF8</argument>
+								<argument>clean</argument>
+								<argument>package</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>build-opensaml-security-api</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>mvn</executable>
+							<workingDirectory>
+								${project.build.directory}/rebuild/java-opensaml/opensaml-security-api</workingDirectory>
+							<arguments>
+								<argument>-Dmaven.test.skip=true</argument>
+								<argument>-Dfile.encoding=UTF8</argument>
+								<argument>clean</argument>
+								<argument>package</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>build-opensaml-storage-api</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>mvn</executable>
+							<workingDirectory>
+								${project.build.directory}/rebuild/java-opensaml/opensaml-storage-api</workingDirectory>
+							<arguments>
+								<argument>-Dmaven.test.skip=true</argument>
+								<argument>-Dfile.encoding=UTF8</argument>
+								<argument>clean</argument>
+								<argument>package</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>build-opensaml-storage-impl</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>mvn</executable>
+							<workingDirectory>
+								${project.build.directory}/rebuild/java-opensaml/opensaml-storage-impl</workingDirectory>
+							<arguments>
+								<argument>-Dmaven.test.skip=true</argument>
+								<argument>-Dfile.encoding=UTF8</argument>
+								<argument>clean</argument>
+								<argument>package</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>build-opensaml-xmlsec-api</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>mvn</executable>
+							<workingDirectory>
+								${project.build.directory}/rebuild/java-opensaml/opensaml-xmlsec-api</workingDirectory>
+							<arguments>
+								<argument>-Dmaven.test.skip=true</argument>
+								<argument>-Dfile.encoding=UTF8</argument>
+								<argument>clean</argument>
+								<argument>package</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>build-opensaml-xmlsec-impl</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>mvn</executable>
+							<workingDirectory>
+								${project.build.directory}/rebuild/java-opensaml/opensaml-xmlsec-impl</workingDirectory>
+							<arguments>
+								<argument>-Dmaven.test.skip=true</argument>
+								<argument>-Dfile.encoding=UTF8</argument>
+								<argument>clean</argument>
+								<argument>package</argument>
+							</arguments>
+						</configuration>
+					</execution>
+
+					<!-- Build java-identity-provider libs -->
+					<execution>
+						<id>build-idp-attribute-api</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>mvn</executable>
+							<workingDirectory>
+								${project.build.directory}/rebuild/java-identity-provider/idp-attribute-api</workingDirectory>
+							<arguments>
+								<argument>-Dmaven.test.skip=true</argument>
+								<argument>-Dfile.encoding=UTF8</argument>
+								<argument>clean</argument>
+								<argument>package</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>build-idp-authn-api</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>mvn</executable>
+							<workingDirectory>
+								${project.build.directory}/rebuild/java-identity-provider/idp-authn-api</workingDirectory>
+							<arguments>
+								<argument>-Dmaven.test.skip=true</argument>
+								<argument>-Dfile.encoding=UTF8</argument>
+								<argument>clean</argument>
+								<argument>package</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>build-idp-saml-api</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>mvn</executable>
+							<workingDirectory>
+								${project.build.directory}/rebuild/java-identity-provider/idp-saml-api</workingDirectory>
+							<arguments>
+								<argument>-Dmaven.test.skip=true</argument>
+								<argument>-Dfile.encoding=UTF8</argument>
+								<argument>clean</argument>
+								<argument>package</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>build-idp-ui</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>mvn</executable>
+							<workingDirectory>
+								${project.build.directory}/rebuild/java-identity-provider/idp-ui</workingDirectory>
+							<arguments>
+								<argument>-Dmaven.test.skip=true</argument>
+								<argument>-Dfile.encoding=UTF8</argument>
+								<argument>clean</argument>
+								<argument>package</argument>
+							</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>copy-java-support-libs</id>
+						<phase>compile</phase>
+						<configuration>
+							<target>
+								<property name="src.dir"
+									value="${project.build.directory}/rebuild/java-support" />
+								<property name="war.lib.dir"
+									value="${project.build.directory}/${project.build.finalName}/WEB-INF/lib" />
+
+								<copy
+									file="${src.dir}/target/java-support-${java-support.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>copy-java-opensaml-libs</id>
+						<phase>compile</phase>
+						<configuration>
+							<target>
+								<property name="src.dir"
+									value="${project.build.directory}/rebuild/java-opensaml" />
+								<property name="war.lib.dir"
+									value="${project.build.directory}/${project.build.finalName}/WEB-INF/lib" />
+
+								<copy
+									file="${src.dir}/opensaml-core/target/opensaml-core-${opensaml.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/opensaml-messaging-api/target/opensaml-messaging-api-${opensaml.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/opensaml-saml-api/target/opensaml-saml-api-${opensaml.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/opensaml-saml-impl/target/opensaml-saml-impl-${opensaml.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/opensaml-security-api/target/opensaml-security-api-${opensaml.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/opensaml-storage-api/target/opensaml-storage-api-${opensaml.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/opensaml-storage-impl/target/opensaml-storage-impl-${opensaml.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/opensaml-xmlsec-api/target/opensaml-xmlsec-api-${opensaml.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/opensaml-xmlsec-impl/target/opensaml-xmlsec-impl-${opensaml.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>copy-java-identity-provider-libs</id>
+						<phase>compile</phase>
+						<configuration>
+							<target>
+								<property name="src.dir"
+									value="${project.build.directory}/rebuild/java-identity-provider" />
+								<property name="war.lib.dir"
+									value="${project.build.directory}/${project.build.finalName}/WEB-INF/lib" />
+
+								<copy
+									file="${src.dir}/idp-attribute-api/target/idp-attribute-api-${shibboleth.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/idp-authn-api/target/idp-authn-api-${shibboleth.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/idp-saml-api/target/idp-saml-api-${shibboleth.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+								<copy
+									file="${src.dir}/idp-ui/target/idp-ui-${shibboleth.version}.jar"
+									todir="${war.lib.dir}" overwrite="true" />
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<useCache>true</useCache>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+						</manifest>
+						<manifestEntries>
+							<Implementation-Build>${buildNumber}</Implementation-Build>
+							<Build-Branch>${git.branch}</Build-Branch>
+						</manifestEntries>
+					</archive>
+					<packagingIncludes>
+						**
+					</packagingIncludes>
+					<packagingExcludes>
+                                                WEB-INF/classes,
+                                                WEB-INF/lib/spring-webflow-${spring-webflow.version}.jar
+					</packagingExcludes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>prepare-war</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>exploded</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-war</id>
+						<phase>package</phase>
+						<goals>
+							<goal>war</goal>
+						</goals>
+						<configuration>
+							<warSourceDirectory>
+								${project.build.directory}/${project.build.finalName}</warSourceDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<doCheck>false</doCheck>
+					<doUpdate>false</doUpdate>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

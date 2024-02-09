@@ -1,0 +1,19 @@
+diff --git a/idp-parent/pom.xml b/idp-parent/pom.xml
+index 5301dd763..f26e3c3e1 100644
+--- a/idp-parent/pom.xml
++++ b/idp-parent/pom.xml
+@@ -22,6 +22,14 @@
+     <version>4.3.1</version>
+     <packaging>pom</packaging>
+ 
++    <repositories>
++        <repository>
++            <id>shib</id>
++            <name>Shib</name>
++            <url>https://build.shibboleth.net/nexus/content/repositories/releases/</url>
++        </repository>
++    </repositories>
++
+     <modules>
+         <module>../idp-core</module>
+         <module>../idp-schema</module>
