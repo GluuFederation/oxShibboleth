@@ -1,0 +1,67 @@
+diff -aurN shibboleth-idp.orig/views/logout-complete.vm shibboleth-idp/views/logout-complete.vm
+--- shibboleth-idp.orig/views/logout-complete.vm	2024-04-14 12:46:38.725262468 +0100
++++ shibboleth-idp/views/logout-complete.vm	2024-04-12 17:50:00.374229000 +0100
+@@ -16,6 +16,8 @@
+ ##
+ #set ($activeIdPSessions = $logoutContext and !$logoutContext.getIdPSessions().isEmpty())
+ #set ($activeSPSessions = $logoutContext and !$logoutContext.getSessionMap().isEmpty())
++#set ($gluuLogoutRedirectUrl = $custom.getRelyingPartyLogoutRedirectUrl($profileRequestContext))
++#set ($gluuLogoutRedirectMethod="get")
+ <!DOCTYPE html>
+ <html>
+     <head>
+diff -aurN shibboleth-idp.orig/views/logout.vm shibboleth-idp/views/logout.vm
+--- shibboleth-idp.orig/views/logout.vm	2024-04-14 12:46:38.729262496 +0100
++++ shibboleth-idp/views/logout.vm	2024-04-12 18:00:19.684950000 +0100
+@@ -20,6 +20,8 @@
+ #end
+ #set ($promptForIdP = $logoutContext and !$logoutContext.getIdPSessions().isEmpty())
+ #set ($promptForSP = $logoutContext and !$logoutContext.getSessionMap().isEmpty())
++#set ($gluuLogoutRedirectUrl = $custom.getRelyingPartyLogoutRedirectUrl($profileRequestContext))
++#set ($gluuLogoutRedirectMethod="get")
+ <!DOCTYPE html>
+ <html>
+     <head>
+@@ -100,6 +102,22 @@
+                 <p><strong>#springMessageText("idp.logout.complete", "The logout operation is complete, and no other services appear to have been accessed during this session.")</strong></p>
+                 <!-- Complete the flow by adding a hidden iframe. -->
+                 <iframe style="display:none" src="$flowExecutionUrl&_eventId=proceed"></iframe>
++
++                <!-- gluu logout redirect url -->
++                #if($gluuLogoutRedirectUrl)
++                <p>
++                  <strong>
++                   #springMessageText("idp.gluulogout.redirect-msg","You will be redirected shortly")
++                  </strong>
++                </p>
++                <form id="f_logout_redirect" method="$gluuLogoutRedirectMethod" action="$gluuLogoutRedirectUrl">
++                  <p>
++                    <button class="button-secondary" type="submit" name="_gluu_action" value="redirect">
++                      #springMessageText("idp.gluu.logout.button","Click here if it's taking too long")
++                    </button>
++                  </p>
++                </form>
++                #end
+             #end
+ 
+                 <ul>
+@@ -107,7 +125,18 @@
+                     <li><a href="#springMessageText("idp.url.helpdesk", '#')">#springMessageText("idp.login.needHelp", "Need Help?")</a></li>
+                 </ul>
+             </section>
+-            
++            #if($gluuLogoutRedirectUrl)
++            <script type="text/javascript">
++             function performRedirect() {
++
++                var redir_form = document.getElementById("f_logout_redirect");
++                if(redir_form != null) {
++                    redir_form.submit();
++                }
++             }
++             setTimeout(performRedirect,5000); // 5 seconds , making sure the hidden iframe to complete the flow has run 
++            </script>
++            #end
+         </main>
+         <footer class="footer">
+             <div class="cc">

@@ -229,6 +229,7 @@ public class ShibOxAuthAuthServlet extends HttpServlet {
 
             final UserProfile userProfile = authClient.getUserProfile(openIdCredentials, context);
             LOG.debug("User profile : {}", userProfile);
+            
 
             if (userProfile == null) {
                 LOG.error("Token validation failed, returning InvalidToken");
@@ -320,7 +321,7 @@ public class ShibOxAuthAuthServlet extends HttpServlet {
                     }
                 }
             }catch(ExternalAuthenticationException e) {
-                LOG.debug("Could not set extra parameters for the request. Extra request parameters will not be available to oxAuth",e);
+                LOG.info("Could not set extra parameters for the request. Extra request parameters will not be available to oxAuth",e);
             }
 
             
@@ -338,7 +339,7 @@ public class ShibOxAuthAuthServlet extends HttpServlet {
                         Function<ProfileRequestContext, RelyingPartyContext> authenticationContextLookupStrategy = new ChildContextLookup<>(RelyingPartyContext.class);
                         final RelyingPartyContext relyingPartyContext = authenticationContextLookupStrategy.apply(profileRequestContext);
                         if (relyingPartyContext != null) {
-                        	ProfileConfiguration profileConfiguration = relyingPartyContext.getProfileConfig();
+                        	 ProfileConfiguration profileConfiguration = relyingPartyContext.getProfileConfig();
                         	if (profileConfiguration instanceof BrowserSSOProfileConfiguration) {
                         		List<Principal> principals = ((BrowserSSOProfileConfiguration) profileConfiguration).getDefaultAuthenticationMethods(profileRequestContext);
                                 acrs = principals.stream()
