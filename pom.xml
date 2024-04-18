@@ -14,7 +14,7 @@
 
 		<shibboleth.version>4.3.3</shibboleth.version>
 		<opensaml.version>4.3.3.0</opensaml.version>
-		<java-support.version>8.4.0</java-support.version>
+		<java-support.version>8.4.2</java-support.version>
 		<spring-webflow.version>2.5.1.RELEASE</spring-webflow.version>
 
 		<shibboleth.dist.sha256>e71e0a948499a0c383d03e35e4bab3779881b72d0ceb5a03dbb776c04230c613</shibboleth.dist.sha256>
