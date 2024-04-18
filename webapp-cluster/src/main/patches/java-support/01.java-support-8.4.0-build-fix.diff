@@ -11,7 +11,7 @@ index f91007f..9f66c3f 100644
      <parent>
          <groupId>net.shibboleth</groupId>
          <artifactId>parent</artifactId>
-         <version>11.3.5</version>
+         <version>11.3.7</version>
      </parent>
 -
 +-->
@@ -39,7 +39,7 @@ index f91007f..9f66c3f 100644
 +         <dependency>
 +            <groupId>net.shibboleth</groupId>
 +            <artifactId>parent</artifactId>
-+            <version>11.3.5</version>
++            <version>11.3.7</version>
 +            <scope>import</scope>
 +            <type>pom</type>
 +         </dependency>
