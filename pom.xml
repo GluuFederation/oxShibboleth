@@ -13,7 +13,7 @@
 		<maven.compiler.target>11</maven.compiler.target>
 
 		<shibboleth.version>4.3.3</shibboleth.version>
-		<opensaml.version>4.3.3.0</opensaml.version>
+		<opensaml.version>4.3.2</opensaml.version>
 		<java-support.version>8.4.2</java-support.version>
 		<spring-webflow.version>2.5.1.RELEASE</spring-webflow.version>
 
