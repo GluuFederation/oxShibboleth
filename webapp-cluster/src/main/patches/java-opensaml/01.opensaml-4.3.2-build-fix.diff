@@ -1,7 +1,7 @@
-diff --git a/pom.xml b/pom.xml
-index c57dbb5e6..fe065268a 100644
---- a/pom.xml
-+++ b/pom.xml
+diff --git a/opensaml-parent/pom.xml b/opensaml-parent/pom.xml
+index f1a1264d3..441f564c0 100644
+--- a/opensaml-parent/pom.xml
++++ b/opensaml-parent/pom.xml
 @@ -26,6 +26,14 @@
      -->
      <packaging>pom</packaging>
@@ -15,5 +15,5 @@ index c57dbb5e6..fe065268a 100644
 +    </repositories>
 +
      <modules>
-         <module>opensaml-core-api</module>
-         <module>opensaml-storage-api</module>
+         <module>../opensaml-core</module>
+         <module>../opensaml-storage-api</module>

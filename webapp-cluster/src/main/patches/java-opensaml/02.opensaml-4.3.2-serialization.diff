@@ -1,7 +1,7 @@
-diff --git a/opensaml-core-api/src/main/java/org/opensaml/core/xml/Namespace.java b/opensaml-core-api/src/main/java/org/opensaml/core/xml/Namespace.java
+diff --git a/opensaml-core/src/main/java/org/opensaml/core/xml/Namespace.java b/opensaml-core/src/main/java/org/opensaml/core/xml/Namespace.java
 index 2c9850562..b200fa355 100644
---- a/opensaml-core-api/src/main/java/org/opensaml/core/xml/Namespace.java
-+++ b/opensaml-core-api/src/main/java/org/opensaml/core/xml/Namespace.java
+--- a/opensaml-core/src/main/java/org/opensaml/core/xml/Namespace.java
++++ b/opensaml-core/src/main/java/org/opensaml/core/xml/Namespace.java
 @@ -25,7 +25,9 @@ import net.shibboleth.utilities.java.support.primitive.StringSupport;
  import net.shibboleth.utilities.java.support.xml.XMLConstants;
  
@@ -13,10 +13,10 @@ index 2c9850562..b200fa355 100644
  
      /** URI of the namespace. */
      private String namespaceURI;
-diff --git a/opensaml-core-api/src/main/java/org/opensaml/core/xml/XMLObject.java b/opensaml-core-api/src/main/java/org/opensaml/core/xml/XMLObject.java
+diff --git a/opensaml-core/src/main/java/org/opensaml/core/xml/XMLObject.java b/opensaml-core/src/main/java/org/opensaml/core/xml/XMLObject.java
 index bf9af8d54..a1f3bacd9 100644
---- a/opensaml-core-api/src/main/java/org/opensaml/core/xml/XMLObject.java
-+++ b/opensaml-core-api/src/main/java/org/opensaml/core/xml/XMLObject.java
+--- a/opensaml-core/src/main/java/org/opensaml/core/xml/XMLObject.java
++++ b/opensaml-core/src/main/java/org/opensaml/core/xml/XMLObject.java
 @@ -34,7 +34,7 @@ import org.w3c.dom.Element;
   * A object that represents an XML element, usually of a specific schema type, that has been unmarshalled into this Java
   * object.
@@ -26,10 +26,10 @@ index bf9af8d54..a1f3bacd9 100644
  
      /**
       * Detaches the XMLObject from its parent. This will release the parent's cached DOM (if it has one) and set this
-diff --git a/opensaml-core-api/src/main/java/org/opensaml/core/xml/schema/XSBooleanValue.java b/opensaml-core-api/src/main/java/org/opensaml/core/xml/schema/XSBooleanValue.java
+diff --git a/opensaml-core/src/main/java/org/opensaml/core/xml/schema/XSBooleanValue.java b/opensaml-core/src/main/java/org/opensaml/core/xml/schema/XSBooleanValue.java
 index 6b53a916e..45a922798 100644
---- a/opensaml-core-api/src/main/java/org/opensaml/core/xml/schema/XSBooleanValue.java
-+++ b/opensaml-core-api/src/main/java/org/opensaml/core/xml/schema/XSBooleanValue.java
+--- a/opensaml-core/src/main/java/org/opensaml/core/xml/schema/XSBooleanValue.java
++++ b/opensaml-core/src/main/java/org/opensaml/core/xml/schema/XSBooleanValue.java
 @@ -25,7 +25,9 @@ import net.shibboleth.utilities.java.support.primitive.StringSupport;
   * A class representing a boolean attribute. This class tracks the usage of the literals {true, false, 1, 0} to ensure
   * proper roundtripping when unmarshalling/marshalling.
@@ -41,10 +41,10 @@ index 6b53a916e..45a922798 100644
  
      /** Whether to use the numeric representation of the lexical one. */
      private boolean numeric;
-diff --git a/opensaml-core-api/src/main/java/org/opensaml/core/xml/util/AttributeMap.java b/opensaml-core-api/src/main/java/org/opensaml/core/xml/util/AttributeMap.java
+diff --git a/opensaml-core/src/main/java/org/opensaml/core/xml/util/AttributeMap.java b/opensaml-core/src/main/java/org/opensaml/core/xml/util/AttributeMap.java
 index 3cba34288..7cc67c48e 100644
---- a/opensaml-core-api/src/main/java/org/opensaml/core/xml/util/AttributeMap.java
-+++ b/opensaml-core-api/src/main/java/org/opensaml/core/xml/util/AttributeMap.java
+--- a/opensaml-core/src/main/java/org/opensaml/core/xml/util/AttributeMap.java
++++ b/opensaml-core/src/main/java/org/opensaml/core/xml/util/AttributeMap.java
 @@ -46,8 +46,10 @@ import com.google.common.base.Strings;
   * attributes change.
   */
@@ -57,10 +57,10 @@ index 3cba34288..7cc67c48e 100644
      /** Logger. */
      private final Logger log = LoggerFactory.getLogger(AttributeMap.class);
  
-diff --git a/opensaml-core-api/src/main/java/org/opensaml/core/xml/util/IDIndex.java b/opensaml-core-api/src/main/java/org/opensaml/core/xml/util/IDIndex.java
+diff --git a/opensaml-core/src/main/java/org/opensaml/core/xml/util/IDIndex.java b/opensaml-core/src/main/java/org/opensaml/core/xml/util/IDIndex.java
 index 3822c60c7..9e3e5cd10 100644
---- a/opensaml-core-api/src/main/java/org/opensaml/core/xml/util/IDIndex.java
-+++ b/opensaml-core-api/src/main/java/org/opensaml/core/xml/util/IDIndex.java
+--- a/opensaml-core/src/main/java/org/opensaml/core/xml/util/IDIndex.java
++++ b/opensaml-core/src/main/java/org/opensaml/core/xml/util/IDIndex.java
 @@ -36,8 +36,10 @@ import org.opensaml.core.xml.XMLObject;
   * {@link org.opensaml.core.xml.XMLObject}.
   */
@@ -73,10 +73,10 @@ index 3822c60c7..9e3e5cd10 100644
      /** The XMLObject which owns this ID index. */
      @Nonnull private final XMLObject owner;
      
-diff --git a/opensaml-core-api/src/main/java/org/opensaml/core/xml/util/XMLObjectChildrenList.java b/opensaml-core-api/src/main/java/org/opensaml/core/xml/util/XMLObjectChildrenList.java
+diff --git a/opensaml-core/src/main/java/org/opensaml/core/xml/util/XMLObjectChildrenList.java b/opensaml-core/src/main/java/org/opensaml/core/xml/util/XMLObjectChildrenList.java
 index f03b880f1..4dc524f24 100644
---- a/opensaml-core-api/src/main/java/org/opensaml/core/xml/util/XMLObjectChildrenList.java
-+++ b/opensaml-core-api/src/main/java/org/opensaml/core/xml/util/XMLObjectChildrenList.java
+--- a/opensaml-core/src/main/java/org/opensaml/core/xml/util/XMLObjectChildrenList.java
++++ b/opensaml-core/src/main/java/org/opensaml/core/xml/util/XMLObjectChildrenList.java
 @@ -39,7 +39,9 @@ import com.google.common.collect.Collections2;
   * 
   * @param <ElementType> type of elements added to the list
