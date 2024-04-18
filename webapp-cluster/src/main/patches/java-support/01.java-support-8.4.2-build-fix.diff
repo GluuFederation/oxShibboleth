@@ -2,37 +2,31 @@ diff --git a/pom.xml b/pom.xml
 index f91007f..9f66c3f 100644
 --- a/pom.xml
 +++ b/pom.xml
-@@ -3,13 +3,13 @@
-     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+@@ -4,11 +4,13 @@
  
      <modelVersion>4.0.0</modelVersion>
--
+ 
 +<!--
      <parent>
          <groupId>net.shibboleth</groupId>
          <artifactId>parent</artifactId>
-         <version>11.3.5</version>
+         <version>11.3.7</version>
      </parent>
--
 +-->
+ 
      <name>java-support</name>
      <groupId>net.shibboleth.utilities</groupId>
-     <artifactId>java-support</artifactId>
-@@ -22,6 +22,11 @@
- 
+@@ -19,8 +21,36 @@
      <properties>
+         <shibboleth.projectName>java-support</shibboleth.projectName>
          <automatic.module.name>net.shibboleth.utilities.java.support</automatic.module.name>
++
 +        <slf4j.groupId>org.slf4j</slf4j.groupId>
 +    	<nashorn.jdk.version>15.3</nashorn.jdk.version>
 +
 +	<maven.compiler.source>11</maven.compiler.source>
 +	<maven.compiler.target>11</maven.compiler.target>
      </properties>
- 
-     <scm>
-@@ -30,6 +35,28 @@
-         <url>https://git.shibboleth.net/view/?p=${project.artifactId}.git</url>
-     </scm>
  
 +   <dependencyManagement>
 +      <dependencies>
@@ -59,7 +53,7 @@ index f91007f..9f66c3f 100644
      <dependencies>
          <!-- Compile Dependencies -->
          <dependency>
-@@ -117,6 +144,7 @@
+@@ -108,6 +138,7 @@
          <!-- Runtime Dependencies -->
  
          <!-- Test Dependencies -->
@@ -67,12 +61,12 @@ index f91007f..9f66c3f 100644
          <dependency>
              <groupId>org.testng</groupId>
              <artifactId>testng</artifactId>
-@@ -137,7 +165,7 @@
+@@ -128,7 +159,7 @@
              <artifactId>spring-web</artifactId>
              <scope>test</scope>
          </dependency>
 -
-+-->
++--->
      </dependencies>
  
      <profiles>
