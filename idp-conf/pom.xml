@@ -6,11 +6,11 @@
 	<name>Gluu idp-conf-impl</name>
 	<url>https://www.gluu.org</url>
 	<packaging>jar</packaging>
-	<version>4.5.4-SNAPSHOT</version>
+	<version>4.5.4.Final</version>
 	<parent>
 		<groupId>org.gluu</groupId>
 		<artifactId>oxShibboleth</artifactId>
-		<version>4.5.4-SNAPSHOT</version>
+		<version>4.5.4.Final</version>
 	</parent>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
