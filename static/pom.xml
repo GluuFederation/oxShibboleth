@@ -121,7 +121,7 @@
 								<artifactItem>
 									<groupId>org.apache.commons</groupId>
 									<artifactId>commons-compress</artifactId>
-									<version>1.25.0</version>
+									<version>1.26.0</version>
 									<type>jar</type>
 									<overWrite>true</overWrite>
 									<outputDirectory>${project.build.directory}/classes/shibboleth-idp/bin/lib</outputDirectory>
