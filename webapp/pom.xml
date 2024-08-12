@@ -8,14 +8,14 @@
 	<parent>
 		<groupId>org.gluu</groupId>
 		<artifactId>oxShibboleth</artifactId>
-		<version>4.5.5-SNAPSHOT</version>
+		<version>4.5.6-SNAPSHOT</version>
 	</parent>
 	<prerequisites>
 		<maven>2.3</maven>
 	</prerequisites>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<oxcore.version>4.5.5-SNAPSHOT</oxcore.version>
+		<oxcore.version>4.5.6-SNAPSHOT</oxcore.version>
 		<jackson.version>2.13.0</jackson.version>
 		<jaxrs.version>3.0.12.Final</jaxrs.version>
 		<resteasy.version>4.7.9.Final</resteasy.version>
@@ -23,7 +23,7 @@
 		<httpclient.version>4.5.13</httpclient.version>
 		<log4j.version>2.17.1</log4j.version>
 		<slf4j.version>1.7.36</slf4j.version>
-		<shib-oxauth-authn.version>4.5.5-SNAPSHOT</shib-oxauth-authn.version>
+		<shib-oxauth-authn.version>4.5.6-SNAPSHOT</shib-oxauth-authn.version>
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
 		<buildDate>${maven.build.timestamp}</buildDate>
 	</properties>
@@ -295,7 +295,7 @@
 		<dependency>
 			<groupId>org.gluu</groupId>
 			<artifactId>oxLogoServlet</artifactId>
-			<version>4.5.5-SNAPSHOT</version>
+			<version>4.5.6-SNAPSHOT</version>
 		</dependency>
 		<!--END: Couchbase JDBC section -->
 		<!--START: OX OpenId Authentication -->
