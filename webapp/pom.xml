@@ -215,6 +215,8 @@
 						WEB-INF/lib/spring-tx-5.3.25.jar,
 						WEB-INF/lib/spring-web-5.3.25.jar,
 						WEB-INF/lib/spring-webmvc-5.3.25.jar,
+						WEB-INF/lib/spring-webmvc-5.3.34.jar,
+						WEB-INF/lib/spring-web-5.3.34.jar,
 
 						WEB-INF/lib/bcpkix-jdk18on-1.72.jar,
 						WEB-INF/lib/bcprov-jdk18on-1.72.jar,
