@@ -215,6 +215,7 @@
 						WEB-INF/lib/spring-tx-5.3.25.jar,
 						WEB-INF/lib/spring-web-5.3.25.jar,
 						WEB-INF/lib/spring-webmvc-5.3.25.jar,
+						WEB-INF/lib/spring-webmvc-5.3.34.jar,
 
 						WEB-INF/lib/bcpkix-jdk18on-1.72.jar,
 						WEB-INF/lib/bcprov-jdk18on-1.72.jar,
@@ -474,13 +475,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>5.3.34</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>5.3.34</version>
+			<version>5.3.37</version>
 		</dependency>
 
 		<dependency>
