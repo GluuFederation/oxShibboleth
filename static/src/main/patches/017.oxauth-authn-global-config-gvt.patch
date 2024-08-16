@@ -1,0 +1,12 @@
+diff -aurN shibboleth-idp.orig/conf/authn/oxauth-authn-global.xml shibboleth-idp/conf/authn/oxauth-authn-global.xml
+--- shibboleth-idp.orig/conf/authn/oxauth-authn-global.xml	2024-04-08 14:17:50.468803551 +0100
++++ shibboleth-idp/conf/authn/oxauth-authn-global.xml	2024-04-08 15:39:24.208219767 +0100
+@@ -55,4 +55,8 @@
+ 
+        <bean id="shibboleth.gluu.AuthResultReuseCondition" class="org.gluu.idp.externalauth.OxAuthReuseResultByAcr">
+        </bean>
++       
++       <bean id="gluuVanillaTrustRelationshipService" class="org.gluu.idp.service.GluuVanillaTrustRelationshipService">
++              <constructor-arg name="configurationFactory" value="#{idpConfigurationFactory.instance()}"/>
++       </bean>
+ </beans>
