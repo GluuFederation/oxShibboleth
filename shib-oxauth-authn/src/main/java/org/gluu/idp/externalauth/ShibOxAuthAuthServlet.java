@@ -76,7 +76,7 @@ import net.shibboleth.idp.saml.saml2.profile.config.BrowserSSOProfileConfigurati
  * @author Yuriy Movchan
  * @version 0.1, 09/13/2018
  */
-@WebServlet(name = "ShibOxAuthAuthServlet", urlPatterns = { "/ceva/auth/*" })
+@WebServlet(name = "ShibOxAuthAuthServlet", urlPatterns = { "/Authn/oxAuth/*" })
 public class ShibOxAuthAuthServlet extends HttpServlet {
 
     private static final long serialVersionUID = -4864851392327422662L;
