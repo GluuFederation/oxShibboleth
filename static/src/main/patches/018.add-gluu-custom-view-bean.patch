@@ -1,0 +1,32 @@
+diff -aurN shibboleth-idp.orig/conf/global.xml shibboleth-idp/conf/global.xml
+--- shibboleth-idp.orig/conf/global.xml	2024-04-08 15:47:28.754193000 +0100
++++ shibboleth-idp/conf/global.xml	2024-04-10 10:28:12.856588766 +0100
+@@ -64,5 +64,6 @@
+     <import resource="conditional:${idp.home}/conf/gluu-storage.xml"/>
+     <import resource="conditional:${idp.home}/conf/gluu-release-attributes.xml"/>
+     <import resource="conditional:${idp.home}/conf/gluu-populate-context.xml"/>
++    <import resource="conditional:${idp.home}/conf/gluu-custom-view-bean.xml"/>
+     
+ </beans>
+diff -aurN shibboleth-idp.orig/conf/gluu-custom-view-bean.xml shibboleth-idp/conf/gluu-custom-view-bean.xml
+--- shibboleth-idp.orig/conf/gluu-custom-view-bean.xml	1970-01-01 01:00:00.000000000 +0100
++++ shibboleth-idp/conf/gluu-custom-view-bean.xml	2024-04-10 11:16:32.107680798 +0100
+@@ -0,0 +1,18 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<beans xmlns="http://www.springframework.org/schema/beans"
++       xmlns:context="http://www.springframework.org/schema/context"
++       xmlns:util="http://www.springframework.org/schema/util"
++       xmlns:p="http://www.springframework.org/schema/p"
++       xmlns:c="http://www.springframework.org/schema/c"
++       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
++                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
++                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
++                           
++       default-init-method="initialize"
++       default-destroy-method="destroy">
++
++       <bean id="shibboleth.CustomViewContext" class="org.gluu.idp.service.GluuCustomViewService">
++         <constructor-arg name="vanillaTrustRelationshipService" ref="gluuVanillaTrustRelationshipService"/>
++       </bean>
++</beans>
