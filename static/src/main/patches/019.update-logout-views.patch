@@ -81,7 +81,7 @@ diff -aurN shibboleth-idp.orig/views/logout-propagate.vm shibboleth-idp/views/lo
              <section>
                  #if($hidden == "true")
                  <p>#springMessageText("idp.logout.hidden", "Your single sign-on session has been terminated, but you are still logged into many of the services you have accessed during your session.")</p>
-+                #if(gluuLogoutRedirectUrl)
++                #if($gluuLogoutRedirectUrl)
 +                <p>You will be redirected shortly...</p>
 +                #end
                  #else
